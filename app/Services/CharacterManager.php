@@ -705,7 +705,7 @@ class CharacterManager extends Service
             $image->species_id = $data['species_id'];
             $image->subtype_id = $data['subtype_id'] ?: null;
             $image->rarity_id = $data['rarity_id'];
-            $image->title_id = isset($data['title_id']) ? ($data['title_id'] != 'custom' ? $data['title_id'] : null) : null;
+            $image->title_id = isset($data['title_id']) && $data['title_id'] ? ($data['title_id'] != 'custom' ? $data['title_id'] : null) : null;
             $image->title_data = isset($data['title_data']) && isset($data['title_data']['full']) ? json_encode($data['title_data']) : null;
             $image->save();
 
@@ -2067,7 +2067,7 @@ is_object($sender) ? $sender->id : null,
             $request->rarity_id = $rarity->id;
             $request->subtype_id = $subtype ? $subtype->id : null;
             $request->has_features = 1;
-            $request->title_id = isset($data['title_id']) ? ($data['title_id'] != 'custom' ? $data['title_id'] : null) : null;
+            $request->title_id = isset($data['title_id']) && $data['title_id'] ? ($data['title_id'] != 'custom' ? $data['title_id'] : null) : null;
             $request->title_data = isset($data['title_data']) && isset($data['title_data']['full']) ? json_encode($data['title_data']) : null;
             $request->save();
 
@@ -2190,7 +2190,7 @@ is_object($sender) ? $sender->id : null,
                 'subtype_id' => ($request->character->is_myo_slot && isset($request->character->image->subtype_id)) ? $request->character->image->subtype_id : $request->subtype_id,
                 'rarity_id' => $request->rarity_id,
                 'sort' => 0,
-                'title_id' => isset($request->title_id) ? $request->title_id : null,
+                'title_id' => isset($request->title_id) && $request->title_id ? $request->title_id : null,
                 'title_data' => isset($request->title_data) ? $request->title_data : null
             ]);
 
