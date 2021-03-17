@@ -186,7 +186,7 @@
                     <td>{!! $character->image->rarity_id ? $character->image->rarity->displayName : 'None' !!}</td>
                     <td>{!! $character->image->species_id ? $character->image->species->displayName : 'None' !!}</td>
                     @if(Settings::get('character_title_display'))
-                        <td>{!! $character->image->title_id ? $character->image->title->displayNameShort : (isset($character->image->title_data['short']) ? nl2br(htmlentities($character->image->title_data['short'])) : nl2br(htmlentities($character->image->title_data['full']))) !!}</td>
+                        <td>{!! $character->image->hasTitle ? ($character->image->title_id ? $character->image->title->displayNameShort : (isset($character->image->title_data['short']) ? nl2br(htmlentities($character->image->title_data['short'])) : nl2br(htmlentities($character->image->title_data['full'])))) : 'None' !!}</td>
                     @endif
                     <td>{!! format_date($character->created_at) !!}</td>
                 </tr>
