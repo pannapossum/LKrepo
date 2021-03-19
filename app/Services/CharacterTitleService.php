@@ -69,7 +69,7 @@ class CharacterTitleService extends Service
         try {
             // More specific validation
             if(CharacterTitle::where('title', $data['title'])->where('id', '!=', $title->id)->exists()) throw new \Exception("The title has already been taken.");
-            if(CharacterTitle::where('title_short', $data['title_short'])->where('id', '!=', $title->id)->exists()) throw new \Exception("The short title has already been taken.");
+            if(CharacterTitle::where('short_title', $data['short_title'])->where('id', '!=', $title->id)->exists()) throw new \Exception("The short title has already been taken.");
 
             $data = $this->populateData($data, $title);
 
