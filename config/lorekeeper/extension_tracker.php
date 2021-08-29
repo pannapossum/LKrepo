@@ -12,9 +12,9 @@ return [
     //     'version' => '1.0.0',
     // ],
 
-    'character_drops' => [
-        'key' => 'character_drops',
-        'wiki_key' => 'Character_drops',
+    'character_titles' => [
+        'key' => 'character_titles',
+        'wiki_key' => 'Character_Titles',
         'creators' => json_encode([
             'Mercury' => 'https://github.com/itinerare/',
         ]),
