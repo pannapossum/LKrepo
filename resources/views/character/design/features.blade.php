@@ -125,6 +125,12 @@
             <div class="col-md-2 col-4"><h5>Rarity</h5></div>
             <div class="col-md-10 col-8">{!! $request->rarity ? $request->rarity->displayName : 'None Selected' !!}</div>
         </div>
+        @if(isset($request->title_id) || isset($request->title_data))
+            <div class="row">
+                <div class="col-md-2 col-4"><h5>Title</h5></div>
+                <div class="col-md-10 col-8">{!! $request->title_id ? $request->title->displayNamePartial.(isset($request->title_data) ? ' ('.nl2br(htmlentities($request->title_data['full'])).')' : null) : (nl2br(htmlentities($request->title_data['full']))) !!}</div>
+            </div>
+        @endif
     </div>
     <h5>Traits</h5>
     <div>
