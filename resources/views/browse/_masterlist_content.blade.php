@@ -26,7 +26,11 @@
                     </div>
                     <div class="masterlist-search-field">
                         {!! Form::label('title_id', 'Title: ') !!}
-                        {!! Form::select('title_id', $titles, Request::get('title_id'), ['class' => 'form-control']) !!}
+                        {!! Form::select('title_id', $titles, Request::get('title_id'), ['class' => 'form-control', 'id' => 'customTitle']) !!}
+                    </div>
+                    <div class="masterlist-search-field" id="customTitleOptions">
+                        {!! Form::label('title_data', 'Custom Title: ') !!}
+                        {!! Form::text('title_data', Request::get('title_data'), ['class' => 'form-control']) !!}
                     </div>
                 @endif
                 <hr/>
