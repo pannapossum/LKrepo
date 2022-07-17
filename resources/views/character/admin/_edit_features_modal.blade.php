@@ -18,11 +18,11 @@
         <div class="col-md-6 pr-2">
             <div class="form-group">
                 {!! Form::label('Character Title') !!}
-                {!! Form::select('title_id', $titles, $image->title_id, ['class' => 'form-control']) !!}
+                {!! Form::select('title_id', $titles, $image->title_id ?? (isset($image->title_data) ? 'custom' : null), ['class' => 'form-control', 'id' => 'charTitle']) !!}
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group">
+            <div class="form-group" id="titleOptions">
                 {!! Form::label('Extra Info/Custom Title (Optional)') !!} {!! add_help('If \'custom title\' is selected, this will be displayed as the title. If a preexisting title is selected, it will be displayed in addition to it.'.(Settings::get('character_title_display') ? ' The short version is only used in the case of a custom title.' : '')) !!}
                 <div class="d-flex">
                     {!! Form::text('title_data[full]', isset($image->title_data['full']) ? $image->title_data['full'] : null, ['class' => 'form-control mr-2', 'placeholder' => 'Full Title']) !!}
@@ -82,6 +82,25 @@
         }
         function removeFeatureRow($trigger) {
             $trigger.parent().remove();
+        }
+    });
+
+    $(document).ready(function() {
+        var $title = $('#charTitle');
+        var $titleOptions = $('#titleOptions');
+
+        var titleEntry = $title.val() != 0;
+
+        updateTitleEntry(titleEntry);
+
+        $title.on('change', function(e) {
+            var titleEntry = $title.val() != 0;
+            updateTitleEntry(titleEntry);
+        });
+
+        function updateTitleEntry($show) {
+            if($show) $titleOptions.removeClass('hide');
+            else $titleOptions.addClass('hide');
         }
     });
 
