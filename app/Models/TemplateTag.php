@@ -103,8 +103,8 @@ class TemplateTag extends Model
      */
     public function getServiceAttribute()
     {
-        $class = 'App\Services\Template\\'.str_replace(' ', '', ucwords(str_replace('_', ' ', $this->tag))).'Service';
-        return (new $class());
+        $class = 'App\Services\Templates\\' . str_replace(' ', '', ucwords(str_replace('_', ' ', $this->tag))) . 'Service';
+        return class_exists($class) ? (new $class()) : null;
     }
 
     /**********************************************************************************************
@@ -131,5 +131,23 @@ class TemplateTag extends Model
     public function getData()
     {
         return $this->service->getTagData($this);
+    }
+
+    /**
+     * Get the template associated with the tag.
+     *
+     * @return mixed
+     */
+    public function getTemplate() {
+        return $this->service?->getTemplate($this) ?? "templates." . $this->tag;
+    }
+
+    /**
+     * Get the template associated with the tag.
+     *
+     * @return mixed
+     */
+    public function getTemplateData() {
+        return method_exists($this->service, 'getTemplateData') ? $this->service?->getTemplateData($this) : null;
     }
 }
