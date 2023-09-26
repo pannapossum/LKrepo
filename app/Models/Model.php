@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Config;
+use App\Models\TemplateTag;
 
 class Model extends EloquentModel
 {
@@ -12,4 +14,34 @@ class Model extends EloquentModel
      * @var string
      */
     public $timestamps = false;
+
+    /**
+     * For theme tags, we always check if a model has the parsed_text attribute.
+     * If so, we load all the necessary data and replace the theme tag with its content.
+     */
+    public function getParsedTextAttribute() {
+        if(isset($this->attributes['parsed_text'])){
+            $tags = Config::get('lorekeeper.template_tags');
+            $parsedText = $this->attributes['parsed_text'];
+            $templatedText = $parsedText;
+
+            //loop over all tags to correctly replace them
+            foreach($tags as $tag => $tagData){
+                $pattern = '/<p>#'.$tag.'([0-9]+)<\/p>/'; // tag pattern is defined as #tag1 for example, in which 1 is the id of the template tag
+                if (preg_match_all($pattern, $templatedText, $matches)) {
+                    //for each match replace and pass the template object if it exists
+                    foreach (array_unique($matches[1]) as $match) {
+                        //find all matches first so we can query the tag data here instead of in each new template blade
+                        //in template blade we can just always reference $tag then
+                        $templateTag = TemplateTag::find($match);
+                        if($templateTag != null)
+                            $templatedText = preg_replace('/<p>#'.$tag.'('.$match.')<\/p>/', view("templates.".$tag, ["tag" => $templateTag]) , $templatedText);
+                    }
+                }
+            }
+            return $templatedText;
+        } else {
+            throw new \Exception('This model does not contain a parsed_text field.');
+        }
+    }
 }
