@@ -17,5 +17,9 @@ return [
         'name' => 'Pure HTML',
         'description' => 'Allows you to add any sort of premade html for easy reuse across the whole site via a template tag.'
     ],
+    'dialogue' => [
+        'name' => 'Dialogue',
+        'description' => 'Allows the creation of dialogue to be clicked through by users.'
+    ],
 
 ];

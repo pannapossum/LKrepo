@@ -31,7 +31,7 @@
 </div>
 
 
-
+<hr>
 @if(isset($template->id))
 <h3>Tag Data</h3>
 <p>The data that should be rendered when this tag is used.</p>
@@ -59,7 +59,7 @@ $( document ).ready(function() {
 
     $('.delete-template-button').on('click', function(e) {
         e.preventDefault();
-        loadModal("{{ url('admin/data/templates/delete') }}/{{ $template->id }}", 'Delete Template');
+        loadModal("{{ url('admin/templates/delete') }}/{{ $template->id }}", 'Delete Template');
     });
 
 });
