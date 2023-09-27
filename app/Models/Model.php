@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Config;
 use App\Models\TemplateTag;
+use Illuminate\Support\Facades\Blade;
 
 class Model extends EloquentModel
 {
@@ -24,10 +25,9 @@ class Model extends EloquentModel
             $tags = Config::get('lorekeeper.template_tags');
             $parsedText = $this->attributes['parsed_text'];
             $templatedText = $parsedText;
-
             //loop over all tags to correctly replace them
             foreach($tags as $tag => $tagData){
-                $pattern = '/<p>#'.$tag.'([0-9]+)<\/p>/'; // tag pattern is defined as #tag1 for example, in which 1 is the id of the template tag
+                $pattern = '/#' . $tag . '([0-9]+)/'; // tag pattern is defined as #tag1 for example, in which 1 is the id of the template tag
                 if (preg_match_all($pattern, $templatedText, $matches)) {
                     //for each match replace and pass the template object if it exists
                     foreach (array_unique($matches[1]) as $match) {
@@ -35,7 +35,14 @@ class Model extends EloquentModel
                         //in template blade we can just always reference $tag then
                         $templateTag = TemplateTag::find($match);
                         if($templateTag != null)
-                            $templatedText = preg_replace('/<p>#'.$tag.'('.$match.')<\/p>/', view("templates.".$tag, ["tag" => $templateTag]) , $templatedText);
+                            $templatedText = preg_replace(
+                                '/#' . $tag . '(' . $match . ')/',
+                                Blade::render(
+                                    $templateTag->getTemplate(),
+                                    ["tag" => $templateTag] + ($templateTag->getTemplateData() ?? [])
+                                ),
+                                $templatedText
+                            );
                     }
                 }
             }
