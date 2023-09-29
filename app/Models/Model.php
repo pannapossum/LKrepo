@@ -24,7 +24,8 @@ class Model extends EloquentModel
         if(isset($this->attributes['parsed_text'])){
             return $this->getTemplatedText($this->attributes['parsed_text']);
         } else {
-            throw new \Exception('This model does not contain a parsed_text field.');
+            //return empty if the attribute isnt set.
+            return '';
         }
     }
 
@@ -36,7 +37,8 @@ class Model extends EloquentModel
         if(isset($this->attributes['parsed_description'])){
             return $this->getTemplatedText($this->attributes['parsed_description']);
         } else {
-            throw new \Exception('This model does not contain a parsed_description field.');
+            //return empty if the attribute isnt set.
+            return '';
         }
     }
 
