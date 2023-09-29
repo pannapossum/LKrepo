@@ -30,16 +30,18 @@ class Model extends EloquentModel
                 $pattern = '/#' . $tag . '([0-9]+)/'; // tag pattern is defined as #tag1 for example, in which 1 is the id of the template tag
                 if (preg_match_all($pattern, $templatedText, $matches)) {
                     //for each match replace and pass the template object if it exists
+
                     foreach (array_unique($matches[1]) as $match) {
                         //find all matches first so we can query the tag data here instead of in each new template blade
                         //in template blade we can just always reference $tag then
                         $templateTag = TemplateTag::find($match);
                         if($templateTag != null)
+
                             $templatedText = preg_replace(
                                 '/#' . $tag . '(' . $match . ')/',
                                 Blade::render(
                                     $templateTag->getTemplate(),
-                                    ["tag" => $templateTag] + ($templateTag->getTemplateData() ?? [])
+                                    ["tag" => $templateTag, "data" => $templateTag->getTemplateData() ?? []]
                                 ),
                                 $templatedText
                             );

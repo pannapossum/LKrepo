@@ -114,32 +114,12 @@ class TemplateTag extends Model
     **********************************************************************************************/
 
     /**
-     * Get the data used for editing the tag.
-     *
-     * @return mixed
-     */
-    public function getEditData()
-    {
-        return $this->service->getEditData();
-    }
-
-    /**
-     * Get the data associated with the tag.
-     *
-     * @return mixed
-     */
-    public function getData()
-    {
-        return $this->service->getTagData($this);
-    }
-
-    /**
      * Get the template associated with the tag.
      *
      * @return mixed
      */
     public function getTemplate() {
-        return $this->service?->getTemplate($this) ?? "templates." . $this->tag;
+        return method_exists($this->service, 'getTemplate') ? $this->service?->getTemplate($this) : "templates." . $this->tag;
     }
 
     /**

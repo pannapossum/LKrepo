@@ -1,9 +1,23 @@
 <h4>Dialogue Template</h4>
 
+<h5>Background</h5>
+<p>If you want a background image be rendered behind the characters as they speak.</p>
+<table class="table table-sm" id="characterTable">
+    <thead>
+        <tr>
+            <th width="20%">Background Image URL (optional)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{!! Form::text('data[background]', $template->data['background'] ?? '', ['class' => 'form-control']) !!}</td>
+        </tr>
+    </tbody>
+</table>
 
-<h5>Characters</h5>
-<p>Sets up speaking characters. Image urls/links have been chosen over uploads to prevent needing multiple uploads if more than one dialogue uses the same characters. Otherwise, a whole 
-    new data model for this would need to be implemented as to keep track of characters. You can use the file manager to keep track of your character dialogue images, or any offsite host.
+<h5>Character Images</h5>
+<p>Sets up speaking characters. Can be left empty if you want no images for the dialogue. You can use the file manager to keep track of your character dialogue images, or any offsite host.
+    <b>Images should ideally be of the same height/size.</b> But feel free to play around with it!
 </p>
 
 <table class="table table-sm" id="characterTable">
@@ -22,7 +36,7 @@
                 @if($name != null)
                 <tr class="character-row">
                     <td>{!! Form::text('data[character_name][]', $name, ['class' => 'form-control']) !!}</td>
-                    <td>{!! Form::text('data[character_default][]', $template->data['character_default'][$loop->index], ['class' => 'form-control']) !!}</td>
+                    <td>{!! Form::text('data[character_default][]', $template->data['character_default'][$loop->index] ?? '', ['class' => 'form-control']) !!}</td>
                     <td>{!! Form::text('data[character_emotion_1][]',  $template->data['character_emotion_1'][$loop->index] ?? '', ['class' => 'form-control']) !!}</td>
                     <td>{!! Form::text('data[character_emotion_2][]',  $template->data['character_emotion_2'][$loop->index] ?? '', ['class' => 'form-control']) !!}</td>
                     <td>{!! Form::text('data[character_emotion_3][]',  $template->data['character_emotion_3'][$loop->index] ?? '', ['class' => 'form-control']) !!}</td>
@@ -53,7 +67,8 @@
 </div>
 
 <h5>Dialogue</h5>
-<p>Sets up the actual dialogue. Make sure that the character names match the names above.</p>
+<p>Sets up the actual dialogue. Make sure that the character names match the names above if you intend to use images. 
+    You can specify which character image should go with the text, for such things as different expressions.</p>
 
 
 <table class="table table-sm" id="dialogueTable">
