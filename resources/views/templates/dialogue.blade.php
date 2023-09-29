@@ -30,16 +30,16 @@ $id = $tag->id;
     <div class="{{ ($loop->index == 0) ? '' : 'hide' }} dialogue-{{$id}}" id="dialogue-{{$loop->index}}-{{$id}}">
         <img src="{{ $dialogueStep['image'] ?? null}}" class="rounded hide" style="max-width:100%;"
             id="image-{{$loop->index}}-{{$id}}">
-        <div class="bg-light ml-2 p-0">
+        <div class="bg-light ml-2 p-0 text-left">
             <h4 id="speaker-{{$loop->index}}-{{$id}}">{{ $dialogueStep['name']}}</h4>
         </div>
         <div class="hide" id="text-{{$loop->index}}-{{$id}}">
             <p>{{ $dialogueStep['text']}}</p>
         </div>
-        <div class="p-4" style="height:100px;overflow:auto;" id="text-container-{{$loop->index}}-{{$id}}"></div>
+        <div class="p-4 text-justify" style="height:100px;overflow:auto;" id="text-container-{{$loop->index}}-{{$id}}"></div>
     </div>
     @endforeach
-    <div class="bg-light ">
+    <div class="bg-light text-left">
         <div id="previous-button-{{$id}}" class="btn btn-primary disabled"><i class="fa fa-chevron-left"></i></div>
         <div id="next-button-{{$id}}" class="btn btn-primary float-right"><i class="fa fa-chevron-right"></i></div>
     </div>
