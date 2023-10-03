@@ -52,7 +52,8 @@ $(document).ready(function() {
     var step = 0;
     var dialogueSteps = $(".dialogue-{{ $id }}").length;
     updateSpeaker();
-
+    if (step <= 0) $('#previous-button-{{ $id }}').addClass('disabled');
+    if (step + 1 >= dialogueSteps) $('#next-button-{{ $id }}').addClass('disabled');
 
     $('#next-button-{{ $id }}').on('click', function(e) {
         if (!$('#next-button-{{ $id }}').hasClass('disabled')) {
