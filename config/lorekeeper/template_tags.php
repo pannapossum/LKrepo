@@ -23,7 +23,7 @@ return [
         'name' => 'Dialogue',
         'description' => 'Allows the creation of dialogue to be clicked through by users.'
     ],
-    'world-expansion-card' => [
+    'world_expansion_card' => [
         'name' => 'World Expansion Card',
         'description' => 'Allows you to easily add a little preview card of any world extension object of your choice.',
         'requires' => '\App\Services\WorldExpansion\WorldExpansionService'

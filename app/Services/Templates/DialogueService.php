@@ -11,7 +11,7 @@ class DialogueService extends Service
     | Dialogue Service
     |--------------------------------------------------------------------------
     |
-    | Handles the editing and usage of Dialogue type items.
+    | Handles the editing and usage of Dialogue type templates.
     |
     */
 
