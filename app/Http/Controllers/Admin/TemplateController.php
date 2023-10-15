@@ -133,7 +133,12 @@ class TemplateController extends Controller
         $tags = Config::get('lorekeeper.template_tags');
         $result = [];
         foreach($tags as $tag => $tagData)
-            $result[$tag] = $tagData['name'];
+            if(isset($tagData['requires'])){
+                if(class_exists($tagData['requires']))
+                    $result[$tag] = $tagData['name'];
+            } else {
+                $result[$tag] = $tagData['name'];
+            }
 
         return $result;
     }
