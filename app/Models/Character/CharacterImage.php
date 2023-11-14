@@ -48,8 +48,8 @@ class CharacterImage extends Model
     public static $createRules = [
         'species_id' => 'required',
         'rarity_id' => 'required',
-        'image' => 'required|mimes:jpeg,gif,png|max:20000',
-        'thumbnail' => 'nullable|mimes:jpeg,gif,png|max:20000',
+        'image' => 'required|mimes:jpeg,jpg,gif,png|max:20000',
+        'thumbnail' => 'nullable|mimes:jpeg,jpg,gif,png|max:20000',
     ];
 
     /**
