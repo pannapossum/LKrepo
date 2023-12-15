@@ -81,7 +81,7 @@ class PrizeCodeController extends Controller
         
         $data = $request->only([
             'name','code', 'description', 'image', 'remove_image', 'start_at', 'end_at', 'is_active',
-            'rewardable_type', 'rewardable_id', 'reward_quantity', 'use_limit' 
+            'rewardable_type', 'rewardable_id', 'reward_quantity', 'use_limit','regenerate'
         ]);
         if($id && $service->updatePrize(PrizeCode::find($id), $data, Auth::user())) {
             flash('Prize updated successfully.')->success();

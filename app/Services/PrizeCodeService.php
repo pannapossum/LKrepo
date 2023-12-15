@@ -1,10 +1,9 @@
 <?php namespace App\Services;
 
+use App\Models\PrizeCode;
+use App\Services\Service;
 use DB;
 use Illuminate\Support\Arr;
-use App\Services\Service;
-
-use App\Models\PrizeCode;
 
 class PrizeCodeService extends Service
 {
@@ -15,13 +14,12 @@ class PrizeCodeService extends Service
     |
     | Handles creation and usage of site registration prize codes.
     |
-    */
+     */
 
-    
     /**
      * Creates a new prize.
      *
-     * @param  array                  $data 
+     * @param  array                  $data
      * @param  \App\Models\User\User  $user
      * @return bool|\App\Models\PrizeCode
      */
@@ -29,30 +27,42 @@ class PrizeCodeService extends Service
     {
         DB::beginTransaction();
 
-        try { 
-             
-            if(!isset($data['rewardable_type'])) throw new \Exception('Please add at least one reward to the prize.');
+        try {
+
+            if (!isset($data['rewardable_type'])) {
+                throw new \Exception('Please add at least one reward to the prize.');
+            }
 
             $data = $this->populateData($data);
 
-            foreach($data['rewardable_type'] as $key => $type)
-            {
-                if(!$type) throw new \Exception("Reward type is required.");
-                if(!$data['rewardable_id'][$key]) throw new \Exception("Reward is required.");
-                if(!$data['reward_quantity'][$key] || $data['reward_quantity'][$key] < 1) throw new \Exception("Quantity is required and must be an integer greater than 0.");
+            foreach ($data['rewardable_type'] as $key => $type) {
+                if (!$type) {
+                    throw new \Exception("Reward type is required.");
+                }
+
+                if (!$data['rewardable_id'][$key]) {
+                    throw new \Exception("Reward is required.");
+                }
+
+                if (!$data['reward_quantity'][$key] || $data['reward_quantity'][$key] < 1) {
+                    throw new \Exception("Quantity is required and must be an integer greater than 0.");
+                }
+
             }
 
-            if(!isset($data['use_limit'])) $data['use_limit'] = 0;
+            if (!isset($data['use_limit'])) {
+                $data['use_limit'] = 0;
+            }
 
-            $prize = PrizeCode::create(Arr::only($data, ['name','start_at', 'end_at', 'is_active', 'use_limit']));
+            $prize = PrizeCode::create(Arr::only($data, ['name', 'start_at', 'end_at', 'is_active', 'use_limit']));
             $prize->code = randomString(15);
-            $prize->user_id = $user->id; 
+            $prize->user_id = $user->id;
 
             $prize->output = $this->populateRewards($data);
             $prize->save();
 
             return $this->commitReturn($prize);
-        } catch(\Exception $e) { 
+        } catch (\Exception $e) {
             $this->setError('error', $e->getMessage());
         }
         return $this->rollbackReturn(false);
@@ -62,7 +72,7 @@ class PrizeCodeService extends Service
      * Updates an prize.
      *
      * @param  \App\Models\PrizeCode  $prize
-     * @param  array                  $data 
+     * @param  array                  $data
      * @param  \App\Models\User\User  $user
      * @return bool|\App\Models\rizeCode
      */
@@ -72,26 +82,46 @@ class PrizeCodeService extends Service
 
         try {
             // More specific validation
-            if(PrizeCode::where('name', $data['name'])->where('id', '!=', $prize->id)->exists()) throw new \Exception("The name has already been taken.");  
-            if(!isset($data['rewardable_type'])) throw new \Exception('Please add at least one reward to the prize.'); 
+            if (PrizeCode::where('name', $data['name'])->where('id', '!=', $prize->id)->exists()) {
+                throw new \Exception("The name has already been taken.");
+            }
+
+            if (!isset($data['rewardable_type'])) {
+                throw new \Exception('Please add at least one reward to the prize.');
+            }
 
             $data = $this->populateData($data);
 
-            foreach($data['rewardable_type'] as $key => $type)
-            {
-                if(!$type) throw new \Exception("Reward type is required.");
-                if(!$data['rewardable_id'][$key]) throw new \Exception("Reward is required.");
-                if(!$data['reward_quantity'][$key] || $data['reward_quantity'][$key] < 1) throw new \Exception("Quantity is required and must be an integer greater than 0.");
+            foreach ($data['rewardable_type'] as $key => $type) {
+                if (!$type) {
+                    throw new \Exception("Reward type is required.");
+                }
+
+                if (!$data['rewardable_id'][$key]) {
+                    throw new \Exception("Reward is required.");
+                }
+
+                if (!$data['reward_quantity'][$key] || $data['reward_quantity'][$key] < 1) {
+                    throw new \Exception("Quantity is required and must be an integer greater than 0.");
+                }
+
             }
 
-            if(!isset($data['use_limit'])) $data['use_limit'] = 0;
+            if (!isset($data['use_limit'])) {
+                $data['use_limit'] = 0;
+            }
+
+            //if wanting to re generate code
+            if (isset($data['regenerate'])) {
+                $data['code'] = randomString(15);
+            }
 
             $prize->update(Arr::only($data, ['name', 'code', 'start_at', 'end_at', 'is_active', 'use_limit']));
             $prize->output = $this->populateRewards($data);
-            $prize->save(); 
+            $prize->save();
 
             return $this->commitReturn($prize);
-        } catch(\Exception $e) { 
+        } catch (\Exception $e) {
             $this->setError('error', $e->getMessage());
         }
         return $this->rollbackReturn(false);
@@ -101,17 +131,16 @@ class PrizeCodeService extends Service
      * Creates the assets json from rewards
      *
      * @param  \App\Models\PrizeCode   $prize
-     * @param  array                       $data 
+     * @param  array                       $data
      */
     private function populateRewards($data)
     {
-        if(isset($data['rewardable_type'])) {
-            // The data will be stored as an asset table, json_encode()d. 
+        if (isset($data['rewardable_type'])) {
+            // The data will be stored as an asset table, json_encode()d.
             // First build the asset table, then prepare it for storage.
             $assets = createAssetsArray();
-            foreach($data['rewardable_type'] as $key => $r) {
-                switch ($r)
-                {
+            foreach ($data['rewardable_type'] as $key => $r) {
+                switch ($r) {
                     case 'Item':
                         $type = 'App\Models\Item\Item';
                         break;
@@ -128,7 +157,7 @@ class PrizeCodeService extends Service
                 $asset = $type::find($data['rewardable_id'][$key]);
                 addAsset($assets, $asset, $data['reward_quantity'][$key]);
             }
-            
+
             return getDataReadyAssets($assets);
         }
         return null;
@@ -137,13 +166,15 @@ class PrizeCodeService extends Service
     /**
      * Processes user input for creating/updating an prize.
      *
-     * @param  array                  $data 
+     * @param  array                  $data
      * @param  \App\Models\PrizeCode  $prize
      * @return array
      */
     private function populateData($data, $prize = null)
     {
-        if(!isset($data['is_active'])) $data['is_active'] = 0;
+        if (!isset($data['is_active'])) {
+            $data['is_active'] = 0;
+        }
 
         return $data;
     }
