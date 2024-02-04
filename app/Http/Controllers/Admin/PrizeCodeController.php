@@ -113,14 +113,29 @@ class PrizeCodeController extends Controller
         return redirect()->back();
     }
 
+     /**
+     * Gets the delete prize key modal
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getDeletePrize($id) {
+        $prize = PrizeCode::find($id);
+
+        return view('admin.prize_codes._delete_prize', [
+            'prize' => $prize,
+        ]);
+    }
+
     /**
-     * Generates a new prize key.
+     * delete key
      *
      * @param  App\Services\PrizeCodeService  $service
      * @param  int                             $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postDeleteKey(PrizeCodeService $service, $id)
+    public function postDeletePrize(PrizeCodeService $service, $id)
     {
         $prize = PrizeCode::find($id);
         if($prize && $service->deletePrize($prize)) {
@@ -129,6 +144,7 @@ class PrizeCodeController extends Controller
         else {
             foreach($service->errors()->getMessages()['error'] as $error) flash($error)->error();
         }
-        return redirect()->back();
+        return redirect()->to('admin/prizecodes');
     }
+    
 }

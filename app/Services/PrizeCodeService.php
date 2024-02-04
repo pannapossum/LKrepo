@@ -179,4 +179,27 @@ class PrizeCodeService extends Service
         return $data;
     }
 
+    /**
+     * Deletes a code
+     *
+     *
+     * @return bool
+     */
+    public function deletePrize($prize) {
+        DB::beginTransaction();
+
+        try {
+
+            DB::table('user_prize_logs')->where('prize_id', $prize->id)->delete();
+
+            $prize->delete();
+
+            return $this->commitReturn(true);
+        } catch (\Exception $e) {
+            $this->setError('error', $e->getMessage());
+        }
+
+        return $this->rollbackReturn(false);
+    }
+
 }
