@@ -10,5 +10,7 @@ use Config;
 use App\Models\TemplateTag;
 
 class PureService extends Service {
-
+  public function getTemplate($tag) {
+    return $tag->data['pure_html'];
+  }
 }
