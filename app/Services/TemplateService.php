@@ -61,6 +61,12 @@ class TemplateService extends Service
 
         try {
             if(TemplateTag::where('name', $data['name'])->where('id', '!=', $template->id)->exists()) throw new \Exception("This template name already exists.");
+
+            //remove null values from all arrays as we do not want to save them
+            $data['data'] = $this->walkRecursiveRemove($data['data'], function ($value) {
+                return $value === null || $value === '';
+            });
+
             $template->update($data);
 
             return $this->commitReturn($template);
@@ -70,5 +76,38 @@ class TemplateService extends Service
         return $this->rollbackReturn(false);
     }
 
+    private function walkRecursiveRemove (array $array, callable $callback) { 
+        foreach ($array as $k => $v) { 
+            if (is_array($v)) { 
+                $array[$k] = $this->walkRecursiveRemove($v, $callback); 
+            } else { 
+                if ($callback($v, $k)) { 
+                    unset($array[$k]); 
+                } 
+            } 
+        } 
     
+        return $array; 
+    } 
+
+    /**
+     * Deletes a template tag.
+     *
+     * @param  \App\Models\SitePage  $news
+     * @return bool
+     */
+    public function deleteTemplate($template)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $template->delete();
+
+            return $this->commitReturn(true);
+        } catch(\Exception $e) { 
+            $this->setError('error', $e->getMessage());
+        }
+        return $this->rollbackReturn(false);
+    }
 }
