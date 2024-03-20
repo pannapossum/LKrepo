@@ -305,7 +305,7 @@ class UserService extends Service
     }
 
      /**
-     * Changes if the user will be invisible or not.
+     * Change character like settings
      */
     public function updateAllowCharacterLikes($data, $user)
     {
