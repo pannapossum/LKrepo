@@ -27,6 +27,7 @@ use App\Models\Item\ItemLog;
 use App\Models\Submission\Submission;
 use App\Models\Submission\SubmissionCharacter;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Settings;
 
 class Character extends Model
 {
@@ -206,6 +207,14 @@ class Character extends Model
     public function items()
     {
         return $this->belongsToMany('App\Models\Item\Item', 'character_items')->withPivot('count', 'data', 'updated_at', 'id')->whereNull('character_items.deleted_at');
+    }
+
+    /**
+     * Get all of the likes that are not NULL
+     */
+    public function characterLikes() 
+    {
+        return $this->hasMany('App\Models\Character\CharacterLike')->where('character_id', $this->id)->whereNotNull('liked_at');
     }
 
     /**********************************************************************************************
@@ -545,5 +554,17 @@ class Character extends Model
                     'character_name' => $this->fullName
                 ]);
         }
+    }
+
+     /**
+     * Return like count based on site setting
+     *
+     * Will always return the accurate count even if settings are flip flopped around (i am paranoid.)
+     */
+    public function getLikeTotalAttribute() {
+        //can like only once
+        if(!Settings::get('character_likes')) {
+            return $this->characterLikes->count();
+        }else return $this->profile->like_count;
     }
 }

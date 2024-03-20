@@ -24,6 +24,7 @@ use App\Models\Gallery\GallerySubmission;
 use App\Models\Gallery\GalleryCollaborator;
 use App\Models\Gallery\GalleryFavorite;
 use App\Traits\Commenter;
+use Settings;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -187,6 +188,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function bookmarks() 
     {
         return $this->hasMany('App\Models\Character\CharacterBookmark')->where('user_id', $this->id);
+    }
+
+    /**
+     * Get all of the user's character like data.
+     */
+    public function characterLikes() 
+    {
+        return $this->hasMany('App\Models\Character\CharacterLike')->where('user_id', $this->id);
     }
 
     /**********************************************************************************************
@@ -564,5 +573,60 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasBookmarked($character)
     {
         return CharacterBookmark::where('user_id', $this->id)->where('character_id', $character->id)->first();
+    }
+
+    /**
+     * Check the user's like for the character
+     */
+    public function checkLike($character) {
+
+        //check for the like and create if nonexistent
+        
+        $like = $this->characterLikes()->where('character_id', $character->id)->first();
+
+        if (!$like) {
+            $createdlike = $this->characterLikes()->create([
+                'user_id'       => $this->id,
+                'character_id'     => $character->id,
+            ]);
+            $this->refresh();
+            $createdlike->refresh();
+        }
+    }
+
+    /**
+     * Check if user can like the character again
+     */
+    public function canLike($character) {
+
+        //triplecheck that a like exists even though we spammed this check literally everywhere.
+        $like = $this->characterLikes()->where('character_id', $character->id)->first();
+
+        if (!$like) {
+            $createdlike = $this->characterLikes()->create([
+                'user_id'       => $this->id,
+                'character_id'     => $character->id,
+            ]);
+            $this->refresh();
+            $createdlike->refresh();
+        }
+
+        //user disabled likes on their characters
+        if(!$character->user->settings->allow_character_likes) return false;
+
+        //already liked
+        if ($like->liked_at) {
+
+            //can only like once
+            if(!Settings::get('character_likes')) {
+                return false;
+            }
+            //can like daily
+            if ($like->liked_at->isToday()) {
+                return false;
+            }
+        }
+        //else you can :)
+        return true;
     }
 }

@@ -303,4 +303,15 @@ class UserService extends Service
         }
         return $this->rollbackReturn(false);
     }
+
+     /**
+     * Changes if the user will be invisible or not.
+     */
+    public function updateAllowCharacterLikes($data, $user)
+    {
+        $user->settings->allow_character_likes = $data;
+        $user->settings->save();
+
+        return true;
+    }
 }

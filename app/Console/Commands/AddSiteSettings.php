@@ -103,6 +103,8 @@ class AddSiteSettings extends Command
 
         $this->addSiteSetting('group_currency', 1, 'ID of the group currency to award from gallery submissions (if enabled).');
 
+        $this->addSiteSetting('character_likes', 1, '0: Characters can be liked only once, 1: Characters can be liked daily.');
+
         $this->line("\nSite settings up to date!");
 
     }
