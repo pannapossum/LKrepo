@@ -25,7 +25,7 @@ class AddCharacterLikes extends Migration
         });
 
         Schema::table('user_settings', function (Blueprint $table) {
-            $table->boolean('allow_character_likes')->default(false);
+            $table->boolean('allow_character_likes')->default(true);
         });
     }
 
