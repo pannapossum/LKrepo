@@ -16,6 +16,7 @@ use App\Models\User\UserItem;
 use App\Services\DesignUpdateManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Character\CharacterTransformation as Transformation;
 
 class DesignController extends Controller {
     /**
@@ -226,6 +227,7 @@ class DesignController extends Controller {
             'subtypes'  => ['0' => 'No Subtype'] + Subtype::visible()->where('species_id', '=', $r->species_id)->orderBy('sort', 'DESC')->pluck('name', 'id')->toArray(),
             'rarities'  => ['0' => 'Select Rarity'] + Rarity::orderBy('sort', 'DESC')->pluck('name', 'id')->toArray(),
             'features'  => Feature::getDropdownItems(),
+            'transformations' => ['0' => 'Select '.ucfirst(__('transformations.transformation'))] + Transformation::orderBy('sort', 'DESC')->pluck('name', 'id')->toArray(),
         ]);
     }
 
@@ -363,4 +365,20 @@ class DesignController extends Controller {
 
         return redirect()->to('designs');
     }
+
+    /**
+     * Shows the edit image transformation portion of the modal.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getFeaturesTransformation(Request $request) {
+        $id = $request->input('id');
+
+        return view('character.design._features_transformation', [
+            'transformations' => ['0' => 'Select '.ucfirst(__('transformations.transformation'))] + Transformation::orderBy('sort', 'DESC')->pluck('name', 'id')->toArray(),
+            'transformation'  => $id,
+        ]);
+    }
+
+
 }
