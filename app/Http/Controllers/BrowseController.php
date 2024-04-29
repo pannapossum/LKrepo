@@ -545,7 +545,10 @@ class BrowseController extends Controller
         
         $imageQuery = CharacterImage::images(Auth::check() ? Auth::user() : null)->with('features')->with('rarity')->with('species')->with('features');
 
-        
+        $query->whereIn('id', $imageQuery->pluck('character_id')->toArray());
+
+        $randomcharacter = $query->visible()->get()->random(1)->first() ?? null;
+
         if($request->get('name')) $query->where(function($query) use ($request) {
             $query->where('characters.name', 'LIKE', '%' . $request->get('name') . '%')->orWhere('characters.slug', 'LIKE', '%' . $request->get('name') . '%');
         });
@@ -556,9 +559,7 @@ class BrowseController extends Controller
                 $query->where('user_id', $owner->id);
             });
         }
-
-        $query->whereIn('id', $imageQuery->pluck('character_id')->toArray());
-
+        
         if(!Auth::check() || !Auth::user()->hasPower('manage_characters')) $query->visible();
     
         switch($request->get('sort')) {
@@ -572,16 +573,7 @@ class BrowseController extends Controller
                 $sort = 'sortByDesc';
         }
 
-        //get random character
-        $randomquery = Character::with('user.rank')->with('image.features')->with('rarity')->with('image.species')->myo(0)->where(function($query) {
-            //only display characters whose users allow likes
-            $query = $query->whereRelation('user.settings', 'allow_character_likes', 1);
-        });
-        $randomimageQuery = CharacterImage::images(Auth::check() ? Auth::user() : null)->with('features')->with('rarity')->with('species')->with('features');
 
-        $randomquery->whereIn('id', $imageQuery->pluck('character_id')->toArray())->visible();
-
-        $randomcharacter = $randomquery->get()->random(1)->first() ?? null;
 
         return view('browse.character_likes_leaderboard', [
             'isMyo' => false,
