@@ -531,6 +531,9 @@ class BrowseController extends Controller
     public function getLikesLeaderboard(Request $request)
     {
         //this is a mess. please don't look. 
+
+        //abort if logged out to reduce strain
+        if(!Auth::check()) abort(404);
         
         //check if enabled, if not, there's no point to fetch anything lol
         if (!Settings::get('character_likes_leaderboard_enable')) {
