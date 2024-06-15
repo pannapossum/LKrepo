@@ -209,6 +209,7 @@
                         {!! Form::checkbox('is_valid', 1, $image->is_valid, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
                         {!! Form::label('is_valid', 'Is Valid', ['class' => 'form-check-label ml-3']) !!} {!! add_help('If this is turned off, the image will still be visible, but displayed with a note that the image is not a valid reference.') !!}
                     </div>
+                    @include('widgets._character_label', ['isStaff' => true])
                     <div class="text-right">
                         {!! Form::submit('Edit', ['class' => 'btn btn-primary']) !!}
                     </div>

@@ -305,7 +305,7 @@ class Character extends Model {
      * @return string
      */
     public function getDisplayNameAttribute() {
-        return '<a href="'.$this->url.'" class="display-character">'.$this->fullName.'</a>';
+        return '<a href="'.$this->url.'" class="display-character">'. $this->label . $this->fullName .'</a>';
     }
 
     /**
@@ -351,6 +351,20 @@ class Character extends Model {
      */
     public function getLogTypeAttribute() {
         return 'Character';
+    }
+
+    /**
+     * Gets if the character has a label or not and a tooltip describing the label.
+     * 
+     * @return string
+     */
+    public function getLabelAttribute(): string {
+        $label = $this->image->label;
+        if (!$label) {
+            return '';
+        }
+
+        return '<i class="fas fa-biohazard text-info mr-1" data-toggle="tooltip" title="'. config('lorekeeper.character_labels')[$label['label']] . '<br /> Description: ' . $label['label_information'].'"></i>';
     }
 
     /**********************************************************************************************
