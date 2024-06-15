@@ -364,7 +364,8 @@ class Character extends Model {
             return '';
         }
 
-        return '<i class="fas fa-biohazard text-info mr-1" data-toggle="tooltip" title="'. config('lorekeeper.character_labels')[$label['label']] . '<br /> Description: ' . $label['label_information'].'"></i>';
+        return '<i class="fas fa-star text-info mr-1" data-toggle="tooltip" title="'. config('lorekeeper.character_labels')[$label['label']] . 
+            ($label['label_information'] ? '<br /> Description: ' . $label['label_information'].'"></i>' : '"></i>');
     }
 
     /**********************************************************************************************

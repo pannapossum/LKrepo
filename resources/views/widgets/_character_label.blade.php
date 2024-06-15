@@ -34,7 +34,7 @@
             For IP inspired, describe the media, ex. "Shinji Ikari from Neon Genesis Evangelion".
             <br />For other labels, describe the character or link to the character's page.
         </p>
-        {!! Form::label('Label Information') !!}
+        {!! Form::label('Label Information (Optional)') !!}
         {!! Form::text('label_information', $image ? $image->label['label_information'] : null, ['class' => 'form-control', 'placeholder' => 'Enter Label Information (ex. link to character, or describe media inspiration)']) !!}
     </div>
 </div>
@@ -52,13 +52,10 @@
 
     $(".label-select").change(function() {
         var label = $('.label-select').val();
-        console.log(label);
         if (label) {
             $('#label-info').removeClass('hide');
-            $('#label-info input').prop('required', true);
         } else {
             $('#label-info').addClass('hide');
-            $('#label-info input').prop('required', false);
         }
     });
 </script>
