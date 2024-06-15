@@ -143,7 +143,7 @@
         </div>
     </div>
 
-    @include('widgets._character_label', ['isStaff' => true, 'canEdit' => true, 'image' => $character->image])
+    @include('widgets._character_label', ['isStaff' => true, 'image' => $character->image])
 
     <div class="text-right">
         {!! Form::submit('Create Image', ['class' => 'btn btn-primary']) !!}

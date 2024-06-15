@@ -5,7 +5,6 @@
     }
 
     $image = (isset($image) && $image?->label) ? $image : null;
-    $canEdit = $isStaff ? true : $canEdit;
 @endphp
 
 <hr />
