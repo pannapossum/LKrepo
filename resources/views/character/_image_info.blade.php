@@ -50,6 +50,7 @@
                             <a href="{{ $image->transformation->url }}">
                                 {!! $image->transformation->displayName !!}
                             </a>
+                            @if($image->transformation_description) ({{ $image->transformation_description }}) @endif
                         </div>
                     </div>
                 @endif
