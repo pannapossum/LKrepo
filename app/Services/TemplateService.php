@@ -62,6 +62,9 @@ class TemplateService extends Service
         try {
             if(TemplateTag::where('name', $data['name'])->where('id', '!=', $template->id)->exists()) throw new \Exception("This template name already exists.");
 
+            // Let the individual service parse anything it might need to
+            if (method_exists($template->service, 'parseData')) $data = $template->service->parseData($data);
+
             //remove null values from all arrays as we do not want to save them
             $data['data'] = $this->walkRecursiveRemove($data['data'], function ($value) {
                 return $value === null || $value === '';

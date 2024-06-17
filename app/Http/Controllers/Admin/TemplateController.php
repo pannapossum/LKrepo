@@ -74,9 +74,7 @@ class TemplateController extends Controller
     public function postCreateEditTemplate(Request $request, TemplateService $service, $id = null)
     {
         $id ? $request->validate(TemplateTag::$updateRules) : $request->validate(TemplateTag::$createRules);
-        $data = $request->only([
-            'name', 'tag', 'data'
-        ]);
+        $data = $request->all();
         if($id && $service->updateTemplate(TemplateTag::find($id), $data)) {
             flash('Template updated successfully.')->success();
         }
