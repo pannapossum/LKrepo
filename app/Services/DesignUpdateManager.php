@@ -19,6 +19,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use App\Models\Character\CharacterTransformation as Transformation;
 
 class DesignUpdateManager extends Service {
     /*
@@ -64,6 +65,7 @@ class DesignUpdateManager extends Service {
                 'rarity_id'     => $character->image->rarity_id,
                 'species_id'    => $character->image->species_id,
                 'subtype_id'    => $character->image->subtype_id,
+                'transformation_id' => $character->image->transformation_id
             ];
 
             $request = CharacterDesignUpdate::create($data);
@@ -368,6 +370,11 @@ class DesignUpdateManager extends Service {
             } else {
                 $subtype = null;
             }
+
+            if(isset($data['transformation_id']) && $data['transformation_id'])
+                $transformation = ($request->character->is_myo_slot && $request->character->image->transformation_id) ? $request->character->image->transformation : Transformation::find($data['transformation_id']);
+            else $transformation = null;
+
             if (!$rarity) {
                 throw new \Exception('Invalid rarity selected.');
             }
@@ -407,6 +414,8 @@ class DesignUpdateManager extends Service {
             $request->species_id = $species->id;
             $request->rarity_id = $rarity->id;
             $request->subtype_id = $subtype ? $subtype->id : null;
+            $request->transformation_id = $transformation ? $transformation->id : null;
+            
             $request->has_features = 1;
             $request->save();
 
@@ -566,6 +575,7 @@ class DesignUpdateManager extends Service {
                 'y1'            => $request->y1,
                 'species_id'    => $request->species_id,
                 'subtype_id'    => ($request->character->is_myo_slot && isset($request->character->image->subtype_id)) ? $request->character->image->subtype_id : $request->subtype_id,
+                'transformation_id' => ($request->character->is_myo_slot && isset($request->character->image->transformation_id)) ? $request->character->image->transformation_id : $request->transformation_id,
                 'rarity_id'     => $request->rarity_id,
                 'sort'          => 0,
             ]);
@@ -962,6 +972,63 @@ class DesignUpdateManager extends Service {
             $this->setError('error', $e->getMessage());
         }
 
+        return $this->rollbackReturn(false);
+    }
+
+    /**
+     * Creates a character design update request (or a MYO design approval request). but with a specific image lol. so people can edit transformation images more easily
+     *
+     * @param  \App\Models\Character\Character  $character
+     * @param  \App\Models\User\User            $user
+     * @return  \App\Models\Character\CharacterDesignUpdate|bool
+     */
+    public function CreateDesignUpdateRequestSpecificImage($character, $user, $image)
+    {
+        DB::beginTransaction();
+
+        try {
+            if($character->user_id != $user->id) throw new \Exception("You do not own this character.");
+            if(CharacterDesignUpdate::where('character_id', $character->id)->active()->exists()) throw new \Exception("This ".($character->is_myo_slot ? 'MYO slot' : 'character')." already has an existing request. Please update that one, or delete it before creating a new one.");
+            if(!$character->isAvailable) throw new \Exception("This ".($character->is_myo_slot ? 'MYO slot' : 'character')." is currently in an open trade or transfer. Please cancel the trade or transfer before creating a design update.");
+
+            $data = [
+                'user_id' => $user->id,
+                'character_id' => $character->id,
+                'status' => 'Draft',
+                'hash' => randomString(10),
+                'fullsize_hash' => randomString(15),
+                'update_type' => $character->is_myo_slot ? 'MYO' : 'Character',
+
+                // Set some data based on the character's existing stats
+                'rarity_id' => $image->rarity_id,
+                'species_id' => $image->species_id,
+                'subtype_id' => $image->subtype_id,
+                'transformation_id' => $image->transformation_id
+            ];
+
+            $request = CharacterDesignUpdate::create($data);
+
+            // If the character is not a MYO slot, make a copy of the previous image's traits
+            // as presumably, we will not want to make major modifications to them.
+            // This is skipped for MYO slots as it complicates things later on - we don't want
+            // users to edit compulsory traits, so we'll only add them when the design is approved.
+            if(!$character->is_myo_slot)
+            {
+                foreach($image->features as $feature)
+                {
+                    $request->features()->create([
+                        'character_image_id' => $request->id,
+                        'character_type' => 'Update',
+                        'feature_id' => $feature->feature_id,
+                        'data' => $feature->data
+                    ]);
+                }
+            }
+
+            return $this->commitReturn($request);
+        } catch(\Exception $e) {
+            $this->setError('error', $e->getMessage());
+        }
         return $this->rollbackReturn(false);
     }
 }

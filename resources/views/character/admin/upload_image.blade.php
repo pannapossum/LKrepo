@@ -112,6 +112,11 @@
         {!! Form::select('species_id', $specieses, old('species_id') ?: $character->image->species_id, ['class' => 'form-control', 'id' => 'species']) !!}
     </div>
 
+    <div class="form-group" id="transformations">
+        {!! Form::label(ucfirst(__('transformations.transformation')).' (Optional)') !!}
+        {!! Form::select('transformation_id', $transformations, null, ['class' => 'form-control', 'id' => 'transformation']) !!}
+    </div>
+
     <div class="form-group" id="subtypes">
         {!! Form::label('Subtype (Optional)') !!}
         {!! Form::select('subtype_id', $subtypes, old('subtype_id') ?: $character->image->subtype_id, ['class' => 'form-control', 'id' => 'subtype']) !!}
