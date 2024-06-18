@@ -654,6 +654,8 @@ class CharacterManager extends Service {
             $image->subtype_id = $data['subtype_id'] ?: null;
             $image->rarity_id = $data['rarity_id'];
             $image->transformation_id = $data['transformation_id'] ?: null;
+            $image->transformation_info = $data['transformation_info'] ?: null;
+            $image->transformation_description = $data['transformation_description'] ?: null;
             $image->save();
 
             $new = [];
@@ -662,6 +664,8 @@ class CharacterManager extends Service {
             $new['subtype'] = $image->subtype_id ? $image->subtype->displayName : null;
             $new['rarity'] = $image->rarity_id ? $image->rarity->displayName : null;
             $new['transformation'] = $image->transformation_id ? $image->transformation->displayName : null;
+            $new['transformation_info'] = $image->transformation_info ? $image->transformation_info : null;
+            $new['transformation_description'] = $image->transformation_description ? $image->transformation_description : null;
 
             // Character also keeps track of these features
             $image->character->rarity_id = $image->rarity_id;
@@ -1855,6 +1859,8 @@ class CharacterManager extends Service {
                 $data['subtype_id'] = isset($data['subtype_id']) && $data['subtype_id'] ? $data['subtype_id'] : null;
                 $data['rarity_id'] = isset($data['rarity_id']) && $data['rarity_id'] ? $data['rarity_id'] : null;
                 $data['transformation_id'] = isset($data['transformation_id']) && $data['transformation_id'] ? $data['transformation_id'] : null;
+                $data['transformation_info'] = isset($data['transformation_info']) && $data['transformation_info'] ? $data['transformation_info'] : null;
+                $data['transformation_description'] = isset($data['transformation_description']) && $data['transformation_description'] ? $data['transformation_description'] : null;
             }
 
             $characterData = Arr::only($data, [
@@ -1908,6 +1914,8 @@ class CharacterManager extends Service {
                 $data['subtype_id'] = isset($data['subtype_id']) && $data['subtype_id'] ? $data['subtype_id'] : null;
                 $data['rarity_id'] = (isset($data['rarity_id']) && $data['rarity_id']) ? $data['rarity_id'] : null;
                 $data['transformation_id'] = isset($data['transformation_id']) && $data['transformation_id'] ? $data['transformation_id'] : null;
+                $data['transformation_info'] = isset($data['transformation_info']) && $data['transformation_info'] ? $data['transformation_info'] : null;
+                $data['transformation_description'] = isset($data['transformation_description']) && $data['transformation_description'] ? $data['transformation_description'] : null;
 
                 // Use default images for MYO slots without an image provided
                 if (!isset($data['image'])) {
@@ -1921,7 +1929,7 @@ class CharacterManager extends Service {
             }
             $imageData = Arr::only($data, [
                 'species_id', 'subtype_id', 'rarity_id', 'use_cropper',
-                'x0', 'x1', 'y0', 'y1', 'transformation_id',
+                'x0', 'x1', 'y0', 'y1', 'transformation_id','transformation_info','transformation_description'
             ]);
             $imageData['use_cropper'] = isset($data['use_cropper']);
             $imageData['description'] = $data['image_description'] ?? null;

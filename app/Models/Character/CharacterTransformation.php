@@ -11,7 +11,7 @@ class CharacterTransformation extends Model {
      * @var array
      */
     protected $fillable = [
-        'name', 'has_image', 'sort', 'description', 'parsed_description',
+        'name', 'has_image', 'sort', 'description', 'parsed_description','species_id'
     ];
 
     /**
@@ -44,6 +44,20 @@ class CharacterTransformation extends Model {
         'description' => 'nullable',
         'image'       => 'mimes:png',
     ];
+
+    /**********************************************************************************************
+    
+        RELATIONS
+
+    **********************************************************************************************/
+    
+    /**
+     * Get the species the transformation belongs to.
+     */
+    public function species() 
+    {
+        return $this->belongsTo('App\Models\Species\Species', 'species_id');
+    }
 
     /**********************************************************************************************
         ACCESSORS

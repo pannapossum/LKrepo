@@ -645,7 +645,7 @@ class CharacterController extends Controller {
         if(!Auth::check() || $this->character->user_id != Auth::user()->id) abort(404);
         $image = CharacterImage::where('character_id', $this->character->id)->where('id', $id)->first();
 
-        if($request = $service->createDesignUpdateRequestSpecificImage($this->character, Auth::user(), $image)) {
+        if($request = $service->createDesignUpdateRequest($this->character, Auth::user(), $image, true)) {
             flash('Successfully created new design update request draft.')->success();
             return redirect()->to($request->url);
         }

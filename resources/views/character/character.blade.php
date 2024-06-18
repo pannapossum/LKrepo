@@ -26,7 +26,7 @@
                 @foreach ($character->images()->where('is_valid', 1)->get() as $image)
                     <li class="nav-item">
                         <a class="nav-link form-data-button {{ $image->id == $character->image->id ? 'active' : '' }}" data-toggle="tab" role="tab" data-id="{{ $image->id }}">
-                            {{ $image->transformation_id ? $image->transformation->name : 'Main' }}
+                            {{ $image->transformation_id ? $image->transformation->name : 'Main' }} {{ $image->transformation_info ? ' ('.$image->transformation_info.')' : '' }}
                         </a>
                     </li>
                 @endforeach
