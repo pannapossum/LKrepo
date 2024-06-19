@@ -54,26 +54,6 @@ class PrizeCode extends Model
         RELATIONS
 
     **********************************************************************************************/
-    /**
-     * Scope a query to only include active codes.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', 1)
-            ->where(function($query) {
-                $query->whereNull('start_at')->orWhere('start_at', '<', Carbon::now())->orWhere(function($query) {
-                    $query->where('start_at', '>=', Carbon::now());
-                });
-        })->where(function($query) {
-                $query->whereNull('end_at')->orWhere('end_at', '>', Carbon::now())->orWhere(function($query) {
-                    $query->where('end_at', '<=', Carbon::now());
-                });
-        });
-
-    }
 
     /**
      * Get the user logs attached to this code.
@@ -135,6 +115,18 @@ class PrizeCode extends Model
     { 
         $usedcode = $this->redeemers->count();
         return $usedcode.'/'.($this->use_limit);
+    }
+
+     /**
+     * Check if the code is active or not.
+     *
+     * @return string
+     */
+    public function getActiveAttribute() {
+        if ($this->start_at && $this->end_at && $this->start_at->isPast() && $this->end_at->isFuture() || $this->start_at == null && $this->end_at && $this->end_at->isFuture() || $this->start_at && $this->start_at->isPast() && $this->end_at == null || $this->start_at == null && $this->end_at == null && $this->is_active) {
+            return true;
+        } 
+        return false;
     }
 
 }

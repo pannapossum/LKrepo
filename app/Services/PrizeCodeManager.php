@@ -27,6 +27,10 @@ Code Redeem
         DB::beginTransaction();
 
         try {
+            if (!isset($data['code'])) {
+                throw new \Exception('You must enter a code.');
+            }
+
             $user = Auth::user();
             // check if the input matches any existing codes
             $codesuccess = PrizeCode::where('code', 'LIKE BINARY', $data['code'])->first();
@@ -36,8 +40,8 @@ Code Redeem
             }
 
             // Check it's not expired
-            if (!$codesuccess->active()) {
-                throw new \Exception("This code is not active");
+            if (!$codesuccess->active) {
+                throw new \Exception('This code is expired.');
             }
 
             // or user already redeemed it
@@ -59,7 +63,6 @@ Code Redeem
                 'data' => 'Received rewards from ' . $codesuccess->name . ' code',
             ];
             //make log
-            $logging = $user;
             $logging = UserPrizeLog::create([
                 'user_id' => $user->id,
                 'prize_id' => $codesuccess->id,
