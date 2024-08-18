@@ -33,6 +33,12 @@
                     This version of this character is outdated, and only noted here for recordkeeping purposes. Do not use as an official reference.
                 </div>
             @endif
+            @if ($image->label)
+                <div class="alert alert-info">
+                    {{ config('lorekeeper.character_labels')[$image->label['label']] }}
+                    {!! $image->label['label_information'] ? '<br /> Description: ' . $image->label['label_information'] : null !!}
+                </div>
+            @endif
 
             {{-- Basic info --}}
             <div class="tab-pane fade show active" id="info-{{ $image->id }}">
