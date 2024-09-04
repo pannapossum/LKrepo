@@ -22,7 +22,7 @@
     @include('character._header', ['character' => $character])
 
     <div class="mb-3">
-        @if(!$character->is_myo_slot && $character->user->settings->character_comments || $character->is_myo_slot && $character->user->settings->myo_comments)
+        @if($allowComments)
             @comments(['model' => $character, 'perPage' => 5])
         @else
             <div class="alert alert-secondary text-center" role="alert">

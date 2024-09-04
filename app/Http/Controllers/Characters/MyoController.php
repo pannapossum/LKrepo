@@ -79,15 +79,30 @@ class MyoController extends Controller {
     }
     
     /**
-     * Shows an MYO slot's comments.
+     * Shows a MYO slot's comments.
      *
-     * @param int $id
+     * @param string $slug
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getCharacterComments($id) {
+    public function getCharacterComments($slug) {
+
+        $character = $this->character;
+
+        if ($character->comment_override == 1) {
+            // Enable comments regardless of global setting if override is set to 1
+            $allowComments = true;
+        } else if ($character->comment_override == 2) {
+            // Disable comments regardless of global setting if override is set to 2
+            $allowComments = false;
+        } else {
+            // Use global user setting if no override is set
+            $allowComments = $character->user->settings->myo_comments;
+        }
+
         return view('character.comments', [
-            'character' => $this->character,
+            'character'             => $character,
+            'allowComments'         => $allowComments
         ]);
     }
 
@@ -133,7 +148,7 @@ class MyoController extends Controller {
             abort(404);
         }
 
-        if ($service->updateCharacterProfile($request->only(['text', 'is_gift_art_allowed', 'is_trading', 'alert_user']), $this->character, Auth::user(), !$isOwner)) {
+        if ($service->updateCharacterProfile($request->only(['text', 'is_gift_art_allowed', 'is_trading', 'alert_user', 'comment_override']), $this->character, Auth::user(), !$isOwner)) {
             flash('Profile edited successfully.')->success();
         } else {
             foreach ($service->errors()->getMessages()['error'] as $error) {
