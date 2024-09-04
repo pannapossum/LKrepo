@@ -135,6 +135,20 @@ class CharacterController extends Controller {
             'extPrevAndNextBtnsUrl' => '/profile',
         ]);
     }
+    
+    /**
+     * Shows a character's comments.
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getCharacterComments($slug) {
+        return view('character.comments', [
+            'character'             => $this->character,
+            'extPrevAndNextBtnsUrl' => '/comments',
+        ]);
+    }
 
     /**
      * Shows a character's edit profile page.

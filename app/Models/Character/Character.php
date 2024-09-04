@@ -17,9 +17,11 @@ use App\Models\User\User;
 use App\Models\User\UserCharacterLog;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Commentable;
 
 class Character extends Model {
     use SoftDeletes;
+    use Commentable;
 
     /**
      * The attributes that are mass assignable.

@@ -183,6 +183,25 @@ class AccountController extends Controller {
 
         return redirect()->back();
     }
+    
+    /**
+     * Changes user character/myo slot comment setting.
+     *
+     * @param App\Services\UserService $service
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postCharacterComments(Request $request, UserService $service) {
+        if ($service->updateCharacterCommentsSetting($request->only(['character_comments', 'myo_comments']), Auth::user())) {
+            flash('Setting updated successfully.')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
 
     /**
      * Enables the user's two factor auth.

@@ -95,6 +95,24 @@
     </div>
 
     <div class="card p-3 mb-2">
+        <h3>Character Comments</h3>
+        <p>If enabled, others will be able to comment on your characters and/or MYO slots.</p>
+        {!! Form::open(['url' => 'account/character-comments']) !!}
+        <div class="form-group">
+            {!! Form::checkbox('character_comments', 1, Auth::user()->settings->character_comments, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
+            {!! Form::label('character_comments', 'Characters', ['class' => 'form-check-label ml-3']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::checkbox('myo_comments', 1, Auth::user()->settings->myo_comments, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
+            {!! Form::label('myo_comments', 'MYO Slots', ['class' => 'form-check-label ml-3']) !!}
+        </div>
+        <div class="text-right">
+            {!! Form::submit('Edit', ['class' => 'btn btn-primary']) !!}
+        </div>
+        {!! Form::close() !!}
+    </div>
+
+    <div class="card p-3 mb-2">
         <h3>Email Address</h3>
         <p>Changing your email address will require you to re-verify your email address.</p>
         {!! Form::open(['url' => 'account/email']) !!}

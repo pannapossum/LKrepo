@@ -73,6 +73,7 @@ Route::get('/sublist/{key}', 'BrowseController@getSublist');
 Route::group(['prefix' => 'character', 'namespace' => 'Characters'], function () {
     Route::get('{slug}', 'CharacterController@getCharacter');
     Route::get('{slug}/profile', 'CharacterController@getCharacterProfile');
+    Route::get('{slug}/comments', 'CharacterController@getCharacterComments');
     Route::get('{slug}/bank', 'CharacterController@getCharacterBank');
     Route::get('{slug}/inventory', 'CharacterController@getCharacterInventory');
     Route::get('{slug}/images', 'CharacterController@getCharacterImages');
@@ -88,6 +89,7 @@ Route::group(['prefix' => 'character', 'namespace' => 'Characters'], function ()
 Route::group(['prefix' => 'myo', 'namespace' => 'Characters'], function () {
     Route::get('{id}', 'MyoController@getCharacter');
     Route::get('{id}/profile', 'MyoController@getCharacterProfile');
+    Route::get('{id}/comments', 'MyoController@getCharacterComments');
     Route::get('{id}/ownership', 'MyoController@getCharacterOwnershipLogs');
     Route::get('{id}/change-log', 'MyoController@getCharacterLogs');
 });

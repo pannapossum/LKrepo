@@ -11,6 +11,7 @@ use App\Models\Report\Report;
 use App\Models\Sales\Sales;
 use App\Models\SitePage;
 use App\Models\User\User;
+use App\Models\Character\Character;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -146,6 +147,12 @@ class CommentController extends Controller {
                 }
                 $post = (($type != 'User-User') ? 'your gallery submission\'s staff comments' : 'your gallery submission');
                 $link = (($type != 'User-User') ? $submission->queueUrl.'/#comment-'.$comment->getKey() : $submission->url.'/#comment-'.$comment->getKey());
+                break;
+            case 'App\Models\Character\Character':
+                $character = Character::find($comment->commentable_id);
+                $recipient = $character->user;
+                $post = $character->displayName;
+                $link = $character->url.'/#comment-'.$comment->getKey();
                 break;
             default:
                 throw new \Exception('Comment type not supported.');

@@ -77,6 +77,19 @@ class MyoController extends Controller {
             'character' => $this->character,
         ]);
     }
+    
+    /**
+     * Shows an MYO slot's comments.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getCharacterComments($id) {
+        return view('character.comments', [
+            'character' => $this->character,
+        ]);
+    }
 
     /**
      * Shows an MYO slot's edit profile page.
