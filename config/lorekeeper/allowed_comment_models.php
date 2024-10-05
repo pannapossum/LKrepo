@@ -9,6 +9,6 @@ return [
     'App\Models\Report\Report',
     'App\Models\SitePage',
     'App\Models\Gallery\GallerySubmission',
-    'App\Models\Character\Character'
+    'App\Models\Character\Character',
 
 ];

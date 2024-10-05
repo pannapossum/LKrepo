@@ -15,13 +15,13 @@ use App\Models\Submission\SubmissionCharacter;
 use App\Models\Trade;
 use App\Models\User\User;
 use App\Models\User\UserCharacterLog;
+use App\Traits\Commentable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\Commentable;
 
 class Character extends Model {
-    use SoftDeletes;
     use Commentable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -34,7 +34,7 @@ class Character extends Model {
         'is_sellable', 'is_tradeable', 'is_giftable',
         'sale_value', 'transferrable_at', 'is_visible',
         'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'sort',
-        'is_myo_slot', 'name', 'trade_id', 'owner_url', 'comment_override'
+        'is_myo_slot', 'name', 'trade_id', 'owner_url', 'comment_override',
     ];
 
     /**

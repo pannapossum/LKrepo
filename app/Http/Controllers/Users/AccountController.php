@@ -183,7 +183,7 @@ class AccountController extends Controller {
 
         return redirect()->back();
     }
-    
+
     /**
      * Changes user character/myo slot comment setting.
      *

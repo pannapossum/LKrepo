@@ -77,7 +77,7 @@ class MyoController extends Controller {
             'character' => $this->character,
         ]);
     }
-    
+
     /**
      * Shows a MYO slot's comments.
      *
@@ -86,13 +86,12 @@ class MyoController extends Controller {
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function getCharacterComments($slug) {
-
         $character = $this->character;
 
         if ($character->comment_override == 1) {
             // Enable comments regardless of global setting if override is set to 1
             $allowComments = true;
-        } else if ($character->comment_override == 2) {
+        } elseif ($character->comment_override == 2) {
             // Disable comments regardless of global setting if override is set to 2
             $allowComments = false;
         } else {
@@ -102,7 +101,7 @@ class MyoController extends Controller {
 
         return view('character.comments', [
             'character'             => $character,
-            'allowComments'         => $allowComments
+            'allowComments'         => $allowComments,
         ]);
     }
 

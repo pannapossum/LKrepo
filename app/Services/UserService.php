@@ -215,7 +215,6 @@ class UserService extends Service {
         return $this->rollbackReturn(false);
     }
 
-    
     /**
      * Updates user's character comments setting.
      *
