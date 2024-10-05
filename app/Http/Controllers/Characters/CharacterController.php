@@ -154,8 +154,8 @@ class CharacterController extends Controller {
             // Disable comments regardless of global setting if override is set to 2
             $allowComments = false;
         } else {
-            // Use global user setting if no override is set
-            $allowComments = $character->user->settings->character_comments;
+            // Use global user setting if no override is set and user has an account on the site
+            $allowComments = isset($character->user->id) ? $character->user->settings->character_comments : false;
         }
 
         return view('character.comments', [
