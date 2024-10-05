@@ -22,7 +22,7 @@
     @include('character._header', ['character' => $character])
 
     <div class="mb-3">
-        @if($allowComments)
+        @if ($allowComments)
             @comments(['model' => $character, 'perPage' => 5])
         @else
             <div class="alert alert-secondary text-center" role="alert">
@@ -30,5 +30,4 @@
             </div>
         @endif
     </div>
-
 @endsection
