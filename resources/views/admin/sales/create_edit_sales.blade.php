@@ -34,6 +34,18 @@
     </div>
 
     <div class="form-group">
+        {!! Form::label('Focal Image (Optional)') !!} {!! add_help('If uploaded, this image will be displayed as the main image at the top of the sales post. Handy if you want to display a full batch.') !!}
+        <div>{!! Form::file('image') !!}</div>
+        <div class="text-muted">Accepted file types: PNG</div>
+        @if ($sales->has_image)
+            <div class="form-check">
+                {!! Form::checkbox('remove_image', 1, false, ['class' => 'form-check-input']) !!}
+                {!! Form::label('remove_image', 'Remove current image', ['class' => 'form-check-label']) !!}
+            </div>
+        @endif
+    </div>
+
+    <div class="form-group">
         {!! Form::label('Post Content') !!}
         {!! Form::textarea('text', $sales->text, ['class' => 'form-control wysiwyg']) !!}
     </div>
