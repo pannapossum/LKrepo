@@ -219,7 +219,7 @@ class Sales extends Model implements Feedable {
      * @return string
      */
     public function getImageFileNameAttribute() {
-        return $this->id . '-image.png';
+        return $this->id.'-image.png';
     }
 
     /**
@@ -232,7 +232,7 @@ class Sales extends Model implements Feedable {
             return null;
         }
 
-        return asset($this->imageDirectory . '/' . $this->imageFileName);
+        return asset($this->imageDirectory.'/'.$this->imageFileName);
     }
 
     /**
