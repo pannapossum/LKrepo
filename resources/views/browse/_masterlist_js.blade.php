@@ -58,7 +58,7 @@
         });
 
         function updateTitleSearch() {
-            if(customTitleSearch) $customTitleOptions.removeClass('hide');
+            if (customTitleSearch) $customTitleOptions.removeClass('hide');
             else $customTitleOptions.addClass('hide');
         }
 

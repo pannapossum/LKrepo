@@ -34,7 +34,7 @@
         });
 
         function updateTitleEntry($show) {
-            if($show) $titleOptions.removeClass('hide');
+            if ($show) $titleOptions.removeClass('hide');
             else $titleOptions.addClass('hide');
         }
     });

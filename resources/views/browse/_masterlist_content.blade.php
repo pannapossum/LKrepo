@@ -173,8 +173,12 @@
                     </div>
                     <div class="small">
                         {!! $character->image->species_id ? $character->image->species->displayName : 'No Species' !!} ・ {!! $character->image->rarity_id ? $character->image->rarity->displayName : 'No Rarity' !!}
-                        @if(Settings::get('character_title_display') && $character->image->hasTitle)
-                            ・ {!! $character->image->title_id ? $character->image->title->displayNameShort : (isset($character->image->title_data['short']) ? nl2br(htmlentities($character->image->title_data['short'])) : nl2br(htmlentities($character->image->title_data['full']))) !!}
+                        @if (Settings::get('character_title_display') && $character->image->hasTitle)
+                            ・ {!! $character->image->title_id
+                                ? $character->image->title->displayNameShort
+                                : (isset($character->image->title_data['short'])
+                                    ? nl2br(htmlentities($character->image->title_data['short']))
+                                    : nl2br(htmlentities($character->image->title_data['full']))) !!}
                         @endif
                         ・ {!! $character->displayOwner !!}
                     </div>
@@ -191,7 +195,7 @@
                 <th>Name</th>
                 <th>Rarity</th>
                 <th>Species</th>
-                @if(Settings::get('character_title_display'))
+                @if (Settings::get('character_title_display'))
                     <th>Title</th>
                 @endif
                 <th>Created</th>
@@ -208,8 +212,14 @@
                     </td>
                     <td>{!! $character->image->rarity_id ? $character->image->rarity->displayName : 'None' !!}</td>
                     <td>{!! $character->image->species_id ? $character->image->species->displayName : 'None' !!}</td>
-                    @if(Settings::get('character_title_display'))
-                        <td>{!! $character->image->hasTitle ? ($character->image->title_id ? $character->image->title->displayNameShort : (isset($character->image->title_data['short']) ? nl2br(htmlentities($character->image->title_data['short'])) : nl2br(htmlentities($character->image->title_data['full'])))) : 'None' !!}</td>
+                    @if (Settings::get('character_title_display'))
+                        <td>{!! $character->image->hasTitle
+                            ? ($character->image->title_id
+                                ? $character->image->title->displayNameShort
+                                : (isset($character->image->title_data['short'])
+                                    ? nl2br(htmlentities($character->image->title_data['short']))
+                                    : nl2br(htmlentities($character->image->title_data['full']))))
+                            : 'None' !!}</td>
                     @endif
                     <td>{!! format_date($character->created_at) !!}</td>
                 </tr>
