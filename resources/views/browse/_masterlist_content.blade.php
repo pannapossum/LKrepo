@@ -172,15 +172,7 @@
                         </a>
                     </div>
                     <div class="small">
-                        {!! $character->image->species_id ? $character->image->species->displayName : 'No Species' !!} ・ {!! $character->image->rarity_id ? $character->image->rarity->displayName : 'No Rarity' !!}
-                        @if (Settings::get('character_title_display') && $character->image->hasTitle)
-                            ・ {!! $character->image->title_id
-                                ? $character->image->title->displayNameShort
-                                : (isset($character->image->title_data['short'])
-                                    ? nl2br(htmlentities($character->image->title_data['short']))
-                                    : nl2br(htmlentities($character->image->title_data['full']))) !!}
-                        @endif
-                        ・ {!! $character->displayOwner !!}
+                        {!! $character->image->species_id ? $character->image->species->displayName : 'No Species' !!} ・ {!! $character->image->rarity_id ? $character->image->rarity->displayName : 'No Rarity' !!} ・ {!! $character->displayOwner !!}
                     </div>
                 </div>
             @endforeach
