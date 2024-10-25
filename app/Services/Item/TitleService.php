@@ -40,7 +40,7 @@ class TitleService extends Service {
      */
     public function getTagData($tag) {
         return [
-            'type'     => $tag->data['type'] ?? null,
+            'type'      => $tag->data['type'] ?? null,
             'title_ids' => $tag->data['title_ids'] ?? [],
         ];
     }
@@ -57,7 +57,6 @@ class TitleService extends Service {
         DB::beginTransaction();
 
         try {
-
             $tag->update(['data' => Arr::only($data, ['type', 'title_ids'])]);
 
             return $this->commitReturn(true);
@@ -94,9 +93,8 @@ class TitleService extends Service {
 
                 // Next, try to delete the title item. If successful, we can start distributing rewards.
                 if ((new InventoryManager)->debitStack($stack->user, 'Title Used', [
-                        'data' => 'Used on '.$character->displayName,
-                    ], $stack, $data['quantities'][$key])) {
-                    
+                    'data' => 'Used on '.$character->displayName,
+                ], $stack, $data['quantities'][$key])) {
                     $tag = $stack->item->tag('title');
                     if ($tag->getData()['type'] == 'choice') {
                         $title = CharacterTitle::find($data['title_id']);

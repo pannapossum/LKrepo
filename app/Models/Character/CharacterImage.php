@@ -276,7 +276,7 @@ class CharacterImage extends Model {
 
     /**
      * Displays all of the images titles.
-     * 
+     *
      * @return string
      */
     public function getDisplayTitlesAttribute() {

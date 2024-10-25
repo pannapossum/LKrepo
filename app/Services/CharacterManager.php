@@ -648,8 +648,8 @@ class CharacterManager extends Service {
                 if ($featureId) {
                     $feature = CharacterFeature::create([
                         'character_image_id' => $image->id,
-                        'feature_id' => $featureId,
-                        'data' => $data['feature_data'][$key]]);
+                        'feature_id'         => $featureId,
+                        'data'               => $data['feature_data'][$key]]);
                 }
             }
 
@@ -659,7 +659,7 @@ class CharacterManager extends Service {
                     CharacterImageTitle::create([
                         'character_image_id' => $image->id,
                         'title_id'           => $titleId == 'custom' ? null : $titleId,
-                        'data'               => isset($data['title_data'][$titleId]) ? $data['title_data'][$titleId] : null,
+                        'data'               => $data['title_data'][$titleId] ?? null,
                     ]);
                 }
             }
@@ -1955,7 +1955,7 @@ class CharacterManager extends Service {
                     CharacterImageTitle::create([
                         'character_image_id' => $image->id,
                         'title_id'           => $titleId == 'custom' ? null : $titleId,
-                        'data'               => isset($data['title_data'][$titleId]) ? $data['title_data'][$titleId] : null,
+                        'data'               => $data['title_data'][$titleId] ?? null,
                     ]);
                 }
             }

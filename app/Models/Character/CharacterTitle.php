@@ -185,6 +185,8 @@ class CharacterTitle extends Model {
 
     /**
      * Displays the title like a typing.
+     *
+     * @param mixed $data
      */
     public function displayTitle($data) {
         return '<a href="'.$this->idUrl.'"><span class="badge ml-1" style="color: white; background-color: '.$this->colour.';"'.

@@ -58,7 +58,7 @@ class CharacterImageTitle extends Model {
 
     /**
      * Displays the title.
-     * 
+     *
      * @return string
      */
     public function getDisplayTitleAttribute() {
