@@ -16,7 +16,10 @@
             oldForms = oldForms.map(function() {
                 let name = $(this).attr('name');
                 let val = $(this).val();
-                return {name: name, val: val};
+                return {
+                    name: name,
+                    val: val
+                };
             });
             $('#titleData').html('');
             if (titleEntries && titleEntries.length > 0 && titleEntries[0] != 0) {
@@ -28,7 +31,7 @@
                         newForm.removeClass('hide original');
                         newForm.find('.title-name').text(titleName);
                         var inputs = newForm.find('input');
-                        inputs.each(function() {  // Use .each() instead of .forEach()
+                        inputs.each(function() { // Use .each() instead of .forEach()
                             let oldName = $(this).attr('name');
                             $(this).attr('name', 'title_data[' + title + '][' + oldName + ']');
 

@@ -2,10 +2,15 @@
     <a class="card-title h5 collapse-title" data-toggle="collapse" href="#openSlotForm"> Add Title To Character</a>
     <div id="openSlotForm" class="collapse">
         {!! Form::hidden('tag', $tag->tag) !!}
-        
+
         <div class="form-group">
             {!! Form::label('character_id', 'Character:', ['class' => 'form-control-label']) !!}
-            {!! Form::select('character_id', Auth::user()->characters()->get()->pluck('fullName', 'id'), null, ['class' => 'form-control']) !!}
+            {!! Form::select(
+                'character_id',
+                Auth::user()->characters()->get()->pluck('fullName', 'id'),
+                null,
+                ['class' => 'form-control'],
+            ) !!}
         </div>
 
         @if ($tag->getData()['type'] == 'choice')

@@ -2,10 +2,15 @@
 
 <div class="form-group">
     {!! Form::label('type', 'Type:', ['class' => 'form-control-label']) !!}
-    {!! Form::select('type', [
-            'all'    => 'All Titles Applied',
+    {!! Form::select(
+        'type',
+        [
+            'all' => 'All Titles Applied',
             'choice' => 'User Chooses One',
-        ], $tag->getData()['type'], ['class' => 'form-control']) !!}
+        ],
+        $tag->getData()['type'],
+        ['class' => 'form-control'],
+    ) !!}
 </div>
 
 <div class="form-group">
