@@ -156,7 +156,7 @@ class CharacterTitle extends Model {
      * @return string
      */
     public function getIdUrlAttribute() {
-        return url('world/character-titles/'.$this->id);
+        return url('world/character-titles/'.str_replace(' ', '-', $this->title));
     }
 
     /**

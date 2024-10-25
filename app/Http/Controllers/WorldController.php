@@ -413,6 +413,19 @@ class WorldController extends Controller {
     }
 
     /**
+     * Shows a single title's page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getCharacterTitle(Request $request, $name) {
+        $title = CharacterTitle::where('title', 'LIKE', str_replace('-', ' ', $name))->first();
+
+        return view('world.title_page', [
+            'title' => $title,
+        ]);
+    }
+
+    /**
      * Shows the character categories page.
      *
      * @return \Illuminate\Contracts\Support\Renderable
