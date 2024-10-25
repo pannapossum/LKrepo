@@ -3,6 +3,7 @@
 namespace App\Models\Character;
 
 use App\Models\Model;
+use App\Models\Rarity;
 
 class CharacterTitle extends Model {
     /**
@@ -11,7 +12,7 @@ class CharacterTitle extends Model {
      * @var array
      */
     protected $fillable = [
-        'title', 'short_title', 'sort', 'has_image', 'description', 'parsed_description', 'rarity_id',
+        'title', 'short_title', 'sort', 'has_image', 'description', 'parsed_description', 'rarity_id', 'colour',
     ];
 
     /**
@@ -55,12 +56,12 @@ class CharacterTitle extends Model {
      * Get the rarity of the character image.
      */
     public function rarity() {
-        return $this->belongsTo('App\Models\Rarity', 'rarity_id');
+        return $this->belongsTo(Rarity::class, 'rarity_id');
     }
 
     /**********************************************************************************************
 
-        ACCESSORS
+        ATTRIBUTES
 
     **********************************************************************************************/
 
@@ -88,7 +89,7 @@ class CharacterTitle extends Model {
      * @return string
      */
     public function getDisplayNameFullAttribute() {
-        return '<a href="'.$this->url.'" class="display-rarity">'.$this->title.'</a>'.($this->short_title ? ' ('.$this->short_title.')' : '').($this->rarity ? ' ('.$this->rarity->displayName.')' : '');
+        return '<a href="'.$this->url.'" style="color: '.$this->colour.' !important;" class="display-rarity">'.$this->title.'</a>'.($this->short_title ? ' ('.$this->short_title.')' : '').($this->rarity ? ' ('.$this->rarity->displayName.')' : '');
     }
 
     /**
@@ -150,11 +151,44 @@ class CharacterTitle extends Model {
     }
 
     /**
+     * Gets the URL of the model's encyclopedia page.
+     *
+     * @return string
+     */
+    public function getIdUrlAttribute() {
+        return url('world/character-titles/'.$this->id);
+    }
+
+    /**
      * Gets the URL for a masterlist search of characters of this rarity.
      *
      * @return string
      */
     public function getSearchCharactersUrlAttribute() {
         return url('masterlist?title_id='.$this->id);
+    }
+
+    /**
+     * Gets the currency's asset type for asset management.
+     *
+     * @return string
+     */
+    public function getAssetTypeAttribute() {
+        return 'character_title';
+    }
+
+    /**********************************************************************************************
+
+        OTHER FUNCTIONS
+
+    **********************************************************************************************/
+
+    /**
+     * Displays the title like a typing.
+     */
+    public function displayTitle($data) {
+        return '<a href="'.$this->idUrl.'"><span class="badge ml-1" style="color: white; background-color: '.$this->colour.';"'.
+            ($data['full'] ? 'data-toggle="tooltip" title="'.$this->title.'">'.$data['full'] : '>'.$this->title)
+        .'</span></a>';
     }
 }

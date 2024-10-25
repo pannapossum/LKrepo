@@ -568,10 +568,17 @@ class DesignUpdateManager extends Service {
                 'subtype_id'    => ($request->character->is_myo_slot && isset($request->character->image->subtype_id)) ? $request->character->image->subtype_id : $request->subtype_id,
                 'rarity_id'     => $request->rarity_id,
                 'sort'          => 0,
-                'title_id'      => isset($request->title_id) && $request->title_id ? $request->title_id : null,
-                'title_data'    => isset($request->title_data) ? json_encode($request->title_data) : null,
             ]);
 
+            // Add old image titles to the new image
+            $image->titles()->createMany($request->character->image->titles->map(function ($title) use ($image) {
+                return [
+                    'title_id' => $title->title_id,
+                    'character_image_id' => $image->id,
+                    'data' => $title->data,
+                ];
+            })->toArray());
+            
             // Shift the image credits over to the new image
             $request->designers()->update(['character_type' => 'Character', 'character_image_id' => $image->id]);
             $request->artists()->update(['character_type' => 'Character', 'character_image_id' => $image->id]);

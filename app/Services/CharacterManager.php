@@ -11,6 +11,7 @@ use App\Models\Character\CharacterCurrency;
 use App\Models\Character\CharacterDesignUpdate;
 use App\Models\Character\CharacterFeature;
 use App\Models\Character\CharacterImage;
+use App\Models\Character\CharacterImageTitle;
 use App\Models\Character\CharacterTransfer;
 use App\Models\Sales\SalesCharacter;
 use App\Models\Species\Subtype;
@@ -635,15 +636,31 @@ class CharacterManager extends Service {
             $old['species'] = $image->species_id ? $image->species->displayName : null;
             $old['subtype'] = $image->subtype_id ? $image->subtype->displayName : null;
             $old['rarity'] = $image->rarity_id ? $image->rarity->displayName : null;
-            $old['title'] = $image->title_id ? $image->title->displayName : ($image->title_data ? $image->title_data : null);
+            $old['titles'] = $image->titles->count() ? json_encode($image->titles) : null;
 
             // Clear old features
             $image->features()->delete();
+            // Clear old titles
+            $image->titles()->delete();
 
             // Attach features
             foreach ($data['feature_id'] as $key => $featureId) {
                 if ($featureId) {
-                    $feature = CharacterFeature::create(['character_image_id' => $image->id, 'feature_id' => $featureId, 'data' => $data['feature_data'][$key]]);
+                    $feature = CharacterFeature::create([
+                        'character_image_id' => $image->id,
+                        'feature_id' => $featureId,
+                        'data' => $data['feature_data'][$key]]);
+                }
+            }
+
+            // Attach titles
+            if (isset($data['title_ids'])) {
+                foreach ($data['title_ids'] as $key=>$titleId) {
+                    CharacterImageTitle::create([
+                        'character_image_id' => $image->id,
+                        'title_id'           => $titleId == 'custom' ? null : $titleId,
+                        'data'               => isset($data['title_data'][$titleId]) ? $data['title_data'][$titleId] : null,
+                    ]);
                 }
             }
 
@@ -651,8 +668,6 @@ class CharacterManager extends Service {
             $image->species_id = $data['species_id'];
             $image->subtype_id = $data['subtype_id'] ?: null;
             $image->rarity_id = $data['rarity_id'];
-            $image->title_id = isset($data['title_id']) && $data['title_id'] ? ($data['title_id'] != 'custom' ? $data['title_id'] : null) : null;
-            $image->title_data = $data['title_id'] && isset($data['title_data']) && isset($data['title_data']['full']) ? json_encode($data['title_data']) : null;
             $image->save();
 
             $new = [];
@@ -660,7 +675,7 @@ class CharacterManager extends Service {
             $new['species'] = $image->species_id ? $image->species->displayName : null;
             $new['subtype'] = $image->subtype_id ? $image->subtype->displayName : null;
             $new['rarity'] = $image->rarity_id ? $image->rarity->displayName : null;
-            $new['title'] = $image->title_id ? $image->title->displayName : ($image->title_data ? $image->title_data : null);
+            $new['title'] = $image->titles->count() ? json_encode($image->titles) : null;
 
             // Character also keeps track of these features
             $image->character->rarity_id = $image->rarity_id;
@@ -1918,7 +1933,7 @@ class CharacterManager extends Service {
             }
             $imageData = Arr::only($data, [
                 'species_id', 'subtype_id', 'rarity_id', 'use_cropper',
-                'x0', 'x1', 'y0', 'y1', 'title_id', 'title_data',
+                'x0', 'x1', 'y0', 'y1',
             ]);
             $imageData['use_cropper'] = isset($data['use_cropper']);
             $imageData['description'] = $data['image_description'] ?? null;
@@ -1931,10 +1946,19 @@ class CharacterManager extends Service {
             $imageData['extension'] = (config('lorekeeper.settings.masterlist_image_format') ?? ($data['extension'] ?? $data['image']->getClientOriginalExtension()));
             $imageData['fullsize_extension'] = (config('lorekeeper.settings.masterlist_fullsizes_format') ?? ($data['fullsize_extension'] ?? $data['image']->getClientOriginalExtension()));
             $imageData['character_id'] = $character->id;
-            $imageData['title_id'] = isset($data['title_id']) && $data['title_id'] ? ($data['title_id'] != 'custom' ? $data['title_id'] : null) : null;
-            $imageData['title_data'] = isset($data['title_data']) && $data['title_data'] && isset($data['title_data']['full']) ? json_encode($data['title_data']) : null;
 
             $image = CharacterImage::create($imageData);
+
+            // Titles
+            if (isset($data['title_ids'])) {
+                foreach ($data['title_ids'] as $key=>$titleId) {
+                    CharacterImageTitle::create([
+                        'character_image_id' => $image->id,
+                        'title_id'           => $titleId == 'custom' ? null : $titleId,
+                        'data'               => isset($data['title_data'][$titleId]) ? $data['title_data'][$titleId] : null,
+                    ]);
+                }
+            }
 
             // Check if entered url(s) have aliases associated with any on-site users
             $designers = array_filter($data['designer_url']); // filter null values

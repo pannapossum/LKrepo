@@ -21,9 +21,6 @@
 <div class="character-masterlist-categories">
     @if (!$character->is_myo_slot)
         {!! $character->category->displayName !!} ・ {!! $character->image->species->displayName !!} ・ {!! $character->image->rarity->displayName !!}
-        @if (Settings::get('character_title_display') && $character->image->hasTitle)
-            ・ "{!! $character->image->title_id ? $character->image->title->displayName : nl2br(htmlentities($character->image->title_data['full'])) !!}"
-        @endif
     @else
         MYO Slot @if ($character->image->species_id)
             ・ {!! $character->image->species->displayName !!}
@@ -62,6 +59,9 @@
         <i data-toggle="tooltip" title="Click to Copy the Character Code" id="copy" style="font-size: 14px; vertical-align: middle;" class="far fa-copy text-small"></i>
     @endif
 </h1>
+@if (Settings::get('character_title_display'))
+    <div class="h5">{!! $character->image->displayTitles !!}</div>
+@endif
 <div class="mb-3">
     Owned by {!! $character->displayOwner !!}
 </div>

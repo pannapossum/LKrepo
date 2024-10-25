@@ -231,13 +231,13 @@ class BrowseController extends Controller {
 
         if ($request->get('title_id')) {
             if ($request->get('title_id') == 'custom') {
-                $imageQuery->whereNull('title_id')->whereNotNull('title_data');
+                $imageQuery->whereRelation('titles', 'title_id', null)->whereNotNull('title_data');
             } else {
-                $imageQuery->where('title_id', $request->get('title_id'));
+                $imageQuery->whereRelation('titles', 'title_id', $request->get('title_id'));
             }
         }
         if ($request->get('title_id') == 'custom' && $request->get('title_data')) {
-            $imageQuery->where('title_data', 'LIKE', '%'.$request->get('title_data').'%');
+            $imageQuery->whereRelation('titles', 'title_data', 'LIKE', '%'.$request->get('title_data').'%');
         }
 
         if ($request->get('artist')) {

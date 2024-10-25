@@ -239,21 +239,17 @@
         </div>
 
         @if (!$isMyo)
-            <div class="row no-gutters">
+            <div class="row">
                 <div class="col-md-6 pr-2">
                     <div class="form-group">
-                        {!! Form::label('Character Title') !!}
-                        {!! Form::select('title_id', $titles, old('title_id'), ['class' => 'form-control', 'id' => 'charTitle']) !!}
+                        {!! Form::label('Character Titles') !!} {!! add_help('If a character has multiple titles, the title with the highest rarity / sort will display first.') !!}
+                        {!! Form::select('title_ids[]', $titles, old('title_ids'), ['class' => 'form-control', 'multiple', 'id' => 'charTitle', 'placeholder' => 'Select Titles']) !!}
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group" id="titleOptions">
-                        {!! Form::label('Extra Info/Custom Title (Optional)') !!} {!! add_help('If \'custom title\' is selected, this will be displayed as the title. If a preexisting title is selected, it will be displayed in addition to it. The short version is only used in the case of a custom title.') !!}
-                        <div class="d-flex">
-                            {!! Form::text('title_data[full]', null, ['class' => 'form-control mr-2', 'placeholder' => 'Full Title']) !!}
-                            @if (Settings::get('character_title_display'))
-                                {!! Form::text('title_data[short]', null, ['class' => 'form-control mr-2', 'placeholder' => 'Short Title (Optional)']) !!}
-                            @endif
+                    <div class="form-group hide" id="titleOptions">
+                        {!! Form::label('Extra Info / Custom Title (Optional)') !!} {!! add_help('If \'custom title\' is selected, this will be displayed as the title. If a preexisting title is selected, it will be displayed in addition to it. The short version is only used in the case of a custom title.') !!}
+                        <div id="titleData">
                         </div>
                     </div>
                 </div>
@@ -280,12 +276,21 @@
             {!! Form::submit('Create Character', ['class' => 'btn btn-primary']) !!}
         </div>
         {!! Form::close() !!}
+
+        <div class="form-group title-data original hide d-flex">
+            <div class="mb-0 title-name col-3"></div>
+            {!! Form::text('full', null, ['class' => 'form-control mr-2', 'placeholder' => 'Full Title']) !!}
+            @if (Settings::get('character_title_display'))
+                {!! Form::text('short', null, ['class' => 'form-control mr-2', 'placeholder' => 'Short Title (Optional)']) !!}
+            @endif
+        </div>
     @endif
 
 @endsection
 
 @section('scripts')
     @parent
+    @include('widgets._character_titles_js')
     @include('widgets._character_create_options_js')
     @include('widgets._image_upload_js')
     @include('widgets._datetimepicker_js')

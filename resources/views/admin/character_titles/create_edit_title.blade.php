@@ -22,23 +22,24 @@
     <h3>Basic Information</h3>
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                {!! Form::label('Title') !!}
-                {!! Form::text('title', $title->title, ['class' => 'form-control']) !!}
-            </div>
+        <div class="col-md-6 form-group">
+            {!! Form::label('Title') !!}
+            {!! Form::text('title', $title->title, ['class' => 'form-control']) !!}
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                {!! Form::label('Short Title (Optional)') !!} {!! add_help('Will be used in place of the full title for display alongside character name, etc. if set.') !!}
-                {!! Form::text('short_title', $title->short_title, ['class' => 'form-control']) !!}
-            </div>
+        <div class="col-md-6 form-group">
+            {!! Form::label('Short Title (Optional)') !!} {!! add_help('Will be used in place of the full title for display alongside character name, etc. if set.') !!}
+            {!! Form::text('short_title', $title->short_title, ['class' => 'form-control']) !!}
         </div>
     </div>
-
-    <div class="form-group">
-        {!! Form::label('Rarity (Optional)') !!}
-        {!! Form::select('rarity_id', $rarities, $title->rarity_id, ['class' => 'form-control', 'placeholder' => 'Select a Rarity']) !!}
+    <div class="row">
+        <div class="col-md-6 form-group">
+            {!! Form::label('Rarity (Optional)') !!}
+            {!! Form::select('rarity_id', $rarities, $title->rarity_id, ['class' => 'form-control', 'placeholder' => 'Select a Rarity']) !!}
+        </div>
+        <div class="col-md-6 form-group">
+            {!! Form::label('Colour (Optional)') !!}
+            {!! Form::color('colour', $title->colour, ['class' => 'form-control']) !!}
+        </div>
     </div>
 
     <div class="form-group">

@@ -24,4 +24,10 @@ return [
         'text_color'       => '#ffffff',
         'background_color' => '#1fd1a7',
     ],
+
+    'title' => [
+        'name'             => 'Character Title',
+        'text_color'       => '#ffffff',
+        'background_color' => '#f44336',
+    ],
 ];

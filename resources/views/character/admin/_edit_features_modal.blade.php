@@ -14,24 +14,26 @@
     {!! Form::select('rarity_id', $rarities, $image->rarity_id, ['class' => 'form-control']) !!}
 </div>
 
-<div class="row no-gutters">
+<div class="row">
     <div class="col-md-6 pr-2">
         <div class="form-group">
-            {!! Form::label('Character Title') !!}
-            {!! Form::select('title_id', $titles, $image->title_id ?? (isset($image->title_data) ? 'custom' : null), ['class' => 'form-control', 'id' => 'charTitle']) !!}
+            {!! Form::label('Character Titles') !!} {!! add_help('If a character has multiple titles, the title with the highest rarity / sort will display first.') !!}
+            {!! Form::select('title_ids[]', $titles, $image->titleIds, ['class' => 'form-control', 'multiple', 'id' => 'charTitle', 'placeholder' => 'Select Titles']) !!}
         </div>
     </div>
     <div class="col-md-6">
-        <div class="form-group" id="titleOptions">
-            {!! Form::label('Extra Info/Custom Title (Optional)') !!} {!! add_help(
-                'If \'custom title\' is selected, this will be displayed as the title. If a preexisting title is selected, it will be displayed in addition to it.' .
-                    (Settings::get('character_title_display') ? ' The short version is only used in the case of a custom title.' : ''),
-            ) !!}
-            <div class="d-flex">
-                {!! Form::text('title_data[full]', isset($image->title_data['full']) ? $image->title_data['full'] : null, ['class' => 'form-control mr-2', 'placeholder' => 'Full Title']) !!}
-                @if (Settings::get('character_title_display'))
-                    {!! Form::text('title_data[short]', isset($image->title_data['short']) ? $image->title_data['short'] : null, ['class' => 'form-control mr-2', 'placeholder' => 'Short Title (Optional)']) !!}
-                @endif
+        <div class="form-group hide" id="titleOptions">
+            {!! Form::label('Extra Info / Custom Title (Optional)') !!} {!! add_help('If \'custom title\' is selected, this will be displayed as the title. If a preexisting title is selected, it will be displayed in addition to it. The short version is only used in the case of a custom title.') !!}
+            <div id="titleData">
+                @foreach ($image->titles as $title)
+                    <div class="d-flex mb-2">
+                        <div class="mb-0 title-name col-3 col-md-3 col-sm-12">{{ $title->title?->title ?? 'Custom Title' }}</div>
+                        {!! Form::text('title_data[' . ($title->title_id ?? 'custom') . '][full]', isset($title->data['full']) ? $title->data['full'] : null, ['class' => 'form-control mr-2', 'placeholder' => 'Full Title']) !!}
+                        @if (Settings::get('character_title_display') && $title->title_id == 'custom')
+                            {!! Form::text('title_data[' . ($title->title_id ?? 'custom') . '][short]', isset($title->data['short']) ? $title->data['short'] : null, ['class' => 'form-control mr-2', 'placeholder' => 'Short Title (Optional)']) !!}
+                        @endif
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -61,6 +63,15 @@
 </div>
 {!! Form::close() !!}
 
+<div class="form-group title-data original hide d-flex">
+    <div class="mb-0 title-name col-4 col-md-4 col-sm-12"></div>
+    {!! Form::text('full', null, ['class' => 'form-control mr-2', 'placeholder' => 'Full Title']) !!}
+    @if (Settings::get('character_title_display'))
+        {!! Form::text('short', null, ['class' => 'form-control mr-2', 'placeholder' => 'Short Title (Optional)']) !!}
+    @endif
+</div>
+
+@include('widgets._character_titles_js')
 <script>
     $(document).ready(function() {
         var $title = $('#charTitle');

@@ -22,7 +22,7 @@ class CharacterImage extends Model {
         'extension', 'use_cropper', 'hash', 'fullsize_hash', 'fullsize_extension', 'sort',
         'x0', 'x1', 'y0', 'y1',
         'description', 'parsed_description',
-        'is_valid', 'title_id', 'title_data',
+        'is_valid',
     ];
 
     /**
@@ -110,8 +110,8 @@ class CharacterImage extends Model {
     /**
      * Get the title of the character image.
      */
-    public function title() {
-        return $this->belongsTo('App\Models\Character\CharacterTitle', 'title_id');
+    public function titles() {
+        return $this->hasMany(CharacterImageTitle::class, 'character_image_id');
     }
 
     /**
@@ -275,24 +275,31 @@ class CharacterImage extends Model {
     }
 
     /**
-     * Checks if the image has title info associated with it.
-     *
+     * Displays all of the images titles.
+     * 
      * @return string
      */
-    public function getHasTitleAttribute() {
-        if (isset($this->title_id) || isset($this->title_data)) {
-            return true;
-        } else {
-            return false;
+    public function getDisplayTitlesAttribute() {
+        $titles = [];
+        foreach ($this->titles as $title) {
+            $titles[] = $title->displayTitle;
         }
+
+        return implode(' ', $titles);
     }
 
     /**
-     * Get the title data attribute as an associative array.
+     * Gets the id array of titles for select forms.
      *
-     * @return array
+     * @return string
      */
-    public function getTitleDataAttribute() {
-        return json_decode($this->attributes['title_data'], true);
+    public function getTitleIdsAttribute() {
+        $ids = [];
+        // we have to do foreach because null id means 'custom' title
+        foreach ($this->titles as $title) {
+            $ids[] = $title->title_id ?? 'custom';
+        }
+
+        return $ids;
     }
 }
