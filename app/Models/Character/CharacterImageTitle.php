@@ -66,6 +66,6 @@ class CharacterImageTitle extends Model {
             return $this->title->displayTitle($this->data);
         }
 
-        return '<div><span class="badge ml-1" style="color: white; background-color: #ddd;">'.(isset($this->data['short']) ? $this->data['short'] : $this->data['full']).'</span></div>';
+        return '<div><span class="badge ml-1" style="color: white; background-color: #ddd;">'.($this->data['short'] ?? $this->data['full']).'</span></div>';
     }
 }
