@@ -569,7 +569,7 @@ class DesignUpdateManager extends Service {
                 'rarity_id'     => $request->rarity_id,
                 'sort'          => 0,
                 'title_id'      => isset($request->title_id) && $request->title_id ? $request->title_id : null,
-                'title_data'    => isset($request->title_data) ? json_encode($request->title_data) : null
+                'title_data'    => isset($request->title_data) ? json_encode($request->title_data) : null,
             ]);
 
             // Shift the image credits over to the new image

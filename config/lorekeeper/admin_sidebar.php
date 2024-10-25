@@ -176,7 +176,7 @@ return [
             ],
             [
                 'name' => 'Character Titles',
-                'url' => 'admin/data/character-titles'
+                'url'  => 'admin/data/character-titles',
             ],
             [
                 'name' => 'Shops',

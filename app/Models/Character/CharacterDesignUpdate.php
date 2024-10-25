@@ -114,8 +114,7 @@ class CharacterDesignUpdate extends Model {
     /**
      * Get the title of the design update.
      */
-    public function title()
-    {
+    public function title() {
         return $this->belongsTo('App\Models\Character\CharacterTitle', 'title_id');
     }
 
@@ -354,8 +353,7 @@ class CharacterDesignUpdate extends Model {
      *
      * @return array
      */
-    public function getTitleDataAttribute()
-    {
+    public function getTitleDataAttribute() {
         return json_decode($this->attributes['title_data'], true);
     }
 

@@ -6,8 +6,8 @@ use App\Facades\Settings;
 use App\Models\Character\Character;
 use App\Models\Character\CharacterCategory;
 use App\Models\Character\CharacterImage;
-use App\Models\Character\Sublist;
 use App\Models\Character\CharacterTitle;
+use App\Models\Character\Sublist;
 use App\Models\Feature\Feature;
 use App\Models\Rank\Rank;
 use App\Models\Rarity;
@@ -229,12 +229,15 @@ class BrowseController extends Controller {
             }
         }
 
-        if($request->get('title_id')) {
-            if($request->get('title_id') == 'custom') $imageQuery->whereNull('title_id')->whereNotNull('title_data');
-            else $imageQuery->where('title_id', $request->get('title_id'));
+        if ($request->get('title_id')) {
+            if ($request->get('title_id') == 'custom') {
+                $imageQuery->whereNull('title_id')->whereNotNull('title_data');
+            } else {
+                $imageQuery->where('title_id', $request->get('title_id'));
+            }
         }
-        if($request->get('title_id') == 'custom' && $request->get('title_data')) {
-            $imageQuery->where('title_data','LIKE', '%'.$request->get('title_data').'%');
+        if ($request->get('title_id') == 'custom' && $request->get('title_data')) {
+            $imageQuery->where('title_data', 'LIKE', '%'.$request->get('title_data').'%');
         }
 
         if ($request->get('artist')) {
@@ -329,7 +332,7 @@ class BrowseController extends Controller {
             'features'    => Feature::getDropdownItems(),
             'sublists'    => Sublist::orderBy('sort', 'DESC')->get(),
             'userOptions' => User::query()->orderBy('name')->pluck('name', 'id')->toArray(),
-            'titles' => [0 => 'Any Title', 'custom' => 'Custom Title'] + CharacterTitle::orderBy('character_titles.sort', 'DESC')->pluck('title', 'id')->toArray(),
+            'titles'      => [0 => 'Any Title', 'custom' => 'Custom Title'] + CharacterTitle::orderBy('character_titles.sort', 'DESC')->pluck('title', 'id')->toArray(),
         ]);
     }
 
@@ -579,12 +582,15 @@ class BrowseController extends Controller {
             }
         }
 
-        if($request->get('title_id')) {
-            if($request->get('title_id') == 'custom') $imageQuery->whereNull('title_id')->whereNotNull('title_data');
-            else $imageQuery->where('title_id', $request->get('title_id'));
+        if ($request->get('title_id')) {
+            if ($request->get('title_id') == 'custom') {
+                $imageQuery->whereNull('title_id')->whereNotNull('title_data');
+            } else {
+                $imageQuery->where('title_id', $request->get('title_id'));
+            }
         }
-        if($request->get('title_id') == 'custom' && $request->get('title_data')) {
-            $imageQuery->where('title_data','LIKE', '%'.$request->get('title_data').'%');
+        if ($request->get('title_id') == 'custom' && $request->get('title_data')) {
+            $imageQuery->where('title_data', 'LIKE', '%'.$request->get('title_data').'%');
         }
 
         if ($request->get('artist')) {
@@ -662,7 +668,7 @@ class BrowseController extends Controller {
             'sublist'     => $sublist,
             'sublists'    => Sublist::orderBy('sort', 'DESC')->get(),
             'userOptions' => User::query()->orderBy('name')->pluck('name', 'id')->toArray(),
-            'titles' => [0 => 'Any Title', 'custom' => 'Custom Title'] + CharacterTitle::orderBy('character_titles.sort', 'DESC')->pluck('title', 'id')->toArray(),
+            'titles'      => [0 => 'Any Title', 'custom' => 'Custom Title'] + CharacterTitle::orderBy('character_titles.sort', 'DESC')->pluck('title', 'id')->toArray(),
         ]);
     }
 }
