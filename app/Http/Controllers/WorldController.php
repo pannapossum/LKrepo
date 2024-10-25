@@ -415,6 +415,8 @@ class WorldController extends Controller {
     /**
      * Shows a single title's page.
      *
+     * @param mixed $name
+     *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function getCharacterTitle(Request $request, $name) {
