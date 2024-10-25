@@ -285,7 +285,7 @@ class CharacterImage extends Model {
             $titles[] = $title->displayTitle;
         }
 
-        return implode(' ', $titles);
+        return '<div class="row">'.implode('', $titles).'</div>';
     }
 
     /**

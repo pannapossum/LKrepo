@@ -190,7 +190,7 @@ class CharacterTitle extends Model {
      */
     public function displayTitle($data) {
         return '<a href="'.$this->idUrl.'"><span class="badge ml-1" style="color: white; background-color: '.$this->colour.';"'.
-            ($data['full'] ? 'data-toggle="tooltip" title="'.$this->title.'">'.$data['full'] : '>'.$this->title)
+            ($data['full'] ? ' data-toggle="tooltip" title="'.$this->title.'">'.$data['full'] : '>'.$this->title)
         .'</span></a>';
     }
 }
