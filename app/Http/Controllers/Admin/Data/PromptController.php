@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use App\Models\Recipe\Recipe;
-
 use App\Http\Controllers\Controller;
 use App\Models\Prompt\Prompt;
 use App\Models\Prompt\PromptCategory;

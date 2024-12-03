@@ -10,6 +10,7 @@ use App\Models\Item\Item;
 use App\Models\Loot\LootTable;
 use App\Models\Prompt\Prompt;
 use App\Models\Raffle\Raffle;
+use App\Models\Recipe\Recipe;
 use App\Models\Submission\Submission;
 use App\Models\Submission\SubmissionCharacter;
 use App\Models\User\User;
@@ -17,7 +18,6 @@ use App\Models\User\UserItem;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use App\Models\Recipe\Recipe;
 
 class SubmissionManager extends Service {
     /*
@@ -628,9 +628,13 @@ class SubmissionManager extends Service {
                             $reward = Raffle::find($data['rewardable_id'][$key]);
                             break;
                         case 'Recipe':
-                            if (!$isStaff) break;
+                            if (!$isStaff) {
+                                break;
+                            }
                             $reward = Recipe::find($data['rewardable_id'][$key]);
-                            if(!$reward->needs_unlocking) throw new \Exception("Invalid recipe selected.");
+                            if (!$reward->needs_unlocking) {
+                                throw new \Exception('Invalid recipe selected.');
+                            }
                             break;
                     }
                     if (!$reward) {

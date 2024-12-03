@@ -161,7 +161,7 @@ Route::group(['prefix' => 'data', 'namespace' => 'Data', 'middleware' => 'power:
     Route::get('items/tag/{id}', 'ItemController@getAddItemTag');
     Route::post('items/tag/{id}', 'ItemController@postAddItemTag');
 
-    # RECIPES
+    // RECIPES
     Route::get('recipes', 'RecipeController@getRecipeIndex');
     Route::get('recipes/create', 'RecipeController@getCreateRecipe');
     Route::get('recipes/edit/{id}', 'RecipeController@getEditRecipe');
@@ -169,7 +169,7 @@ Route::group(['prefix' => 'data', 'namespace' => 'Data', 'middleware' => 'power:
     Route::post('recipes/create', 'RecipeController@postCreateEditRecipe');
     Route::post('recipes/edit/{id?}', 'RecipeController@postCreateEditRecipe');
     Route::post('recipes/delete/{id}', 'RecipeController@postDeleteRecipe');
-    
+
     // SHOPS
     Route::get('shops', 'ShopController@getIndex');
     Route::get('shops/create', 'ShopController@getCreateShop');
@@ -297,7 +297,7 @@ Route::group(['prefix' => 'grants', 'namespace' => 'Users', 'middleware' => 'pow
 
     Route::get('items', 'GrantController@getItems');
     Route::post('items', 'GrantController@postItems');
-    
+
     Route::get('item-search', 'GrantController@getItemSearch');
 
     Route::get('recipes', 'GrantController@getRecipes');

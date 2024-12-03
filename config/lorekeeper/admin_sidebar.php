@@ -114,9 +114,9 @@ return [
             ],
             [
                 'name' => 'Recipe Grants',
-                'url' => 'admin/grants/recipes'
+                'url'  => 'admin/grants/recipes',
             ],
-        ]
+        ],
     ],
     'Masterlist' => [
         'power' => 'manage_characters',
@@ -200,9 +200,9 @@ return [
             ],
             [
                 'name' => 'Recipes',
-                'url' => 'admin/data/recipes'
+                'url'  => 'admin/data/recipes',
             ],
-        ]
+        ],
     ],
     'Raffles'    => [
         'power' => 'manage_raffles',
