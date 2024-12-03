@@ -13,6 +13,7 @@ use App\Models\Raffle\Raffle;
 use App\Models\Submission\Submission;
 use App\Models\User\User;
 use App\Models\User\UserItem;
+use App\Models\Recipe\Recipe;
 use App\Services\SubmissionManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

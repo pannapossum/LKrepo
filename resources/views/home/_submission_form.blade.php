@@ -73,9 +73,9 @@
             @endphp
         @endif
         @if ($isClaim)
-            @include('widgets._loot_select', ['loots' => $submission->id ? $submission->rewards : $loots ?? null, 'showLootTables' => false, 'showRaffles' => true])
+            @include('widgets._loot_select', ['loots' => $submission->id ? $submission->rewards : $loots ?? null, 'showLootTables' => false, 'showRaffles' => true, 'showRecipes' => true])
         @else
-            @include('widgets._loot_select', ['loots' => $submission->id ? $submission->rewards : $loots ?? null, 'showLootTables' => false, 'showRaffles' => false])
+            @include('widgets._loot_select', ['loots' => $submission->id ? $submission->rewards : $loots ?? null, 'showLootTables' => false, 'showRaffles' => false, 'showRecipes' => false])
         @endif
 
         @if (!$isClaim)

@@ -112,7 +112,11 @@ return [
                 'name' => 'Item Grants',
                 'url'  => 'admin/grants/items',
             ],
-        ],
+            [
+                'name' => 'Recipe Grants',
+                'url' => 'admin/grants/recipes'
+            ],
+        ]
     ],
     'Masterlist' => [
         'power' => 'manage_characters',
@@ -194,7 +198,11 @@ return [
                 'name' => 'Items',
                 'url'  => 'admin/data/items',
             ],
-        ],
+            [
+                'name' => 'Recipes',
+                'url' => 'admin/data/recipes'
+            ],
+        ]
     ],
     'Raffles'    => [
         'power' => 'manage_raffles',
