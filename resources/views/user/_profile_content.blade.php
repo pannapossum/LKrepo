@@ -4,7 +4,7 @@
 
 <div class="row pt-3 pb-3" style="border: 7px double white; border-radius: 10px;  background-image: url('{{ $user->profileImgUrl }}'); background-position: top middle; text-align: center; background-size: cover;">
     <div class="col-lg-12" style="text-shadow: 0 0 5px white ;">
-        <h1>  
+        <h1>
             <div style="position: relative; margin: auto;">
                 <img src="/images/avatars/{{ $user->avatar }}" style="width:125px; height:125px; border-radius:50%;" alt="{{ $user->name }}" />
             </div>
@@ -23,12 +23,12 @@
             <div class="col-md-2 text-center">
                 <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{!! format_date($user->created_at, false) !!}
             </div>
-            @if($user->birthdayDisplay && isset($user->birthday))
+            @if ($user->birthdayDisplay && isset($user->birthday))
                 <div class="col-md-2 text-center">
                     <i class="fas fa-birthday-cake"></i> {!! $user->birthdayDisplay !!}
                 </div>
             @endif
-            @if($user->settings->is_fto)
+            @if ($user->settings->is_fto)
                 <span class="badge badge-success" data-toggle="tooltip" title="This user has not owned any characters from this world before.">FTO</span>
             @endif
         </div>
