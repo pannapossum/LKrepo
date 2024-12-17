@@ -381,10 +381,10 @@ class User extends Authenticatable implements MustVerifyEmail {
     }
 
     /**
-    * Displays the user's profile image.
-    *
-    * @return string
-    */
+     * Displays the user's profile image.
+     *
+     * @return string
+     */
     public function getProfileImg() {
         return $this->profile_img;
     }
@@ -412,18 +412,17 @@ class User extends Authenticatable implements MustVerifyEmail {
     }
 
     /**
-    * Gets the display URL for a user's profile image, or the default profile image if they don't have one.
-    *
-    * @return url
-    */
+     * Gets the display URL for a user's profile image, or the default profile image if they don't have one.
+     *
+     * @return url
+     */
     public function getProfileImgUrlAttribute() {
         if ($this->profile_img == 'default.png') {
             return url('images/profileimgs/default.png');
         }
 
-        return url('images/profileimgs/' . $this->profile_img);
+        return url('images/profileimgs/'.$this->profile_img);
     }
-
 
     /**
      * Gets the user's log type for log creation.

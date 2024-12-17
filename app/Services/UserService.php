@@ -324,11 +324,11 @@ class UserService extends Service {
         return $this->rollbackReturn(false);
     }
 
-        /**
+    /**
      * Updates the user's profile image.
      *
-     * @param \App\Models\User\User         $user
-     * @param mixed                         $profile_img
+     * @param \App\Models\User\User $user
+     * @param mixed                 $profile_img
      *
      * @return bool
      */
@@ -376,7 +376,7 @@ class UserService extends Service {
                     }
                 }
             }
-            
+
             $user->profile_img = $filename;
             $user->save();
 

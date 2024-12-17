@@ -19,14 +19,14 @@
                 </div>
                 {!! Form::open(['url' => 'account/avatar', 'files' => true]) !!}
                 <div class="form-group row">
-                        {!! Form::label('avatar', 'Update', ['class' => 'col-md-2 col-form-label']) !!}
-                        <div class="col-md-10">
-                            {!! Form::file('avatar', ['class' => 'form-control']) !!}
-                        </div>
+                    {!! Form::label('avatar', 'Update', ['class' => 'col-md-2 col-form-label']) !!}
+                    <div class="col-md-10">
+                        {!! Form::file('avatar', ['class' => 'form-control']) !!}
                     </div>
-                    <div class="text-right">
-                        {!! Form::submit('Edit', ['class' => 'btn btn-primary']) !!}
-                    </div>
+                </div>
+                <div class="text-right">
+                    {!! Form::submit('Edit', ['class' => 'btn btn-primary']) !!}
+                </div>
                 {!! Form::close() !!}
             </div>
         </div>
@@ -46,7 +46,7 @@
                 {!! Form::close() !!}
             </div>
         </div>
-	</div>
+    </div>
 
     @if (config('lorekeeper.settings.allow_username_changes'))
         <div class="card p-3 mb-2">
