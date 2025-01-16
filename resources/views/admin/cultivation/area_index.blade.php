@@ -20,6 +20,9 @@
                 <tr class="sort-item" data-id="{{ $area->id }}">
                     <td>
                         <a class="fas fa-arrows-alt-v handle mr-3" href="#"></a>
+                        @if(!$area->is_active)
+                            <i class="fas fa-eye-slash mr-1" data-toggle="tooltip" title="This area is hidden."></i>
+                        @endif
                         {!! $area->displayName !!}
                     </td>
                     <td class="text-right">
