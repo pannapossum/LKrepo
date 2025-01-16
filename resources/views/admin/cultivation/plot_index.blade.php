@@ -20,6 +20,9 @@
                 <tr class="sort-item" data-id="{{ $plot->id }}">
                     <td>
                         <a class="fas fa-arrows-alt-v handle mr-3" href="#"></a>
+                        @if(!$plot->is_active)
+                            <i class="fas fa-eye-slash mr-1" data-toggle="tooltip" title="This post is hidden."></i>
+                        @endif
                         {!! $plot->displayName !!}
                     </td>
                     <td class="text-right">

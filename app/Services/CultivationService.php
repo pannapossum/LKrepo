@@ -125,7 +125,7 @@ class CultivationService extends Service
 
             //update plots
             //remove old plots
-            if(!isset($data["plot_id"])) $area->plotAreas()->delete();
+            $area->plotAreas()->delete();
             if(isset($data["plot_id"])){
                 //add set plots if not yet there
                 foreach(array_filter($data["plot_id"]) as $plot_id){
@@ -391,7 +391,7 @@ class CultivationService extends Service
             
             //update items
             //remove old items
-            if(!isset($data["item_id"])) $plot->plotItems()->delete();
+            $plot->plotItems()->delete();
             if(isset($data["item_id"])){
                 //add set plots if not yet there
                 foreach(array_filter($data["item_id"]) as $item_id){

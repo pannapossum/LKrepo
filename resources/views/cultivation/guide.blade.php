@@ -14,6 +14,7 @@
 
 <div class="row shops-row">
     @foreach($areas as $area)
+    @if($area->allowedPlots->where('is_active', 1)->count() > 0)
     <div class="col-12 mb-3 text-center">
         <div class="card h-100">
             <div class="row m-0 card-header">
@@ -23,47 +24,48 @@
                 </div>
             </div>
             <div class="card-body row">
-                @foreach($area->allowedPlots as $plot)
-                <div class="col-lg-6 col-12 mb-3 text-center">
-                    <div class="card h-100">
-                        <div class="row m-0 card-header">
-                            <h4 class="p-0 m-0">{{$plot->name}}</h4>
-                        </div>
-                        <div class="card-body text-justify">
-                            <div class="row m-0">
-                                <div class="col-lg-4 col-12 text-center"><img class="" src="{{$plot->getStageImage(4)}}" alt="{{$plot->name}}" style="max-height:200px;"></div>
-                                <div class="col-lg-7 col-12">
-                                    <b> Created with: </b>
-                                    <table class="table table-sm">
-                                        <tbody>
-                                            @foreach(App\Models\Item\ItemTag::where('tag', 'tool')->where('data', 'like', '%"plot_id":"'.$plot->id.'"%')->get() as $tag) 
-                                            <tr>
-                                                <td> {!! $tag->item->displayName !!} </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <b> Can Cultivate: </b>
-                                    <table class="table table-sm">
-                                        <tbody>
-                                            @foreach($plot->allowedItems as $item)
-                                            <tr>
-                                                <td> {!! $item->displayName  !!} </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                    @foreach($area->allowedPlots->where('is_active', 1) as $plot)
+                    <div class="col-lg-6 col-12 mb-3 text-center">
+                        <div class="card h-100">
+                            <div class="row m-0 card-header">
+                                <h4 class="p-0 m-0">{{$plot->name}}</h4>
                             </div>
+                            <div class="card-body text-justify">
+                                <div class="row m-0">
+                                    <div class="col-lg-4 col-12 text-center"><img class="" src="{{$plot->getStageImage(4)}}" alt="{{$plot->name}}" style="max-height:200px;"></div>
+                                    <div class="col-lg-7 col-12">
+                                        <b> Created with: </b>
+                                        <table class="table table-sm">
+                                            <tbody>
+                                                @foreach(App\Models\Item\ItemTag::where('tag', 'tool')->where('data', 'like', '%"plot_id":"'.$plot->id.'"%')->get() as $tag) 
+                                                <tr>
+                                                    <td> {!! $tag->item->displayName !!} </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <b> Can Cultivate: </b>
+                                        <table class="table table-sm">
+                                            <tbody>
+                                                @foreach($plot->allowedItems as $item)
+                                                <tr>
+                                                    <td> {!! $item->displayName  !!} </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                @endforeach
+                    @endforeach
 
             </div>
         </div>
     </div>
+    @endif
     @endforeach
 </div>
 
