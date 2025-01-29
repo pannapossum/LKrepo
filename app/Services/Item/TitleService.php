@@ -107,7 +107,7 @@ class TitleService extends Service {
                             'data'               => [],
                         ]);
                     } else {
-                        foreach ($stack->item->data['title_ids'] as $key=> $title_id) {
+                        foreach ($tag->getData()['title_ids'] as $key=> $title_id) {
                             $title = CharacterTitle::find($title_id);
                             if (!$title) {
                                 throw new \Exception('Title not found.');
