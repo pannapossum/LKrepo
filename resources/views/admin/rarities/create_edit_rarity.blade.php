@@ -61,43 +61,43 @@
                     </div>
                 @endif
             </div>
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('Description (Optional)') !!}
-        {!! Form::textarea('description', $rarity->description, ['class' => 'form-control wysiwyg']) !!}
-    </div>
-
-    <div class="text-right">
-        {!! Form::submit($rarity->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
-    </div>
-
-    {!! Form::close() !!}
-
-    @if ($rarity->id)
-        <h3>Preview</h3>
-        <div class="card mb-3">
-            <div class="card-body">
-                @include('world._rarity_entry', [
-                    'imageUrl' => $rarity->rarityImageUrl,
-                    'name' => $rarity->displayName,
-                    'description' => $rarity->parsed_description,
-                    'searchFeaturesUrl' => $rarity->searchFeaturesUrl,
-                    'searchCharactersUrl' => $rarity->searchCharactersUrl,
-                ])
-            </div>
         </div>
-    @endif
-@endsection
 
-@section('scripts')
-    @parent
-    <script>
-        $(document).ready(function() {
-            $('.delete-rarity-button').on('click', function(e) {
-                e.preventDefault();
-                loadModal("{{ url('admin/data/rarities/delete') }}/{{ $rarity->id }}", 'Delete Rarity');
+        <div class="form-group">
+            {!! Form::label('Description (Optional)') !!}
+            {!! Form::textarea('description', $rarity->description, ['class' => 'form-control wysiwyg']) !!}
+        </div>
+
+        <div class="text-right">
+            {!! Form::submit($rarity->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
+        </div>
+
+        {!! Form::close() !!}
+
+        @if ($rarity->id)
+            <h3>Preview</h3>
+            <div class="card mb-3">
+                <div class="card-body">
+                    @include('world._rarity_entry', [
+                        'imageUrl' => $rarity->rarityImageUrl,
+                        'name' => $rarity->displayName,
+                        'description' => $rarity->parsed_description,
+                        'searchFeaturesUrl' => $rarity->searchFeaturesUrl,
+                        'searchCharactersUrl' => $rarity->searchCharactersUrl,
+                    ])
+                </div>
+            </div>
+        @endif
+    @endsection
+
+    @section('scripts')
+        @parent
+        <script>
+            $(document).ready(function() {
+                $('.delete-rarity-button').on('click', function(e) {
+                    e.preventDefault();
+                    loadModal("{{ url('admin/data/rarities/delete') }}/{{ $rarity->id }}", 'Delete Rarity');
+                });
             });
-        });
-    </script>
-@endsection
+        </script>
+    @endsection
