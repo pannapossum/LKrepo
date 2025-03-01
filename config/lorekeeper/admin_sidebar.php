@@ -202,6 +202,10 @@ return [
                 'name' => 'Pets',
                 'url'  => 'admin/data/pets',
             ],
+            [
+                'name' => 'Dynamic Limits',
+                'url'  => 'admin/data/limits',
+            ],
         ],
     ],
     'Raffles'    => [
