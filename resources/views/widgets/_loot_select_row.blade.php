@@ -18,7 +18,9 @@
             ->orderBy('name')
             ->pluck('name', 'id');
     }
-    $pets = \App\Models\Pet\Pet::orderBy('name')->get()->pluck('fullName', 'id');
+    $pets = \App\Models\Pet\Pet::orderBy('name')
+        ->get()
+        ->pluck('fullName', 'id');
 @endphp
 
 <div id="lootRowData" class="hide">

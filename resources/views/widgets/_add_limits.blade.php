@@ -7,10 +7,18 @@
     });
     $limits = \App\Models\Limit\Limit::hasLimits($object) ? \App\Models\Limit\Limit::getLimits($object) : null;
 
-    $prompts = \App\Models\Prompt\Prompt::orderBy('name')->pluck('name', 'id')->toArray();
-    $items = \App\Models\Item\Item::orderBy('name')->pluck('name', 'id')->toArray();
-    $currencies = \App\Models\Currency\Currency::orderBy('name')->pluck('name', 'id')->toArray();
-    $dynamics = \App\Models\Limit\DynamicLimit::orderBy('name')->pluck('name', 'id')->toArray();
+    $prompts = \App\Models\Prompt\Prompt::orderBy('name')
+        ->pluck('name', 'id')
+        ->toArray();
+    $items = \App\Models\Item\Item::orderBy('name')
+        ->pluck('name', 'id')
+        ->toArray();
+    $currencies = \App\Models\Currency\Currency::orderBy('name')
+        ->pluck('name', 'id')
+        ->toArray();
+    $dynamics = \App\Models\Limit\DynamicLimit::orderBy('name')
+        ->pluck('name', 'id')
+        ->toArray();
 @endphp
 
 <div class="card p-4 mb-3 mt-3" id="limit-card">
