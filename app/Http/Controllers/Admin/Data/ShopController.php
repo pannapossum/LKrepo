@@ -9,6 +9,7 @@ use App\Models\Shop\Shop;
 use App\Services\ShopService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Pet\Pet;
 
 class ShopController extends Controller {
     /*
@@ -39,6 +40,7 @@ class ShopController extends Controller {
     public function getCreateShop() {
         return view('admin.shops.create_edit_shop', [
             'shop' => new Shop,
+            'pets' => Pet::orderBy('name')->pluck('name', 'id'),
         ]);
     }
 
@@ -59,6 +61,7 @@ class ShopController extends Controller {
             'shop'       => $shop,
             'items'      => Item::orderBy('name')->pluck('name', 'id'),
             'currencies' => Currency::orderBy('name')->pluck('name', 'id'),
+            'pets' => Pet::orderBy('name')->pluck('name', 'id'),
         ]);
     }
 

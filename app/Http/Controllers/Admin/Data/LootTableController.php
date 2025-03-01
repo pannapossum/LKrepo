@@ -9,6 +9,7 @@ use App\Models\Item\ItemCategory;
 use App\Models\Loot\LootTable;
 use App\Services\LootService;
 use Illuminate\Http\Request;
+use App\Models\Pet\Pet;
 
 class LootTableController extends Controller {
     /*
@@ -47,6 +48,7 @@ class LootTableController extends Controller {
             'currencies' => Currency::orderBy('name')->pluck('name', 'id'),
             'tables'     => LootTable::orderBy('name')->pluck('name', 'id'),
             'rarities'   => array_filter($rarities),
+            'pets' => Pet::orderBy('name')->pluck('name', 'id'),
         ]);
     }
 
@@ -73,6 +75,7 @@ class LootTableController extends Controller {
             'currencies' => Currency::orderBy('name')->pluck('name', 'id'),
             'tables'     => LootTable::orderBy('name')->pluck('name', 'id'),
             'rarities'   => array_filter($rarities),
+            'pets' => Pet::orderBy('name')->pluck('name', 'id'),
         ]);
     }
 
