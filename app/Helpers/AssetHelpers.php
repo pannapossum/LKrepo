@@ -19,8 +19,7 @@
  *
  * @return int
  */
-function calculateGroupCurrency($data)
-{
+function calculateGroupCurrency($data) {
     // Sets a starting point for the total so that numbers can be added to it.
     // Don't change this!
     $total = 0;
@@ -71,8 +70,7 @@ function calculateGroupCurrency($data)
  *
  * @return array
  */
-function getAssetKeys($isCharacter = false)
-{
+function getAssetKeys($isCharacter = false) {
     if (!$isCharacter) {
         return ['items', 'currencies', 'pets', 'raffle_tickets', 'loot_tables', 'user_items', 'characters'];
     } else {
@@ -89,8 +87,7 @@ function getAssetKeys($isCharacter = false)
  *
  * @return string
  */
-function getAssetModelString($type, $namespaced = true)
-{
+function getAssetModelString($type, $namespaced = true) {
     switch ($type) {
         case 'items':
         case 'item':
@@ -171,8 +168,7 @@ function getAssetModelString($type, $namespaced = true)
  *
  * @return array
  */
-function createAssetsArray($isCharacter = false)
-{
+function createAssetsArray($isCharacter = false) {
     $keys = getAssetKeys($isCharacter);
     $assets = [];
     foreach ($keys as $key) {
@@ -190,8 +186,7 @@ function createAssetsArray($isCharacter = false)
  *
  * @return array
  */
-function mergeAssetsArrays($first, $second)
-{
+function mergeAssetsArrays($first, $second) {
     $keys = getAssetKeys();
     foreach ($keys as $key) {
         foreach ($second[$key] as $item) {
@@ -210,8 +205,7 @@ function mergeAssetsArrays($first, $second)
  * @param mixed $asset
  * @param int   $quantity
  */
-function addAsset(&$array, $asset, $quantity = 1)
-{
+function addAsset(&$array, $asset, $quantity = 1) {
     if (!$asset) {
         return;
     }
@@ -229,8 +223,7 @@ function addAsset(&$array, $asset, $quantity = 1)
  * @param mixed $asset
  * @param int   $quantity
  */
-function removeAsset(&$array, $asset, $quantity = 1)
-{
+function removeAsset(&$array, $asset, $quantity = 1) {
     if (!$asset) {
         return;
     }
@@ -252,8 +245,7 @@ function removeAsset(&$array, $asset, $quantity = 1)
  *
  * @return array
  */
-function getDataReadyAssets($array, $isCharacter = false)
-{
+function getDataReadyAssets($array, $isCharacter = false) {
     $result = [];
     foreach ($array as $key => $type) {
         if ($type && !isset($result[$key])) {
@@ -276,8 +268,7 @@ function getDataReadyAssets($array, $isCharacter = false)
  *
  * @return array
  */
-function parseAssetData($array)
-{
+function parseAssetData($array) {
     $assets = createAssetsArray();
     foreach ($array as $key => $contents) {
         $model = getAssetModelString($key);
@@ -303,6 +294,7 @@ function parseAssetData($array)
  * @param \App\Models\User\User $recipient
  * @param string                $logType
  * @param string                $data
+ * @param mixed|null            $selected
  *
  * @return array
  */
@@ -456,8 +448,7 @@ function countAssets($array) {
  *
  * @return array
  */
-function fillCharacterAssets($assets, $sender, $recipient, $logType, $data, $submitter = null)
-{
+function fillCharacterAssets($assets, $sender, $recipient, $logType, $data, $submitter = null) {
     if (!config('lorekeeper.extensions.character_reward_expansion.default_recipient') && $recipient->user) {
         $item_recipient = $recipient->user;
     } else {
@@ -497,6 +488,8 @@ function fillCharacterAssets($assets, $sender, $recipient, $logType, $data, $sub
  * Creates a rewards string from an asset array.
  *
  * @param array $array
+ * @param mixed $useDisplayName
+ * @param mixed $absQuantities
  *
  * @return string
  */
@@ -540,8 +533,7 @@ function createRewardsString($array, $useDisplayName = true, $absQuantities = fa
  * @param mixed $min_quantity
  * @param mixed $max_quantity
  */
-function addDropAsset(&$array, $asset, $min_quantity = 1, $max_quantity = 1)
-{
+function addDropAsset(&$array, $asset, $min_quantity = 1, $max_quantity = 1) {
     if (!$asset) {
         return;
     }
@@ -560,8 +552,7 @@ function addDropAsset(&$array, $asset, $min_quantity = 1, $max_quantity = 1)
  *
  * @return array
  */
-function getDataReadyDropAssets($array)
-{
+function getDataReadyDropAssets($array) {
     $result = [];
     foreach ($array as $group => $types) {
         $result[$group] = [];
@@ -593,8 +584,7 @@ function getDataReadyDropAssets($array)
  *
  * @return array
  */
-function parseDropAssetData($array)
-{
+function parseDropAssetData($array) {
     $result = [];
     foreach ($array as $group => $types) {
         $result[$group] = [];
@@ -625,8 +615,7 @@ function parseDropAssetData($array)
  *
  * @return bool
  */
-function compareAssetArrays($first, $second, $isCharacter = false, $absQuantities = false)
-{
+function compareAssetArrays($first, $second, $isCharacter = false, $absQuantities = false) {
     $keys = getAssetKeys($isCharacter);
     foreach ($keys as $key) {
         if (count($first[$key]) != count($second[$key])) {

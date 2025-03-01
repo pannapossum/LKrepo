@@ -8,16 +8,16 @@ use App\Models\Character\CharacterDesignUpdate;
 use App\Models\Character\CharacterItem;
 use App\Models\Currency\Currency;
 use App\Models\Item\Item;
+use App\Models\Pet\Pet;
 use App\Models\Submission\Submission;
 use App\Models\Trade;
 use App\Models\User\User;
 use App\Models\User\UserItem;
 use App\Services\CurrencyManager;
 use App\Services\InventoryManager;
+use App\Services\PetManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Pet\Pet;
-use App\Services\PetManager;
 
 class GrantController extends Controller {
     /**

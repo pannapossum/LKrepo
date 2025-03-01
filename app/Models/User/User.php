@@ -14,6 +14,8 @@ use App\Models\Gallery\GallerySubmission;
 use App\Models\Item\Item;
 use App\Models\Item\ItemLog;
 use App\Models\Notification;
+use App\Models\Pet\Pet;
+use App\Models\Pet\PetLog;
 use App\Models\Rank\Rank;
 use App\Models\Rank\RankPower;
 use App\Models\Shop\ShopLog;
@@ -25,8 +27,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use App\Models\Pet\Pet;
-use App\Models\Pet\PetLog;
 
 class User extends Authenticatable implements MustVerifyEmail {
     use Commenter, Notifiable, TwoFactorAuthenticatable;

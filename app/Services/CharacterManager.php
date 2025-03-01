@@ -15,12 +15,12 @@ use App\Models\Character\CharacterTransfer;
 use App\Models\Sales\SalesCharacter;
 use App\Models\Species\Subtype;
 use App\Models\User\User;
+use App\Models\User\UserPet;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
-use App\Models\User\UserPet;
 
 class CharacterManager extends Service {
     /*
@@ -1078,7 +1078,7 @@ class CharacterManager extends Service {
         return $this->rollbackReturn(false);
     }
 
-        /**
+    /**
      * Sorts a character's pets.
      *
      * @param array                 $data

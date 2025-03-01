@@ -594,7 +594,6 @@ class SubmissionManager extends Service {
                         case 'LootTable': if ($data['character_rewardable_quantity'][$data['character_id']][$key]) {
                             addAsset($assets, $data['tables'][$reward], $data['character_rewardable_quantity'][$data['character_id']][$key]);
                         } break;
-                    
                     }
                 }
             }

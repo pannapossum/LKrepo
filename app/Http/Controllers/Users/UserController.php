@@ -12,16 +12,16 @@ use App\Models\Gallery\GalleryCharacter;
 use App\Models\Gallery\GallerySubmission;
 use App\Models\Item\Item;
 use App\Models\Item\ItemCategory;
+use App\Models\Pet\Pet;
+use App\Models\Pet\PetCategory;
 use App\Models\User\User;
 use App\Models\User\UserCurrency;
+use App\Models\User\UserPet;
 use App\Models\User\UserUpdateLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Route;
-use App\Models\Pet\Pet;
-use App\Models\Pet\PetCategory;
-use App\Models\User\UserPet;
 
 class UserController extends Controller {
     /*
@@ -78,7 +78,7 @@ class UserController extends Controller {
             'items'      => $this->user->items()->where('count', '>', 0)->orderBy('user_items.updated_at', 'DESC')->take(4)->get(),
             'characters' => $characters,
             'aliases'    => $aliases->orderBy('is_primary_alias', 'DESC')->orderBy('site')->get(),
-            'pets' => $this->user->pets()->orderBy('user_pets.updated_at', 'DESC')->take(5)->get(),
+            'pets'       => $this->user->pets()->orderBy('user_pets.updated_at', 'DESC')->take(5)->get(),
         ]);
     }
 
