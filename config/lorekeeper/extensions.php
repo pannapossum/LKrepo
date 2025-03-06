@@ -20,19 +20,19 @@ return [
     */
 
     // Navbar News Notif - Juni
-    'navbar_news_notif' => 0,
+    'navbar_news_notif' => 1,
 
     // Species Trait Index - Mercury
     'species_trait_index' => [
-        'enable'       => 0,
+        'enable'       => 1,
         'trait_modals' => 0, // Enables modals when you click on a trait for more info instead of linking to the traits page - Moif
     ],
 
     // Character Status Badges - Juni
-    'character_status_badges' => 0,
+    'character_status_badges' => 1,
 
     // Character TH Profile Link - Juni
-    'character_TH_profile_link' => 0,
+    'character_TH_profile_link' => 1,
 
     // Design Update Voting - Mercury
     'design_update_voting' => 0,
@@ -52,7 +52,7 @@ return [
     'traits_by_category' => 0,
 
     // Scroll To Top - Uri
-    'scroll_to_top' => 0, // 1 - On, 0 - off
+    'scroll_to_top' => 1, // 1 - On, 0 - off
 
     // Character Reward Expansion - Uri
     'character_reward_expansion' => [
@@ -80,7 +80,7 @@ return [
     // Previous & Next buttons on Character pages - Speedy
     // Adds buttons linking to the previous character as well as the next character on all character pages.
     'previous_and_next_characters' => [
-        'display' => 0,
+        'display' => 1,
         'reverse' => 0, // By default, 0 has the lower number on the 'Next' side and the higher number on the 'Previous' side, reflecting the default masterlist order. Setting this to 1 reverses this.
     ],
 
