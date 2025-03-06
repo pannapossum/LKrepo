@@ -252,6 +252,16 @@ class BrowseController extends Controller {
             });
         }
 
+        if ($request->get('label')) {
+            if ($request->get('label') == 'none') {
+                $imageQuery->where('label', null);
+            } else if ($request->get('label') == 'all') {
+                $imageQuery->whereNotNull('label');
+            } else {
+                $imageQuery->whereJsonContains('label->label', $request->get('label'));
+            }
+        }
+
         $query->whereIn('id', $imageQuery->pluck('character_id')->toArray());
 
         if ($request->get('is_gift_art_allowed')) {
@@ -590,6 +600,16 @@ class BrowseController extends Controller {
             $imageQuery->whereHas('designers', function ($query) use ($designerUrl) {
                 $query->where('url', 'LIKE', '%'.$designerUrl.'%');
             });
+        }
+
+        if ($request->get('label')) {
+            if ($request->get('label') == 'none') {
+                $imageQuery->where('label', null);
+            } else if ($request->get('label') == 'all') {
+                $imageQuery->whereNotNull('label');
+            } else {
+                $imageQuery->whereJsonContains('label->label', $request->get('label'));
+            }
         }
 
         $query->whereIn('id', $imageQuery->pluck('character_id')->toArray());
