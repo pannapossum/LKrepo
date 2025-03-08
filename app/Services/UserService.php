@@ -216,6 +216,28 @@ class UserService extends Service {
     }
 
     /**
+     * Updates user's character comments setting.
+     *
+     * @param mixed $data
+     * @param mixed $user
+     */
+    public function updateCharacterCommentsSetting($data, $user) {
+        DB::beginTransaction();
+
+        try {
+            $user->settings->character_comments = $data['character_comments'] ?? 0;
+            $user->settings->myo_comments = $data['myo_comments'] ?? 0;
+            $user->settings->save();
+
+            return $this->commitReturn(true);
+        } catch (\Exception $e) {
+            $this->setError('error', $e->getMessage());
+        }
+
+        return $this->rollbackReturn(false);
+    }
+
+    /**
      * Confirms a user's two-factor auth.
      *
      * @param string           $code

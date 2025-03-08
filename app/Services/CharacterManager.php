@@ -1351,6 +1351,7 @@ class CharacterManager extends Service {
                 $character->is_gift_art_allowed = isset($data['is_gift_art_allowed']) && $data['is_gift_art_allowed'] <= 2 ? $data['is_gift_art_allowed'] : 0;
                 $character->is_gift_writing_allowed = isset($data['is_gift_writing_allowed']) && $data['is_gift_writing_allowed'] <= 2 ? $data['is_gift_writing_allowed'] : 0;
                 $character->is_trading = isset($data['is_trading']);
+                $character->comment_override = $data['comment_override'];
                 $character->save();
             } else {
                 if (!$this->logAdminAction($user, 'Updated Character Profile', 'Updated character profile on '.$character->displayname)) {
@@ -1882,6 +1883,9 @@ class CharacterManager extends Service {
             ]);
         }
 
+        // Reset commenting override
+        $character->update(['comment_override' => 0]);
+
         // Add a log for the ownership change
         $this->createLog(
             is_object($sender) ? $sender->id : null,
@@ -1933,6 +1937,7 @@ class CharacterManager extends Service {
             $characterData['is_gift_art_allowed'] = 0;
             $characterData['is_gift_writing_allowed'] = 0;
             $characterData['is_trading'] = 0;
+            $characterData['comment_override'] = 0;
             $characterData['parsed_description'] = parse($data['description']);
             if ($isMyo) {
                 $characterData['is_myo_slot'] = 1;

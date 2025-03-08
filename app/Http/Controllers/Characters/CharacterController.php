@@ -143,6 +143,34 @@ class CharacterController extends Controller {
     }
 
     /**
+     * Shows a character's comments.
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getCharacterComments($slug) {
+        $character = $this->character;
+
+        if ($character->comment_override == 1) {
+            // Enable comments regardless of global setting if override is set to 1
+            $allowComments = true;
+        } elseif ($character->comment_override == 2) {
+            // Disable comments regardless of global setting if override is set to 2
+            $allowComments = false;
+        } else {
+            // Use global user setting if no override is set and user has an account on the site
+            $allowComments = isset($character->user->id) ? $character->user->settings->character_comments : false;
+        }
+
+        return view('character.comments', [
+            'character'             => $character,
+            'extPrevAndNextBtnsUrl' => '/comments',
+            'allowComments'         => $allowComments,
+        ]);
+    }
+
+    /**
      * Shows a character's edit profile page.
      *
      * @param string $slug
@@ -186,7 +214,7 @@ class CharacterController extends Controller {
 
         $request->validate(CharacterProfile::$rules);
 
-        if ($service->updateCharacterProfile($request->only(['name', 'link', 'text', 'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'alert_user']), $this->character, Auth::user(), !$isOwner)) {
+        if ($service->updateCharacterProfile($request->only(['name', 'link', 'text', 'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'alert_user', 'comment_override']), $this->character, Auth::user(), !$isOwner)) {
             flash('Profile edited successfully.')->success();
         } else {
             foreach ($service->errors()->getMessages()['error'] as $error) {

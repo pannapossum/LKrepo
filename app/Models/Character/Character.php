@@ -19,10 +19,12 @@ use App\Models\Submission\SubmissionCharacter;
 use App\Models\Trade;
 use App\Models\User\User;
 use App\Models\User\UserCharacterLog;
+use App\Traits\Commentable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Character extends Model {
+    use Commentable;
     use SoftDeletes;
 
     /**
@@ -36,7 +38,7 @@ class Character extends Model {
         'is_sellable', 'is_tradeable', 'is_giftable',
         'sale_value', 'transferrable_at', 'is_visible',
         'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'sort',
-        'is_myo_slot', 'name', 'trade_id', 'owner_url',
+        'is_myo_slot', 'name', 'trade_id', 'owner_url', 'comment_override',
     ];
 
     /**

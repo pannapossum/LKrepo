@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Character\Character;
 use App\Models\Comment\Comment;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +24,11 @@ class CommentPolicy {
     public function delete($user, Comment $comment): bool {
         if (Auth::user()->isStaff) {
             return true;
+        } elseif ($comment->commentable_type == 'App\Models\Character\Character') {
+            // This section allows character owners to delete comments.
+            $character = Character::find($comment->commentable_id);
+
+            return $character->user_id == $user->id;
         } else {
             return false;
         }

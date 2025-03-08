@@ -60,6 +60,10 @@
                 </div>
             </div>
         @endif
+        <div class="form-group">
+            {!! Form::label('comment_override', 'Comment Override', ['class' => 'form-check-label mb-3']) !!} {!! add_help('Use this dropdown to override your comment settings for this individual character. To enable/disable comments on all characters, go to your user settings.') !!}
+            {!! Form::select('comment_override', [0 => 'None', 1 => 'Enable comments on this character', 2 => 'Disable comments on this character'], $character->comment_override, ['class' => 'form-control user-select']) !!}
+        </div>
         @if ($character->is_tradeable || $character->is_sellable)
             <div class="form-group disabled">
                 {!! Form::checkbox('is_trading', 1, $character->is_trading, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}

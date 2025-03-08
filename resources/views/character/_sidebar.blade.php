@@ -11,6 +11,7 @@
         @if ($character->getLineageBlacklistLevel() < 2)
             <div class="sidebar-item"><a href="{{ $character->url . '/lineage' }}" class="{{ set_active('character/' . $character->slug . '/lineage') }}">Lineage</a></div>
         @endif
+        <div class="sidebar-item"><a href="{{ $character->url . '/comments' }}" class="{{ set_active('character/' . $character->slug . '/comments') }}">Comments</a></div>
     </li>
     <li class="sidebar-section">
         <div class="sidebar-section-header">History</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Comments;
 
 use App\Facades\Notifications;
 use App\Facades\Settings;
+use App\Models\Character\Character;
 use App\Models\Comment\Comment;
 use App\Models\Gallery\GallerySubmission;
 use App\Models\News;
@@ -146,6 +147,12 @@ class CommentController extends Controller {
                 }
                 $post = (($type != 'User-User') ? 'your gallery submission\'s staff comments' : 'your gallery submission');
                 $link = (($type != 'User-User') ? $submission->queueUrl.'/#comment-'.$comment->getKey() : $submission->url.'/#comment-'.$comment->getKey());
+                break;
+            case 'App\Models\Character\Character':
+                $character = Character::find($comment->commentable_id);
+                $recipient = $character->user;
+                $post = $character->displayName;
+                $link = $character->url.'/#comment-'.$comment->getKey();
                 break;
             default:
                 throw new \Exception('Comment type not supported.');
