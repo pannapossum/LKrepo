@@ -207,6 +207,10 @@ return [
                 'name' => 'Transformations',
                 'url'  => 'admin/data/transformations',
             ],
+            [
+                'name' => 'Carousel',
+                'url'  => 'admin/data/carousel',
+            ],
         ],
     ],
     'Raffles'    => [
