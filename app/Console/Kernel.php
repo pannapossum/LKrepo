@@ -32,7 +32,9 @@ class Kernel extends ConsoleKernel {
          $schedule->command('change-feature')
             ->monthly();
         $schedule->command('update-timed-daily')
-                ->everyMinute();          
+                ->everyMinute();         
+        $schedule->command('reset-hol')
+            ->daily();
 
     }
 
