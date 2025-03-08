@@ -178,3 +178,10 @@ Route::group(['prefix' => 'reports', 'namespace' => 'Users'], function () {
 Route::get('time' , function() {
     return date('Y-m-d H:i:s');
 });
+
+/**************************************************************************************************
+    Terms accept
+**************************************************************************************************/
+Route::group(['prefix' => 'terms'], function() {
+    Route::get('/accept', 'TermsController@acceptTerms');
+});

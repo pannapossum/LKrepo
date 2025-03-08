@@ -129,6 +129,8 @@
 
         </main>
 
+        
+        @include('layouts._terms_modal')
 
         <div class="modal fade" id="modal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">

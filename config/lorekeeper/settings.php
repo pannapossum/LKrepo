@@ -341,4 +341,26 @@ return [
     |
     */
     'wysiwyg_comments'                                  => 1,
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Terms Popup
+    |--------------------------------------------------------------------------
+    |
+    | Defines the content of the terms popup that appears on your site. 
+    | For the text field, some html is fine.
+    |
+    | 0: do not show terms popup ever. 
+    | 1: Show terms popup until the visitor or user agreed.
+    */
+
+    'show_terms_popup' => 1,
+    'terms_popup' => [
+        "title" => "Adults only!", 
+        "text" => "This website is 18+, by clicking accept you knowledge this and are of age.", 
+        "button" => "Accept"
+    ],
+    
 ];
