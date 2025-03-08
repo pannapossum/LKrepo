@@ -163,4 +163,8 @@ class Notification extends Model {
     public const FORCED_AWARD_TRANSFER = 344;
     public const CHARACTER_AWARD_GRANT = 345;
     public const CHARACTER_AWARD_REMOVAL = 346;
+    public const PAIRING_APPROVED = 1300;
+    public const PAIRING_REJECTED = 1301;
+    public const PAIRING_NEW_APPROVAL = 1302;
+    public const PAIRING_CANCELLED = 1303;
 }

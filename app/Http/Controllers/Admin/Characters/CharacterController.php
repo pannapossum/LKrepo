@@ -6,6 +6,7 @@ use App\Facades\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\Character\Character;
 use App\Models\Character\CharacterCategory;
+use App\Models\Character\CharacterLineageBlacklist;
 use App\Models\Character\CharacterTransfer;
 use App\Models\Feature\Feature;
 use App\Models\Rarity;
@@ -56,6 +57,7 @@ class CharacterController extends Controller {
             'features'    => Feature::getDropdownItems(1),
             'transformations' => ['0' => 'Pick a Species First'],
             'isMyo'       => false,
+            'characterOptions' => CharacterLineageBlacklist::getAncestorOptions(),
         ]);
     }
 
@@ -73,6 +75,7 @@ class CharacterController extends Controller {
             'features'    => Feature::getDropdownItems(1),
             'transformations' => ['0' => 'Pick a Species First'],
             'isMyo'       => true,
+            'characterOptions' => CharacterLineageBlacklist::getAncestorOptions(),
         ]);
     }
 
@@ -121,6 +124,7 @@ class CharacterController extends Controller {
             'artist_id', 'artist_url',
             'species_id', 'subtype_id', 'rarity_id', 'feature_id', 'feature_data',
             'image', 'thumbnail', 'image_description', 'label', 'label_information', 'transformation_id','transformation_info','transformation_description'
+            'sex', 'parent_1_id', 'parent_2_id',
         ]);
         if ($character = $service->createCharacter($data, Auth::user())) {
             flash('Character created successfully.')->success();
@@ -153,6 +157,7 @@ class CharacterController extends Controller {
             'artist_id', 'artist_url',
             'species_id', 'subtype_id', 'rarity_id', 'feature_id', 'feature_data',
             'image', 'thumbnail', 'transformation_id','transformation_info','transformation_description'
+            'parent_1_id', 'parent_2_id',
         ]);
         if ($character = $service->createCharacter($data, Auth::user(), true)) {
             flash('MYO slot created successfully.')->success();

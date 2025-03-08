@@ -1,6 +1,7 @@
 <?php
+
 return [
-    
+
     // FORMAT EXAMPLE.
     //
     // 'extension_tracker' => [
@@ -11,14 +12,5 @@ return [
     //     ]),
     //     'version' => '1.0.0',
     // ],
-    
-    'higher_or_lower' => [
-        'key' => 'higher_or_lower',
-        'wiki_key' => 'Higher_or_Lower',
-        'creators' => json_encode([
-            'CH3RVB' => 'https://github.com/CH3RVB/',
-        ]),
-        'version' => '1.0.1',
-    ],
 
 ];
