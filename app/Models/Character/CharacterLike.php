@@ -27,7 +27,7 @@ class CharacterLike extends Model {
      *
      * @var array
      */
-    public $dates = ['liked_at'];
+    public $casts = ['liked_at'=>'datetime'];
 
 
     /**********************************************************************************************
