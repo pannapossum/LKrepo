@@ -60,41 +60,18 @@
                         {!! Form::label('remove_icon', 'Remove current icon', ['class' => 'form-check-label']) !!}
                     </div>
                 @endif
-        @endif
     </div>
-
-    <div class="form-group">
-        {!! Form::label('Description (Optional)') !!}
-        {!! Form::textarea('description', $rarity->description, ['class' => 'form-control wysiwyg']) !!}
-    </div>
-
     <div class="col form-group">
         {!! Form::label('Chance to inherit') !!} {!! add_help('For pairings, how likely this rarity is to be passed on in percent. Must be a number between 1-100. Defaults to 50.') !!}
         {!! Form::number('inherit_chance', $rarity->inherit_chance ?? 50, ['class' => 'form-control']) !!}
     </div>
+    <div>
 
     @include('admin.lineage._edit_lineage_blacklist', [
         'lineageBlacklist' => $lineageBlacklist,
         'type' => 'rarity',
     ])
-
-    <div class="text-right">
-        {!! Form::submit($rarity->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
     </div>
-
-    {!! Form::close() !!}
-
-    @if ($rarity->id)
-        <h3>Preview</h3>
-        <div class="card mb-3">
-            <div class="card-body">
-                @include('world._rarity_entry', [
-                    'imageUrl' => $rarity->rarityImageUrl,
-                    'name' => $rarity->displayName,
-                    'description' => $rarity->parsed_description,
-                    'searchFeaturesUrl' => $rarity->searchFeaturesUrl,
-                    'searchCharactersUrl' => $rarity->searchCharactersUrl,
-                ])
             </div>
         </div>
 
