@@ -46,6 +46,7 @@ Route::group(['prefix' => 'account', 'namespace' => 'Users'], function () {
     Route::get('deactivate', 'AccountController@getDeactivate');
     Route::get('deactivate-confirm', 'AccountController@getDeactivateConfirmation');
     Route::post('deactivate', 'AccountController@postDeactivate');
+    Route::post('character-likes', 'AccountController@postAllowCharacterLikes');
 
     Route::get('bookmarks', 'BookmarkController@getBookmarks');
     Route::get('bookmarks/create', 'BookmarkController@getCreateBookmark');
@@ -131,6 +132,8 @@ Route::group(['prefix' => 'character', 'namespace' => 'Characters'], function ()
         }
         return \App\Models\Character\Character::where('slug', $slug)->first()?->image->displayColours();
     });
+
+    Route::post('{slug}/like', 'CharacterController@postLikeCharacter');
 });
 Route::group(['prefix' => 'myo', 'namespace' => 'Characters'], function () {
     Route::get('{id}/profile/edit', 'MyoController@getEditCharacterProfile');

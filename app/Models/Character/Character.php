@@ -22,6 +22,7 @@ use App\Models\User\UserCharacterLog;
 use App\Traits\Commentable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Settings;
 
 class Character extends Model {
     use Commentable;
@@ -219,6 +220,14 @@ class Character extends Model {
     public function children()
     {
         return $this->hasMany(CharacterLineage::class, 'parent_1_id')->orWhere('parent_2_id', $this->id);
+    }
+
+    /**
+     * Get all of the likes that are not NULL
+     */
+    public function characterLikes() 
+    {
+        return $this->hasMany('App\Models\Character\CharacterLike')->where('character_id', $this->id)->whereNotNull('liked_at');
     }
 
     /**********************************************************************************************
@@ -651,5 +660,17 @@ class Character extends Model {
         } else {
             return "Mother";
         }
+    }
+
+     /**
+     * Return like count based on site setting
+     *
+     * Will always return the accurate count even if settings are flip flopped around (i am paranoid.)
+     */
+    public function getLikeTotalAttribute() {
+        //can like only once
+        if(!Settings::get('character_likes')) {
+            return $this->characterLikes->count();
+        }else return $this->profile->like_count;
     }
 }

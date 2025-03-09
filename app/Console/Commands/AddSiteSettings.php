@@ -77,6 +77,10 @@ class AddSiteSettings extends Command {
        
         $this->addSiteSetting('featured_character', 1, 'ID of the currently featured character.');
 
+        $this->addSiteSetting('character_likes', 1, '0: Characters can be liked only once, 1: Characters can be liked daily.');
+
+        $this->addSiteSetting('character_likes_leaderboard_enable', 1, '0: Disable leaderboard, 1: Enable leaderboard.');
+
         $this->addSiteSetting('foraging_stamina', 1, 'How many times a user can forage a day.');
 
         $this->addSiteSetting('deactivated_privacy', 0, 'Who can view the deactivated list? 0: Admin only, 1: Staff only, 2: Members only, 3: Public.');

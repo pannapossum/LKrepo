@@ -29,6 +29,28 @@
             @endif
         @endif
 </div>
+<div class="mb-0">
+    <div class="float-right align-content-center">
+        @if (!$character->is_myo_slot)
+            @if ($character->user && $character->user->settings->allow_character_likes)
+                <div class="btn btn-primary float-right ml-2" data-toggle="tooltip"
+                    title="{{ ucfirst(__('character_likes.liked')) }}
+             {{ $character->likeTotal }} times">
+                    <i class="fas fa-star"></i> {{ $character->likeTotal }}</a>
+                </div>
+            @endif
+            @if (Auth::check() && $character->user &&
+                    $character->user->settings->allow_character_likes &&
+                    Auth::user()->canLike($character) &&
+                    Auth::user()->id != $character->user_id)
+                <span class="float-right float-top ml-2 align-content-center">
+                    {!! Form::open(['url' => $character->url . '/like']) !!}
+                    {!! Form::submit(ucfirst(__('character_likes.like')), ['class' => 'btn btn-success']) !!}
+                    {!! Form::close() !!}
+                </span>
+            @endif
+        @endif
+</div>
 <h1 class="mb-0">
     @if (config('lorekeeper.extensions.character_status_badges'))
         <!-- character trade/gift status badges -->
