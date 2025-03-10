@@ -82,8 +82,6 @@ class AddSiteSettings extends Command {
         $this->addSiteSetting('cultivation_care_cooldown', 0, 'How many plots can users care for each day? 0=unlimited.');
         $this->addSiteSetting('cultivation_area_unlock', 0, 'How many areas can a user unlock at the same time? 0=unlimited.');
 
-        $this->line("\nSite settings up to date!");
-
         $this->addSiteSetting('character_likes', 1, '0: Characters can be liked only once, 1: Characters can be liked daily.');
 
         $this->addSiteSetting('character_likes_leaderboard_enable', 1, '0: Disable leaderboard, 1: Enable leaderboard.');

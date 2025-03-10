@@ -231,7 +231,11 @@ return [
             'name' => 'Codes',
                 'url' => 'admin/prizecodes'
             ],
-        ]
+                [
+                'name' => 'FAQ',
+                'url'  => 'admin/data/faq',
+                ],
+        ],
     ],
     'Raffles'    => [
         'power' => 'manage_raffles',

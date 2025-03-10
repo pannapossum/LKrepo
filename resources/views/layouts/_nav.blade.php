@@ -134,6 +134,9 @@
                         {{__('dailies.dailies')}}
                         <a class="dropdown-item" href="{{ url(__('cultivation.cultivation')) }}">
                             {{__('cultivation.cultivation')}}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url('faq') }}">
+                            FAQ
                         </a>
                     </div>
                 </li>
