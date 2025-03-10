@@ -312,3 +312,8 @@ Route::group(['prefix' => __('cultivation.cultivation')], function() {
     Route::post('plots/harvest/{plotId}', 'CultivationController@postHarvestPlot');
 
 });
+//prize codes
+Route::group(['prefix' => 'redeem-code', 'namespace' => 'Users'], function() {
+    Route::get('/', 'PrizeCodeController@getIndex');
+    Route::post('/redeem', 'PrizeCodeController@postRedeemPrize');
+});

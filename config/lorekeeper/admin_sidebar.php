@@ -227,7 +227,11 @@ return [
                 'name' => 'Carousel',
                 'url'  => 'admin/data/carousel',
             ],
-        ],
+            [
+            'name' => 'Codes',
+                'url' => 'admin/prizecodes'
+            ],
+        ]
     ],
     'Raffles'    => [
         'power' => 'manage_raffles',

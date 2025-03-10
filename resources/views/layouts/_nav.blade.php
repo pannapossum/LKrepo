@@ -52,6 +52,8 @@
                             </a>
                             <a class="dropdown-item" href="{{ url('higher-or-lower') }}">
                                 Higher or Lower
+                            <a class="dropdown-item" href="{{ url('redeem-code') }}">
+                                Redeem Code
                             </a>
                         </div>
                     </li>
