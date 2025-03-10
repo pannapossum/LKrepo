@@ -72,7 +72,7 @@ function calculateGroupCurrency($data) {
  */
 function getAssetKeys($isCharacter = false) {
     if (!$isCharacter) {
-        return ['items', 'currencies', 'raffle_tickets', 'loot_tables', 'user_items', 'characters', 'awards', 'user_awards'];
+        return ['items', 'currencies', 'raffle_tickets', 'loot_tables', 'user_items', 'characters', 'awards', 'user_awards', 'areas'];
     } else {
         return ['currencies', 'items', 'character_items', 'loot_tables', 'awards'];
     }
@@ -159,6 +159,10 @@ function getAssetModelString($type, $namespaced = true) {
             } else {
                 return 'CharacterItem';
             }
+            break;
+        case 'areas':
+            if($namespaced) return '\App\Models\Cultivation\CultivationArea';
+            else return 'Area';
             break;
     }
 
@@ -355,11 +359,13 @@ function fillUserAssets($assets, $sender, $recipient, $logType, $data) {
             }
         } elseif ($key == 'characters' && count($contents)) {
             $service = new \App\Services\CharacterManager;
-            foreach ($contents as $asset) {
-                if (!$service->moveCharacter($asset['asset'], $recipient, $data, $asset['quantity'], $logType)) {
-                    return false;
-                }
-            }
+            foreach($contents as $asset)
+                if(!$service->moveCharacter($asset['asset'], $recipient, $data, $asset['quantity'], $logType))
+                 return false;
+        }elseif ($key == 'areas' && count($contents)) {
+            $service = new \App\Services\CultivationManager;
+            foreach ($contents as $asset)
+                if (!$service->unlockArea($recipient, $asset['asset'])) return false;
         }
     }
 

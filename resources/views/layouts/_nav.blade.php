@@ -130,6 +130,8 @@
                         </a>
                         <a class="dropdown-item" href="{{ url(__('dailies.dailies')) }}">
                         {{__('dailies.dailies')}}
+                        <a class="dropdown-item" href="{{ url(__('cultivation.cultivation')) }}">
+                            {{__('cultivation.cultivation')}}
                         </a>
                     </div>
                 </li>
