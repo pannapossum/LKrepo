@@ -80,6 +80,7 @@ Route::get('/'.__('character_likes.likes').'-leaderboard', 'BrowseController@get
     Route::get('{slug}/profile', 'CharacterController@getCharacterProfile');
     Route::get('{slug}/'.__('awards.awardcase'), 'CharacterController@getCharacterAwards');
     Route::get('{slug}/comments', 'CharacterController@getCharacterComments');
+    Route::get('{slug}/links', 'CharacterController@getCharacterLinks');
     Route::get('{slug}/bank', 'CharacterController@getCharacterBank');
     Route::get('{slug}/inventory', 'CharacterController@getCharacterInventory');
     Route::get('{slug}/images', 'CharacterController@getCharacterImages');

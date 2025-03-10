@@ -11,6 +11,7 @@ use App\Models\Character\CharacterAward;
 use App\Models\Character\CharacterCurrency;
 use App\Models\Character\CharacterItem;
 use App\Models\Character\CharacterProfile;
+use App\Models\Character\CharacterRelation;
 use App\Models\Character\CharacterTransfer;
 use App\Models\Currency\Currency;
 use App\Models\Gallery\GallerySubmission;
@@ -21,6 +22,7 @@ use App\Models\User\UserAward;
 use App\Models\User\UserCurrency;
 use App\Models\User\UserItem;
 use App\Services\AwardCaseManager;
+use App\Services\CharacterLinkService;
 use App\Services\CharacterManager;
 use App\Services\CurrencyManager;
 use App\Services\DesignUpdateManager;
@@ -217,7 +219,7 @@ class CharacterController extends Controller {
 
         $request->validate(CharacterProfile::$rules);
 
-        if ($service->updateCharacterProfile($request->only(['name', 'link', 'text', 'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'alert_user', 'comment_override']), $this->character, Auth::user(), !$isOwner)) {
+        if ($service->updateCharacterProfile($request->only(['name', 'link', 'text', 'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'alert_user', 'comment_override', 'is_links_open']), $this->character, Auth::user(), !$isOwner)) {
             flash('Profile edited successfully.')->success();
         } else {
             foreach ($service->errors()->getMessages()['error'] as $error) {
@@ -672,6 +674,138 @@ class CharacterController extends Controller {
             flash('Successfully created new design update request draft.')->success();
 
             return redirect()->to($request->url);
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**********************************************************************************************
+
+        LINKS
+
+    **********************************************************************************************/
+
+    /**
+     * Shows a character's links page.
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getCharacterLinks($slug) {
+        return view('character.links', [
+            'character' => $this->character,
+            'types'     => config('lorekeeper.character_relationships'),
+        ]);
+    }
+
+    /**
+     * Shows a character's edit links page.
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getCreateEditCharacterLinks($slug) {
+        if (!Auth::check()) {
+            abort(404);
+        }
+
+        if (!Auth::user()->id == $this->character->user_id && !Auth::user()->hasPower('manage_characters')) {
+            abort(404);
+        }
+
+        return view('character.edit_links', [
+            'character' => $this->character,
+        ]);
+    }
+
+    /**
+     * Creates / requests character links.
+     *
+     * @param App\Services\CharacterManager $service
+     * @param string                        $slug
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postCreateEditCharacterLinks(Request $request, CharacterLinkService $service, $slug) {
+        if (!Auth::check()) {
+            abort(404);
+        }
+
+        $isMod = Auth::user()->hasPower('manage_characters');
+        $isOwner = ($this->character->user_id == Auth::user()->id);
+        if (!$isMod && !$isOwner) {
+            abort(404);
+        }
+
+        if ($service->createCharacterRelationLinks($this->character, $request->only(['slug']), Auth::user())) {
+            flash('Links requested successfully.')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Edits a character's link info.
+     *
+     * @param App\Services\CharacterManager $service
+     * @param string                        $slug
+     * @param mixed                         $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postEditCharacterLinkInfo(Request $request, CharacterLinkService $service, $slug, $id) {
+        $data = $request->only(['info', 'type']);
+        if ($service->updateCharacterRelationLinkInfo($data + ['slug' => $slug], $id, Auth::user())) {
+            flash('Info updated successfully!')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Gets the delete character relationship modal.
+     *
+     * @param mixed $slug
+     * @param mixed $id
+     */
+    public function getDeleteCharacterLink($slug, $id) {
+        $link = CharacterRelation::find($id);
+
+        if (!$link) {
+            abort(404);
+        }
+
+        return view('character._delete_link', [
+            'link'      => $link,
+            'character' => $this->character,
+        ]);
+    }
+
+    /**
+     * deletes a character relationship link.
+     *
+     * @param string $slug
+     * @param mixed  $id
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function postDeleteCharacterLink(Request $request, CharacterLinkService $service, $slug, $id) {
+        if ($service->deleteCharacterRelationLink($id)) {
+            flash('Link deleted successfully!')->success();
         } else {
             foreach ($service->errors()->getMessages()['error'] as $error) {
                 flash($error)->error();

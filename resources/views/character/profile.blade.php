@@ -49,7 +49,7 @@
         </div>
     @endif
 
-    @if ($character->is_trading || $character->is_gift_art_allowed || $character->is_gift_writing_allowed)
+    @if ($character->is_trading || $character->is_gift_art_allowed || $character->is_gift_writing_allowed || $character->is_links_open)
         <div class="card mb-3">
             <ul class="list-group list-group-flush">
                 @if ($character->is_gift_art_allowed >= 1 && !$character->is_myo_slot)
@@ -67,6 +67,11 @@
                 @if ($character->is_trading)
                     <li class="list-group-item">
                         <h5 class="mb-0"><i class="text-success far fa-circle fa-fw mr-2"></i> Open for trades</h5>
+                    </li>
+                @endif
+                @if ($character->is_links_open)
+                    <li class="list-group-item">
+                        <h5 class="mb-0"><i class="text-success far fa-circle fa-fw mr-2"></i> Open for link requests</h5>
                     </li>
                 @endif
             </ul>

@@ -39,7 +39,7 @@ class Character extends Model {
         'is_sellable', 'is_tradeable', 'is_giftable',
         'sale_value', 'transferrable_at', 'is_visible',
         'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'sort',
-        'is_myo_slot', 'name', 'trade_id', 'owner_url', 'comment_override',
+        'is_myo_slot', 'name', 'trade_id', 'owner_url', 'is_links_open', 'comment_override',
     ];
 
     /**
@@ -228,6 +228,13 @@ class Character extends Model {
     public function characterLikes() 
     {
         return $this->hasMany('App\Models\Character\CharacterLike')->where('character_id', $this->id)->whereNotNull('liked_at');
+}
+    /*
+    * Get the links for this character
+    */
+    public function links() {
+        // character id can be in either column
+        return $this->hasMany(CharacterRelation::class, 'character_1_id')->orWhere('character_2_id', $this->id);
     }
 
     /**********************************************************************************************
