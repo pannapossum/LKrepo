@@ -169,4 +169,5 @@ class Notification extends Model {
     public const PAIRING_REJECTED = 1301;
     public const PAIRING_NEW_APPROVAL = 1302;
     public const PAIRING_CANCELLED = 1303;
+    public const BIRTHDAY_REWARDED    = 1105;
 }
