@@ -19,7 +19,7 @@ class Sales extends Model implements Feedable {
      */
     protected $fillable = [
         'user_id', 'text', 'parsed_text', 'title', 'is_visible', 'post_at',
-        'is_open', 'comments_open_at',
+        'is_open', 'comments_open_at', 'has_image',
     ];
 
     /**
@@ -54,6 +54,7 @@ class Sales extends Model implements Feedable {
     public static $createRules = [
         'title' => 'required|between:3,100',
         'text'  => 'required',
+        'image' => 'mimes:png',
     ];
 
     /**
@@ -64,6 +65,7 @@ class Sales extends Model implements Feedable {
     public static $updateRules = [
         'title' => 'required|between:3,100',
         'text'  => 'required',
+        'image' => 'mimes:png',
     ];
 
     /**********************************************************************************************
@@ -191,6 +193,46 @@ class Sales extends Model implements Feedable {
      */
     public function getUrlAttribute() {
         return url('sales/'.$this->slug);
+    }
+
+    /**
+     * Gets the Sales image directory.
+     *
+     * @return string
+     */
+    public function getImageDirectoryAttribute() {
+        return 'images/data/sales';
+    }
+
+    /**
+     * Gets the Sales image directory path.
+     *
+     * @return string
+     */
+    public function getImagePathAttribute() {
+        return public_path($this->imageDirectory);
+    }
+
+    /**
+     * Gets the Sales post image file name.
+     *
+     * @return string
+     */
+    public function getImageFileNameAttribute() {
+        return $this->id.'-image.png';
+    }
+
+    /**
+     * Gets the Sales post image URL.
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute() {
+        if (!$this->has_image) {
+            return null;
+        }
+
+        return asset($this->imageDirectory.'/'.$this->imageFileName);
     }
 
     /**

@@ -40,7 +40,20 @@ class SalesService extends Service {
                 $data['is_open'] = 0;
             }
 
+            $image = null;
+            if (isset($data['image']) && $data['image']) {
+                $data['has_image'] = 1;
+                $image = $data['image'];
+                unset($data['image']);
+            } else {
+                $data['has_image'] = 0;
+            }
+
             $sales = Sales::create($data);
+
+            if ($image) {
+                $this->handleImage($image, $sales->imagePath, $sales->imageFileName);
+            }
 
             // The character identification comes in both the slug field and as character IDs
             // First, check if the characters are accessible to begin with.
@@ -96,6 +109,21 @@ class SalesService extends Service {
                 $this->alertUsers();
             }
 
+            if (isset($data['remove_image'])) {
+                if ($sales && $sales->has_image && $data['remove_image']) {
+                    $data['has_image'] = 0;
+                    $this->deleteImage($sales->imagePath, $sales->imageFileName);
+                }
+                unset($data['remove_image']);
+            }
+
+            $image = null;
+            if (isset($data['image']) && $data['image']) {
+                $data['has_image'] = 1;
+                $image = $data['image'];
+                unset($data['image']);
+            }
+
             // The character identification comes in both the slug field and as character IDs
             // First, check if the characters are accessible to begin with.
             if (isset($data['slug'])) {
@@ -114,6 +142,10 @@ class SalesService extends Service {
             }
 
             $sales->update($data);
+
+            if ($sales) {
+                $this->handleImage($image, $sales->imagePath, $sales->imageFileName);
+            }
 
             return $this->commitReturn($sales);
         } catch (\Exception $e) {

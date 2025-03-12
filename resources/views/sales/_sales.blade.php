@@ -6,32 +6,67 @@
             Posted {!! $sales->post_at ? pretty_date($sales->post_at) : pretty_date($sales->created_at) !!} :: Last edited {!! pretty_date($sales->updated_at) !!} by {!! $sales->user->displayName !!}
         </small>
     </div>
-
-
-    @if ($sales->characters()->count())
 </div>
 
-<div class="row mb-2">
-    @foreach ($sales->characters as $character)
-        @if ($character->character->deleted_at)
-            <div class="col-lg mb-2">
-                <div class="card h-100">
-                    <div class="alert alert-warning my-auto mx-2">
-                        <i class="fas fa-exclamation-triangle"></i> This character has been deleted.
-                    </div>
-                </div>
-            </div>
-        @else
-            <div class="col-lg mb-2">
-                @include('sales._character', ['character' => $character, 'loop' => $loop])
+@if ($sales->has_image)
+    @if (Settings::get('sales_image_display') == 0)
+        @if ($sales->has_image)
+            <div class="card text-center p-3 mb-3">
+                <img src="{{ $sales->imageUrl }}" class="img-fluid" alt="{{ $sales->displayName }}">
             </div>
         @endif
-        {!! $loop->even ? '<div class="w-100"></div>' : '' !!}
-    @endforeach
-</div>
+    @else
+        @if ($sales->has_image)
+            <div class="card text-center p-3 mb-3">
+                <img src="{{ $sales->imageUrl }}" class="img-fluid" alt="{{ $sales->name }}">
+            </div>
+        @endif
+
+        @if ($sales->characters()->count())
+            <div class="row mb-2">
+                @foreach ($sales->characters as $character)
+                    @if ($character->character->deleted_at)
+                        <div class="col-lg mb-2">
+                            <div class="card h-100">
+                                <div class="alert alert-warning my-auto mx-2">
+                                    <i class="fas fa-exclamation-triangle"></i> This character has been deleted.
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="col-lg mb-2">
+                            @include('sales._character', ['character' => $character, 'loop' => $loop])
+                        </div>
+                    @endif
+                    {!! $loop->even ? '<div class="w-100"></div>' : '' !!}
+                @endforeach
+            </div>
+        @endif
+    @endif
+@else
+    @if ($sales->characters()->count())
+        <div class="row mb-2">
+            @foreach ($sales->characters as $character)
+                @if ($character->character->deleted_at)
+                    <div class="col-lg mb-2">
+                        <div class="card h-100">
+                            <div class="alert alert-warning my-auto mx-2">
+                                <i class="fas fa-exclamation-triangle"></i> This character has been deleted.
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="col-lg mb-2">
+                        @include('sales._character', ['character' => $character, 'loop' => $loop])
+                    </div>
+                @endif
+                {!! $loop->even ? '<div class="w-100"></div>' : '' !!}
+            @endforeach
+        </div>
+    @endif
+@endif
 
 <div class="card mb-3">
-    @endif
 
     <div class="card-body">
         <div class="parsed-text">
