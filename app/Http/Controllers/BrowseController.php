@@ -6,6 +6,7 @@ use App\Facades\Settings;
 use App\Models\Character\Character;
 use App\Models\Character\CharacterCategory;
 use App\Models\Character\CharacterImage;
+use App\Models\Character\CharacterTitle;
 use App\Models\Character\Sublist;
 use App\Models\Feature\Feature;
 use App\Models\Rank\Rank;
@@ -236,7 +237,19 @@ class BrowseController extends Controller {
         if ($request->get('has_transformation')) {
             $imageQuery->whereNotNull('transformation_id');
         }
-        if($request->get('artist')) {
+
+        if ($request->get('title_id')) {
+            if ($request->get('title_id') == 'custom') {
+                $imageQuery->whereRelation('titles', 'title_id', null)->whereNotNull('title_data');
+            } else {
+                $imageQuery->whereRelation('titles', 'title_id', $request->get('title_id'));
+            }
+        }
+        if ($request->get('title_id') == 'custom' && $request->get('title_data')) {
+            $imageQuery->whereRelation('titles', 'title_data', 'LIKE', '%'.$request->get('title_data').'%');
+        }
+
+        if ($request->get('artist')) {
             $artist = User::find($request->get('artist'));
             $imageQuery->whereHas('artists', function ($query) use ($artist) {
                 $query->where('user_id', $artist->id);
@@ -339,6 +352,7 @@ class BrowseController extends Controller {
             'sublists'    => Sublist::orderBy('sort', 'DESC')->get(),
             'userOptions' => User::query()->orderBy('name')->pluck('name', 'id')->toArray(),
             'transformations' => [0 => 'Any '.ucfirst(__('transformations.transformation'))] + Transformation::orderBy('sort', 'DESC')->pluck('name', 'id')->toArray(),
+            'titles'      => [0 => 'Any Title', 'custom' => 'Custom Title'] + CharacterTitle::orderBy('character_titles.sort', 'DESC')->pluck('title', 'id')->toArray(),
         ]);
     }
 
@@ -593,7 +607,19 @@ class BrowseController extends Controller {
         if ($request->get('has_transformation')) {
             $imageQuery->whereNotNull('transformation_id');
         }
-        if($request->get('artist')) {
+
+        if ($request->get('title_id')) {
+            if ($request->get('title_id') == 'custom') {
+                $imageQuery->whereNull('title_id')->whereNotNull('title_data');
+            } else {
+                $imageQuery->where('title_id', $request->get('title_id'));
+            }
+        }
+        if ($request->get('title_id') == 'custom' && $request->get('title_data')) {
+            $imageQuery->where('title_data', 'LIKE', '%'.$request->get('title_data').'%');
+        }
+
+        if ($request->get('artist')) {
             $artist = User::find($request->get('artist'));
             $imageQuery->whereHas('artists', function ($query) use ($artist) {
                 $query->where('user_id', $artist->id);
@@ -679,6 +705,8 @@ class BrowseController extends Controller {
             'sublists'    => Sublist::orderBy('sort', 'DESC')->get(),
             'userOptions' => User::query()->orderBy('name')->pluck('name', 'id')->toArray(),
             'transformations' => [0 => 'Any '.ucfirst(__('transformations.transformation'))] + Transformation::orderBy('sort', 'DESC')->pluck('name', 'id')->toArray(),
+            'titles'      => [0 => 'Any Title', 'custom' => 'Custom Title'] + CharacterTitle::orderBy('character_titles.sort', 'DESC')->pluck('title', 'id')->toArray(),
+
         ]);
     }
 

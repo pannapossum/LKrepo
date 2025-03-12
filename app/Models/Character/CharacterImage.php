@@ -109,6 +109,13 @@ class CharacterImage extends Model {
     }
 
     /**
+     * Get the title of the character image.
+     */
+    public function titles() {
+        return $this->hasMany(CharacterImageTitle::class, 'character_image_id');
+    }
+
+    /**
      * Get the features (traits) attached to the character image, ordered by display order.
      */
     public function features() {
@@ -336,5 +343,34 @@ class CharacterImage extends Model {
         }
 
         return implode(' ', $display_colours);
+    }
+    
+     /** 
+     *  Displays all of the images titles.
+     *
+     * @return string
+     */
+    public function getDisplayTitlesAttribute() {
+        $titles = [];
+        foreach ($this->titles as $title) {
+            $titles[] = $title->displayTitle;
+        }
+
+        return '<div class="row">'.implode('', $titles).'</div>';
+    }
+
+    /**
+     * Gets the id array of titles for select forms.
+     *
+     * @return string
+     */
+    public function getTitleIdsAttribute() {
+        $ids = [];
+        // we have to do foreach because null id means 'custom' title
+        foreach ($this->titles as $title) {
+            $ids[] = $title->title_id ?? 'custom';
+        }
+
+        return $ids;
     }
 }

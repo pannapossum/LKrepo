@@ -129,6 +129,8 @@ Route::group(['prefix' => 'world'], function () {
     Route::get('traits', 'WorldController@getFeatures');
     Route::get('character-categories', 'WorldController@getCharacterCategories');
     Route::get(__('transformations.transformations'), 'WorldController@getTransformations');
+    Route::get('character-titles', 'WorldController@getCharacterTitles');
+    Route::get('character-titles/{name}', 'WorldController@getCharacterTitle');
 });
 
 Route::group(['prefix' => 'prompts'], function () {

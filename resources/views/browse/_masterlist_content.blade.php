@@ -33,6 +33,14 @@
                         {!! Form::select('has_transformation', ['1' => 'Has a '.__('transformations.transformation').'.'], Request::get('has_transformation'), ['class' => 'form-control', 'placeholder' => 'Any']) !!}
                     </div>
                     <hr />
+                    {!! Form::label('title_id', 'Title: ') !!}
+                    {!! Form::select('title_id', $titles, Request::get('title_id'), ['class' => 'form-control', 'id' => 'customTitle', 'style' => 'width: 250px']) !!}
+                </div>
+                <div class="masterlist-search-field" id="customTitleOptions">
+                    {!! Form::label('title_data', 'Custom Title: ') !!}
+                    {!! Form::text('title_data', Request::get('title_data'), ['class' => 'form-control', 'style' => 'width: 250px']) !!}
+                </div>
+                <hr />
             @endif
             <div class="masterlist-search-field">
                 {!! Form::label('owner', 'Owner Username: ') !!}
@@ -191,6 +199,10 @@
                 <th>Name</th>
                 <th>Rarity</th>
                 <th>{{ ucfirst(__('lorekeeper.species')) }}</th>
+                <th>Species</th>
+                @if (Settings::get('character_title_display'))
+                    <th>Title</th>
+                @endif
                 <th>Created</th>
             </tr>
         </thead>
@@ -205,6 +217,15 @@
                     </td>
                     <td>{!! $character->image->rarity_id ? $character->image->rarity->displayName : 'None' !!}</td>
                     <td>{!! $character->image->species_id ? $character->image->species->displayName : 'None' !!}</td>
+                    @if (Settings::get('character_title_display'))
+                        <td>{!! $character->image->hasTitle
+                            ? ($character->image->title_id
+                                ? $character->image->title->displayNameShort
+                                : (isset($character->image->title_data['short'])
+                                    ? nl2br(htmlentities($character->image->title_data['short']))
+                                    : nl2br(htmlentities($character->image->title_data['full']))))
+                            : 'None' !!}</td>
+                    @endif
                     <td>{!! format_date($character->created_at) !!}</td>
                 </tr>
             @endforeach
