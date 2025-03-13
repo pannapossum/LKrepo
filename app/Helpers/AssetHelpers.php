@@ -429,31 +429,7 @@ function fillCharacterAssets($assets, $sender, $recipient, $logType, $data, $sub
 }
 
 /**
- * Creates a rewards string from an asset array.
- *
- * @param array $array
- *
- * @return string
- */
-function createRewardsString($array) {
-    $string = [];
-    foreach ($array as $key => $contents) {
-        foreach ($contents as $asset) {
-            $string[] = $asset['asset']->displayName.' x'.$asset['quantity'];
-        }
-    }
-    if (!count($string)) {
-        return 'Nothing. :('; // :(
-    }
-
-    if (count($string) == 1) {
-        return implode(', ', $string);
-    }
-
-    return implode(', ', array_slice($string, 0, count($string) - 1)).(count($string) > 2 ? ', and ' : ' and ').end($string);
-}
-
- /** Rolls on a loot-table esque rewards setup.
+ * Rolls on a loot-table esque rewards setup.
  */
 function rollRewards($loot, $quantity = 1)
 {
@@ -506,7 +482,7 @@ function rollCategory($id, $quantity = 1, $criteria = null, $rarity = null)
     $rewards = createAssetsArray();
 
     if(isset($criteria) && $criteria && isset($rarity) && $rarity) {
-        if(Config::get('lorekeeper.extensions.item_entry_expansion.loot_tables.alternate_filtering')) $loot = Item::where('item_category_id', $id)->released()->whereNotNull('data')->where('data->rarity', $criteria, $rarity)->get();
+        if(config('lorekeeper.extensions.item_entry_expansion.loot_tables.alternate_filtering')) $loot = Item::where('item_category_id', $id)->released()->whereNotNull('data')->where('data->rarity', $criteria, $rarity)->get();
         else $loot = Item::where('item_category_id', $id)->released()->whereNotNull('data')->whereRaw('JSON_EXTRACT(`data`, \'$.rarity\')'. $criteria . $rarity)->get();
     }
     else $loot = Item::where('item_category_id', $id)->released()->get();
@@ -539,7 +515,7 @@ function rollRarityItem($quantity = 1, $criteria, $rarity)
 {
     $rewards = createAssetsArray();
 
-    if(Config::get('lorekeeper.extensions.item_entry_expansion.loot_tables.alternate_filtering')) $loot = Item::released()->whereNotNull('data')->where('data->rarity', $criteria, $rarity)->get();
+    if(config('lorekeeper.extensions.item_entry_expansion.loot_tables.alternate_filtering')) $loot = Item::released()->whereNotNull('data')->where('data->rarity', $criteria, $rarity)->get();
     else $loot = Item::released()->whereNotNull('data')->whereRaw('JSON_EXTRACT(`data`, \'$.rarity\')'. $criteria . $rarity)->get();
     if(!$loot->count()) throw new \Exception('There are no items to select from!');
 
@@ -558,3 +534,27 @@ function rollRarityItem($quantity = 1, $criteria, $rarity)
     return $rewards;
 }
 
+/**
+ * Creates a rewards string from an asset array.
+ *
+ * @param array $array
+ *
+ * @return string
+ */
+function createRewardsString($array) {
+    $string = [];
+    foreach ($array as $key => $contents) {
+        foreach ($contents as $asset) {
+            $string[] = $asset['asset']->displayName.' x'.$asset['quantity'];
+        }
+    }
+    if (!count($string)) {
+        return 'Nothing. :('; // :(
+    }
+
+    if (count($string) == 1) {
+        return implode(', ', $string);
+    }
+
+    return implode(', ', array_slice($string, 0, count($string) - 1)).(count($string) > 2 ? ', and ' : ' and ').end($string);
+}
