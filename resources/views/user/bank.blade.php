@@ -11,6 +11,9 @@
         {!! $user->displayName !!}'s Bank
     </h1>
 
+<div class="card-body text-center">
+    <img src="{{asset ('images/bag.gif') }}" width="450px"/>
+
     <h3>Currencies</h3>
     <div class="card mb-4">
         <ul class="list-group list-group-flush">
