@@ -77,6 +77,7 @@ class CharacterController extends Controller {
             'features'    => Feature::getDropdownItems(1),
             'transformations' => ['0' => 'Pick a Species First'],
             'isMyo'       => true,
+            'titles'      => ['custom' => 'Custom Title'] + CharacterTitle::orderBy('sort', 'DESC')->pluck('title', 'id')->toArray(),
             'characterOptions' => CharacterLineageBlacklist::getAncestorOptions(),
         ]);
     }
@@ -158,7 +159,7 @@ class CharacterController extends Controller {
             'designer_id', 'designer_url',
             'artist_id', 'artist_url',
             'species_id', 'subtype_id', 'rarity_id', 'feature_id', 'feature_data',
-            'image', 'thumbnail', 'transformation_id','transformation_info','transformation_description',
+            'image', 'thumbnail', 'transformation_id','transformation_info','transformation_description', 'title_ids', 'title_data',
             'parent_1_id', 'parent_2_id',
         ]);
         if ($character = $service->createCharacter($data, Auth::user(), true)) {
