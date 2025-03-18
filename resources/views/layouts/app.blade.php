@@ -208,7 +208,6 @@
 </body>
 <div>
 
-        <a href="sigillants.com">
         <img src="{{ asset('images/jennedoll.png') }}"
         style="max-width:15%; position:fixed; bottom:10px; right:10px; z-index:3;" ></div>
 <div>
