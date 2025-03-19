@@ -7,6 +7,7 @@
 
 
 
+
 <div class="row">
     <div class="col-md-12">
         @include('widgets._carousel')
@@ -16,6 +17,9 @@
 
 @include('widgets._news', ['textPreview' => true])
 
+<div class="card-body text-center">
+    <img src="{{asset('images/divider.png')}}" width="200px" height="49px"/>
+</div>
 
 <div class="row justify-content-center">
     <div class="col-md-6">

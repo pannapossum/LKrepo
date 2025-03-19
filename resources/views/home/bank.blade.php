@@ -10,6 +10,19 @@
     <h1>
         Bank
     </h1>
+    
+    <div class="card-body text-center">
+    <img src="{{asset ('images/bankwoman.png') }}" width="350px"/>
+    <div>
+    <h4 class="card-header inventory-header" style="text-align: left;">MS. BANK</h4>
+<div class="paragraph">
+<div class="paragraph">
+<div class="card">
+<div class="card-body">
+<p>"welcome 2 the bank..........i will not scam u i promise." </p>
+</div>
+</div>
+
 
     <h3>Currencies</h3>
     <div class="card mb-2">
