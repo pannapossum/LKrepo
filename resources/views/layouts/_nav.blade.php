@@ -108,11 +108,28 @@
                         </a>
                     </div>
                 
+                    <li class="nav-item dropdown">
+                    <a id="browseDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        Community
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="browseDropdown">
+
+                         <a class="dropdown-item" href="{{ url('info/rules') }}">
+                           Rules
+                        </a>
+                        <a class="dropdown-item" href="{{ url('info/discord') }}">
+                            Discord
+                        </a>
+                    </div>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('gallery') }}">Gallery</a>
                 </li>
             </ul>
+            
 
+            
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
