@@ -233,5 +233,6 @@
     </table>
 </div>
 {!! $characters->render() !!}
+                        </div>
 
 <div class="text-center mt-4 small text-muted">{{ $characters->total() }} result{{ $characters->total() == 1 ? '' : 's' }} found.</div>
