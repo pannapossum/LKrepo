@@ -32,7 +32,7 @@
                         {!! Form::label('has_transformation', 'Has a '.ucfirst(__('transformations.transformation')).': ') !!}
                         {!! Form::select('has_transformation', ['1' => 'Has a '.__('transformations.transformation').'.'], Request::get('has_transformation'), ['class' => 'form-control', 'placeholder' => 'Any']) !!}
                     </div>
-                    <hr />
+                   <div>
                     {!! Form::label('title_id', 'Title: ') !!}
                     {!! Form::select('title_id', $titles, Request::get('title_id'), ['class' => 'form-control', 'id' => 'customTitle', 'style' => 'width: 250px']) !!}
                 </div>
@@ -228,11 +228,10 @@
                     @endif
                     <td>{!! format_date($character->created_at) !!}</td>
                 </tr>
-            @endforeach
+                @endforeach
         </tbody>
     </table>
 </div>
 {!! $characters->render() !!}
-                        </div>
 
 <div class="text-center mt-4 small text-muted">{{ $characters->total() }} result{{ $characters->total() == 1 ? '' : 's' }} found.</div>
