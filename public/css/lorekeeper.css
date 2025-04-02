@@ -117,11 +117,14 @@ main > .row {
 .navbar .row { width: 100%; }
 
 .navbar {
-    background: radial-gradient(circle, rgba(252,130,223,1) 13%, rgba(143,90,198,1) 46%, rgba(138,103,204,1) 57%, rgba(93,210,251,1) 91%);
+    background: linear-gradient(90deg, rgba(93,210,251,1) 0%, rgba(143,90,198,1) 25%, rgba(252,130,224,1) 50%, rgba(143,90,198,1) 75%, rgba(93,210,251,1) 100%);
  }
 
  .navbar-nav .nav-link {
 color: #00065a !important;
+ }
+ .navbar-nav .bg-secondary{
+color:rgba(143,90,198,1) !important;
  }
 /* Sidebar */
 
