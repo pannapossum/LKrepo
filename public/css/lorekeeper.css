@@ -116,6 +116,13 @@ main > .row {
 
 .navbar .row { width: 100%; }
 
+.navbar {
+    background: radial-gradient(circle, rgba(252,130,223,1) 13%, rgba(143,90,198,1) 46%, rgba(138,103,204,1) 57%, rgba(93,210,251,1) 91%);
+ }
+
+ .navbar-nav .nav-link {
+color: #00065a !important;
+ }
 /* Sidebar */
 
 .sidebar {
@@ -310,6 +317,10 @@ main > .row {
 .ui-datepicker-inline {
     position: fixed;
 }
+.site-footer .navbar {
+    background-color: #ffffff00;
+ }
+
 
 /**************************************************************************************************
 
