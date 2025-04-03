@@ -93,7 +93,9 @@
 <body>
     <div id="app">
         <div class="site-header-image" id="header" style="background-image: url('{{ asset('images/header.png') }}');">
+            <a href="https://sigillants.com">
             <img id="logo" src="{{ asset('images/logo.png') }}">
+</a>
         </div>
         @include('layouts._nav')
         @if (View::hasSection('sidebar'))
@@ -207,9 +209,12 @@
     </div>
 </body>
 <div>
-
+<div class="d-none d-lg-block">
+<a href="https://sigillants.com">
         <img src="{{ asset('images/jennedoll.png') }}"
         style="max-width:15%; position:fixed; bottom:10px; right:10px; z-index:3;" ></div>
+        </a>
+        </div>
 <div>
  
 </html>
