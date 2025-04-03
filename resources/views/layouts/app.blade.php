@@ -93,7 +93,9 @@
 <body>
     <div id="app">
         <div class="site-header-image" id="header" style="background-image: url('{{ asset('images/header.png') }}');">
+        <a href="https://sigillants.com">
             <img id="logo" src="{{ asset('images/logo.png') }}">
+</a>
         </div>
         @include('layouts._nav')
         @if (View::hasSection('sidebar'))
