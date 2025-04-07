@@ -244,6 +244,10 @@ return [
             'name' => 'Collections',
                 'url' => 'admin/data/collections'
             ],
+            [
+                'name' => 'Scavenger Hunts',
+                'url' => 'admin/data/hunts'
+            ],
         ]
     ],
     'Raffles'    => [
