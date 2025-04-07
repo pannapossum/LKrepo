@@ -15,7 +15,7 @@ class ParsePostRequestFields {
      */
     public function handle(Request $request, Closure $next) {
         if ($request->isMethod('post')) {
-            $excludedFields = ['_token', 'password', 'email', 'description', 'text', 'criteria'];
+            $excludedFields = ['_token', 'password', 'email', 'description', 'text', 'criteria', 'pure_html'];
             $strippedFields = ['name', 'title'];
 
             $parsedFields = [];

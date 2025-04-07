@@ -401,6 +401,18 @@ Route::group(['prefix' => 'settings', 'middleware' => 'power:edit_site_settings'
     Route::get('/', 'SettingsController@getIndex');
     Route::post('{key}', 'SettingsController@postEditSetting');
 });
+# TEMPLATE TAGS
+Route::group(['prefix' => 'templates', 'middleware' => 'power:edit_pages'], function() {
+
+    Route::get('/', 'TemplateController@getIndex');
+    Route::get('create', 'TemplateController@getCreateTemplate');
+    Route::get('edit/{id}', 'TemplateController@getEditTemplate');
+    Route::get('delete/{id}', 'TemplateController@getDeleteTemplate');
+    Route::post('create', 'TemplateController@postCreateEditTemplate');
+    Route::post('edit/{id?}', 'TemplateController@postCreateEditTemplate');
+    Route::post('delete/{id}', 'TemplateController@postDeleteTemplate');
+});
+
 
 // GRANTS
 Route::group(['prefix' => 'grants', 'namespace' => 'Users', 'middleware' => 'power:edit_inventories'], function () {
