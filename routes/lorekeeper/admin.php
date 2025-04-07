@@ -412,7 +412,7 @@ Route::group(['prefix' => 'templates', 'middleware' => 'power:edit_pages'], func
     Route::post('edit/{id?}', 'TemplateController@postCreateEditTemplate');
     Route::post('delete/{id}', 'TemplateController@postDeleteTemplate');
 });
-
+ 
 
 // GRANTS
 Route::group(['prefix' => 'grants', 'namespace' => 'Users', 'middleware' => 'power:edit_inventories'], function () {
