@@ -80,6 +80,9 @@
                             <a class="dropdown-item" href="{{ url('prompts/prompts') }}">
                                 Prompts
                             </a>
+                            <a class="dropdown-item" href="{{ url('collection') }}">
+                                Collections
+                            </a>
                             <a class="dropdown-item" href="{{ url('raffles') }}">
                                 Raffles
                             </a>

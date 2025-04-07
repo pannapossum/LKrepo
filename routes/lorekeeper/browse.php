@@ -66,6 +66,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'Users'], function () {
     Route::get('{name}/ownership', 'UserController@getUserOwnershipLogs');
     Route::get('{name}/submissions', 'UserController@getUserSubmissions');
     Route::get('{name}/redeem-logs', 'UserController@getUserRedeemLogs');
+    Route::get('{name}/collection-logs', 'UserController@getUserCollectionLogs');
 });
 
 /**************************************************************************************************
@@ -131,6 +132,10 @@ Route::group(['prefix' => 'world'], function () {
     Route::get(__('transformations.transformations'), 'WorldController@getTransformations');
     Route::get('character-titles', 'WorldController@getCharacterTitles');
     Route::get('character-titles/{name}', 'WorldController@getCharacterTitle');
+
+    Route::get('collections', 'WorldController@getCollections');
+    Route::get('collections/{id}', 'WorldController@getCollection');
+    Route::get('collection-categories', 'WorldController@getCollectionCategories');
 });
 
 Route::group(['prefix' => 'prompts'], function () {

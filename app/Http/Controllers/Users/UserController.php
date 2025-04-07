@@ -23,7 +23,10 @@ use Illuminate\Support\Facades\View;
 use Route;
 use App\Models\Character\CharacterCategory;
 use App\Models\User\UserPrizeLog;
-class UserController extends Controller{
+use App\Models\Collection\CollectionCategory;
+
+class UserController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | User Controller
@@ -76,6 +79,7 @@ class UserController extends Controller{
             'user'       => $this->user,
             'name'       => $name,
             'items'      => $this->user->items()->where('count', '>', 0)->orderBy('user_items.updated_at', 'DESC')->take(4)->get(),
+            'collections' => $this->user->collections()->orderBy('user_collections.updated_at', 'DESC')->take(4)->get(),
             'characters' => $characters,
             'aliases'    => $aliases->orderBy('is_primary_alias', 'DESC')->orderBy('site')->get(),
             'awards'     => $this->user->awards()->orderBy('user_awards.updated_at', 'DESC')->whereNull('deleted_at')->where('count', '>', 0)->take(4)->get(),
@@ -421,4 +425,36 @@ class UserController extends Controller{
             'sublists' => Sublist::orderBy('sort', 'DESC')->get()
         ]);
     }
+
+    /**
+     * Shows a user's collection logs.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getUserCollectionLogs($name)
+    {
+        $user = $this->user;
+        $categories = CollectionCategory::orderBy('sort', 'DESC')->get();
+        $collections = count($categories) ?
+        $user->collections()
+            ->orderByRaw('FIELD(collection_category_id,'.implode(',', $categories->pluck('id')->toArray()).')')
+            ->orderBy('name')
+            ->orderBy('updated_at')
+            ->get()
+            ->groupBy(['collection_category_id', 'id']) :
+        $user->collections()
+            ->orderBy('name')
+            ->orderBy('updated_at')
+            ->get()
+            ->groupBy(['collection_category_id', 'id']);
+        return view('user.collection_logs', [
+            'user' => $this->user,
+            'logs' => $this->user->getCollectionLogs(0),
+            'categories' => $categories->keyBy('id'),
+            'collections' => $collections,
+            'sublists' => Sublist::orderBy('sort', 'DESC')->get()
+        ]);
+    }
+
 }

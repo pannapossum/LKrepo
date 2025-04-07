@@ -239,7 +239,12 @@ return [
                 'name' => 'FAQ',
                 'url'  => 'admin/data/faq',
                 ],
-        ],
+        
+                [
+            'name' => 'Collections',
+                'url' => 'admin/data/collections'
+            ],
+        ]
     ],
     'Raffles'    => [
         'power' => 'manage_raffles',
