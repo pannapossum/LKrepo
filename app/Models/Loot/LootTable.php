@@ -143,7 +143,7 @@ class LootTable extends Model {
                 } elseif ($result->rewardable_type == 'ItemCategory' || $result->rewardable_type == 'ItemCategoryRarity') {
                     $rewards = mergeAssetsArrays($rewards, $this->rollCategory($result->rewardable_id, $result->quantity, ($result->data['criteria'] ?? null), ($result->data['rarity'] ?? null)));
                 } elseif ($result->rewardable_type == 'ItemRarity') {
-                    $rewards = mergeAssetsArrays($rewards, $this->rollRarityItem($result->quantity, $result->data['criteria'], $result->data['rarity']));
+                    $rewards = mergeAssetsArrays($rewards, $this->rollRarityItem($result->data['criteria'], $result->data['rarity'], $result->quantity));
                 } else {
                     addAsset($rewards, $result->reward, $result->quantity);
                 }

@@ -9,6 +9,7 @@ use App\Models\Character\Character;
 use App\Models\Currency\Currency;
 use App\Models\Item\Item;
 use App\Models\Loot\LootTable;
+use App\Models\Pet\Pet;
 use App\Models\Prompt\Prompt;
 use App\Models\Raffle\Raffle;
 use App\Models\Submission\Submission;
@@ -637,6 +638,9 @@ class SubmissionManager extends Service {
                             break;
                         case 'Award':
                             $reward = Award::find($data['rewardable_id'][$key]);
+                            break;
+                        case 'Pet':
+                            $reward = Pet::find($data['rewardable_id'][$key]);
                             break;
                     }
                     if (!$reward) {

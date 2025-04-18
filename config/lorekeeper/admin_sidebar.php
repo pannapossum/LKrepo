@@ -120,6 +120,10 @@ return [
                 'name' => 'Award Grants',
                 'url'  => 'admin/grants/awards',
             ],
+            [
+                'name' => 'Pet Grants',
+                'url'  => 'admin/grants/pets',
+            ],
         ],
     ],
     'Foraging' => [
@@ -236,23 +240,31 @@ return [
                 'url'  => 'admin/data/carousel',
             ],
             [
-            'name' => 'Codes',
+                'name' => 'Codes',
                 'url' => 'admin/prizecodes'
             ],
-                [
+            [
                 'name' => 'FAQ',
                 'url'  => 'admin/data/faq',
-                ],
-        
-                [
-            'name' => 'Collections',
+            ],
+
+            [
+                'name' => 'Collections',
                 'url' => 'admin/data/collections'
             ],
             [
                 'name' => 'Scavenger Hunts',
                 'url' => 'admin/data/hunts'
             ],
-        ]
+            [
+                'name' => 'Pets',
+                'url'  => 'admin/data/pets',
+            ],
+            [
+                'name' => 'Dynamic Limits',
+                'url'  => 'admin/data/limits',
+            ],
+        ],
     ],
     'Raffles'    => [
         'power' => 'manage_raffles',

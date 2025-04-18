@@ -514,3 +514,24 @@ function parseLiveClock($text) {
 function colourDistance($rgb1, $rgb2) {
     return sqrt(pow($rgb1[0] - $rgb2[0], 2) + pow($rgb1[1] - $rgb2[1], 2) + pow($rgb1[2] - $rgb2[2], 2));
 }
+
+/*
+ * Gets the displayName attribute from a given model.
+ *
+ * @param mixed $model
+ * @param mixed $id
+ */
+function getDisplayName($model, $id) {
+    return $model::find($id)?->displayName;
+}
+
+/**
+ * Returns the given objects limits, if any.
+ *
+ * @param mixed $object
+ *
+ * @return bool
+ */
+function getLimits($object) {
+    return App\Models\Limit\Limit::where('object_model', get_class($object))->where('object_id', $object->id)->get();
+}

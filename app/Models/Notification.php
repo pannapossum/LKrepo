@@ -170,4 +170,8 @@ class Notification extends Model {
     public const PAIRING_NEW_APPROVAL = 1302;
     public const PAIRING_CANCELLED = 1303;
     public const BIRTHDAY_REWARDED    = 1105;
+    public const PET_REMOVAL = 241;
+    public const PET_TRANSFER = 242;
+    public const FORCED_PET_TRANSFER = 243;
+    public const PET_GRANT = 244;
 }

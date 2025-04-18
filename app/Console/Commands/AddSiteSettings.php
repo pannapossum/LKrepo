@@ -101,7 +101,16 @@ class AddSiteSettings extends Command {
         $this->addSiteSetting('comment_dislikes_enabled', 0, '0: Dislikes disabled, 1: Dislikes enabled.');
 
         $this->addSiteSetting('carousel_speed', 10000, 'Speed of the carousel in milliseconds.');
+
         $this->addSiteSetting('sales_image_display', 0, '0: Shows only the focal image at the top of the post, 1: Shows both the focal image and attached characters at the top of the post.');
+        
+        $this->addSiteSetting('claymore_cooldown', 0, 'Number of days to add to the cooldown timer when a pet/weapon/gear is attached.');
+
+        $this->addSiteSetting('coupon_settings', 0, '0: Percentage is taken from total (e.g 20% from 2 items costing a total of 100 = 80), 1: Percentage is taken from item (e.g 20% from 2 items costing a total of 100 = 90)');
+
+        $this->addSiteSetting('limited_stock_coupon_settings', 0, '0: Does not allow coupons to be used on limited stock items, 1: Allows coupons to be used on limited stock items');
+
+        $this->addSiteSetting('shop_type', 0, '0: Default, 1: Collapsible.');
 
         $this->line("\nSite settings up to date!");
     }
