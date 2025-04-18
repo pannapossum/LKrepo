@@ -44,9 +44,6 @@
                             <a class="dropdown-item" href="{{ url('world') }}">
                                 Encyclopedia
                             </a>
-                            <a class="dropdown-item" href="{{ url('crafting') }}">
-                                Crafting
-                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('info/starterguide') }}">
                                 Starter Guide
@@ -79,12 +76,18 @@
                             <a class="dropdown-item" href="{{ url('foraging') }}">
                                 Foraging
                             </a>
+                            <a class="dropdown-item" href="{{ url('encounter-areas') }}">
+                                Encounters
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('prompts/prompts') }}">
                                 Prompts
                             </a>
                             <a class="dropdown-item" href="{{ url('collection') }}">
                                 Collections
+                            </a>
+                            <a class="dropdown-item" href="{{ url('crafting') }}">
+                                Crafting
                             </a>
                             <a class="dropdown-item" href="{{ url('raffles') }}">
                                 Raffles

@@ -45,6 +45,11 @@ class Kernel extends ConsoleKernel {
             ->everyMinute();
         $schedule->command('check-pet-drops')
             ->everyMinute();
+        $schedule->command('refresh-encounter-energy')
+                ->daily();
+        $schedule->command('update-timed-areas')
+                ->everyMinute();
+
     }
 
     /**
