@@ -124,6 +124,10 @@ return [
                 'name' => 'Pet Grants',
                 'url'  => 'admin/grants/pets',
             ],
+            [
+                'name' => 'Recipe Grants',
+                'url'  => 'admin/grants/recipes',
+            ],
         ],
     ],
     'Foraging' => [
@@ -263,6 +267,10 @@ return [
             [
                 'name' => 'Dynamic Limits',
                 'url'  => 'admin/data/limits',
+            ],
+            [
+                'name' => 'Recipes',
+                'url'  => 'admin/data/recipes',
             ],
         ],
     ],

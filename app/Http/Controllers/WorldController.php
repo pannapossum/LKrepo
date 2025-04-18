@@ -14,6 +14,7 @@ use App\Models\Item\ItemCategory;
 use App\Models\Pet\Pet;
 use App\Models\Pet\PetCategory;
 use App\Models\Rarity;
+use App\Models\Recipe\Recipe;
 use App\Models\Shop\Shop;
 use App\Models\Species\Species;
 use App\Models\Species\Subtype;
@@ -753,6 +754,66 @@ class WorldController extends Controller
 
         return view('world.pet_page', [
             'pet' => $pet,
+        ]);
+    }
+
+        /**
+     * Shows the items page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getRecipes(Request $request) {
+        $query = Recipe::query();
+        $data = $request->only(['name', 'sort']);
+        if (isset($data['name'])) {
+            $query->where('name', 'LIKE', '%'.$data['name'].'%');
+        }
+
+        if (isset($data['sort'])) {
+            switch ($data['sort']) {
+                case 'alpha':
+                    $query->sortAlphabetical();
+                    break;
+                case 'alpha-reverse':
+                    $query->sortAlphabetical(true);
+                    break;
+                case 'newest':
+                    $query->sortNewest();
+                    break;
+                case 'oldest':
+                    $query->sortOldest();
+                    break;
+                case 'locked':
+                    $query->sortNeedsUnlocking();
+                    break;
+            }
+        } else {
+            $query->sortNewest();
+        }
+
+        return view('world.recipes.recipes', [
+            'recipes' => $query->paginate(20)->appends($request->query()),
+        ]);
+    }
+
+    /**
+     * Shows an individual recipe;ss page.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getRecipe($id) {
+        $recipe = Recipe::where('id', $id)->first();
+        if (!$recipe) {
+            abort(404);
+        }
+
+        return view('world.recipes._recipe_page', [
+            'recipe'      => $recipe,
+            'imageUrl'    => $recipe->imageUrl,
+            'name'        => $recipe->displayName,
+            'description' => $recipe->parsed_description,
         ]);
     }
 }

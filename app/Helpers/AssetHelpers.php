@@ -72,7 +72,7 @@ function calculateGroupCurrency($data) {
  */
 function getAssetKeys($isCharacter = false) {
     if (!$isCharacter) {
-        return ['items', 'currencies', 'pets', 'raffle_tickets', 'loot_tables', 'user_items', 'characters', 'awards', 'user_awards', 'areas'];
+        return ['items', 'currencies', 'pets', 'raffle_tickets', 'loot_tables', 'user_items', 'characters', 'awards', 'user_awards', 'areas', 'recipes'];
     } else {
         return ['currencies', 'items', 'character_items', 'loot_tables', 'awards'];
     }
@@ -153,6 +153,14 @@ function getAssetModelString($type, $namespaced = true) {
                 return '\App\Models\Character\Character';
             } else {
                 return 'Character';
+            }
+            break;
+
+        case 'recipes':
+            if ($namespaced) {
+                return '\App\Models\Recipe\Recipe';
+            } else {
+                return 'Recipe';
             }
             break;
 
@@ -435,6 +443,14 @@ function fillUserAssets($assets, $sender, $recipient, $logType, $data, $selected
             $service = new \App\Services\PetManager;
             foreach ($contents as $asset) {
                 if (!$service->creditPet($sender, $recipient, $logType, $data, $asset['asset'], $asset['quantity'])) {
+                    return false;
+                }
+            }
+        }
+        if ($key == 'recipes' && count($contents)) {
+            $service = new \App\Services\RecipeService;
+            foreach ($contents as $asset) {
+                if (!$service->creditRecipe($sender, $recipient, null, $logType, $data, $asset['asset'])) {
                     return false;
                 }
             }

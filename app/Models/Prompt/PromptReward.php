@@ -9,6 +9,7 @@ use App\Models\Loot\LootTable;
 use App\Models\Model;
 use App\Models\Pet\Pet;
 use App\Models\Raffle\Raffle;
+use App\Models\Recipe\Recipe;
 
 class PromptReward extends Model {
     /**
@@ -76,6 +77,9 @@ class PromptReward extends Model {
                 break;
             case 'Pet':
                 return $this->belongsTo(Pet::class, 'rewardable_id');
+                break;
+            case 'Recipe':
+                return $this->belongsTo(Recipe::class, 'rewardable_id');
                 break;
         }
 

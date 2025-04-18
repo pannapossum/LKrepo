@@ -556,4 +556,10 @@ return [
         'message' => 'You have received a staff grant of {pet_name} (×{pet_quantity}) from <a href="{sender_url}">{sender_name}</a>. (<a href="{url}">View Pets</a>)',
         'url'     => 'pets',
     ],
+    // RECIPE_GRANT
+    600 => [
+        'name'    => 'Recipe Grant',
+        'message' => 'You have received a staff grant of the crafting recipe {recipe_name} from <a href="{sender_url}">{sender_name}</a>. (<a href="{url}">View Unlocked Recipes</a>)',
+        'url'     => 'crafting',
+    ],
 ];

@@ -10,6 +10,7 @@ use App\Models\Character\CharacterItem;
 use App\Models\Currency\Currency;
 use App\Models\Item\Item;
 use App\Models\Pet\Pet;
+use App\Models\Recipe\Recipe;
 use App\Models\Submission\Submission;
 use App\Models\Trade;
 use App\Models\User\User;
@@ -18,6 +19,7 @@ use App\Services\AwardCaseManager;
 use App\Services\CurrencyManager;
 use App\Services\InventoryManager;
 use App\Services\PetManager;
+use App\Services\RecipeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -101,6 +103,18 @@ class GrantController extends Controller {
     }
 
     /**
+     * Show the recipe grant page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getRecipes() {
+        return view('admin.grants.recipes', [
+            'users'   => User::orderBy('id')->pluck('name', 'id'),
+            'recipes' => Recipe::orderBy('name')->pluck('name', 'id'),
+        ]);
+    }
+
+    /**
      * Grants or removes awards from multiple users.
      *
      * @param App\Services\AwardCaseManager $service
@@ -123,7 +137,27 @@ class GrantController extends Controller {
         return redirect()->back();
     }
 
-    /*
+    /**
+     * Grants or removes items from multiple users.
+     *
+     * @param App\Services\InventoryManager $service
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postRecipes(Request $request, RecipeService $service) {
+        $data = $request->only(['names', 'recipe_ids', 'data']);
+        if ($service->grantRecipes($data, Auth::user())) {
+            flash('Recipes granted successfully.')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
      * Show the item search page.
      *
      * @return \Illuminate\Contracts\Support\Renderable

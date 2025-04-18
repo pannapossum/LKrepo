@@ -174,4 +174,5 @@ class Notification extends Model {
     public const PET_TRANSFER = 242;
     public const FORCED_PET_TRANSFER = 243;
     public const PET_GRANT = 244;
+    public const RECIPE_GRANT = 600; // Draginraptor - Crafting
 }
