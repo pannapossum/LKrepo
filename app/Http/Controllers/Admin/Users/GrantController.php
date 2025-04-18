@@ -23,6 +23,7 @@ use App\Services\RecipeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\EncounterService;
+use Illuminate\Support\Facades\Config;
 
 class GrantController extends Controller {
     /**

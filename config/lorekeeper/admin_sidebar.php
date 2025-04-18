@@ -128,6 +128,10 @@ return [
                 'name' => 'Recipe Grants',
                 'url'  => 'admin/grants/recipes',
             ],
+            [
+                'name' => 'Encounter Energy Grants',
+                'url' => 'admin/grants/encounter-energy'
+            ],
         ],
     ],
     'Foraging' => [
@@ -136,10 +140,6 @@ return [
             [
                 'name' => 'Forages',
                 'url' => 'admin/data/forages'
-            ],
-            [
-                'name' => 'Encounter Energy Grants',
-                'url' => 'admin/grants/encounter-energy'
             ],
         ]
     ],
